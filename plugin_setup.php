@@ -1,6 +1,23 @@
 <?php
 //$DEBUG=true;
+
+$sequenceFolder = "/home/pi/media/sequences/";
 $projectorControlSettingsFile = "/home/pi/media/plugins/projectorControl.settings";
+
+$projectorONSequence = "PROJ-ON.fseq";
+$projectorOFFSequence = "PROJ-OFF.fseq";
+$projectorVIDEOSequence = "PROJ-VIDEO-INPUT.fseq";
+
+//create blank sequence files
+fopen($sequenceFolder.$projectorONSequence, "w") or die("Unable to open file!");
+fclose($sequenceFolder.$projectorONSequence);
+
+fopen($sequenceFolder.$projectorOFFSequence, "w") or die("Unable to open file!");
+fclose($sequenceFolder.$projectorOFFSequence);
+
+fopen($sequenceFolder.$projectorVIDEOSequence, "w") or die("Unable to open file!");
+fclose($sequenceFolder.$projectorVIDEOSequence);
+
 if(isset($_POST['submit']))
 {
     
@@ -55,12 +72,12 @@ if(isset($_POST['submit']))
 		$DEVICE = $configParts[1];
 		
 		$configParts=explode("=",$settingParts[1]);
-		$DEVICE_CONNECTION_TYPE = $configParts[2];
+		$DEVICE_CONNECTION_TYPE = $configParts[1];
 	
-		$configParts=explode("=",$settingParts[3]);
+		$configParts=explode("=",$settingParts[2]);
 		$IP = $configParts[1];
 	
-		$configParts=explode("=",$settingParts[4]);
+		$configParts=explode("=",$settingParts[3]);
 		$PORT = $configParts[1];
 
 

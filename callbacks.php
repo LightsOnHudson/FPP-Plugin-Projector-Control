@@ -61,14 +61,27 @@ function processCallback($argv) {
 				$obj = json_decode($data);
 
 				$type = $obj->{'type'};
-				if($type == "event" || $type == "pause") {
-					//let's reset the callbacks / sign script
-				//	$cmd = "/usr/bin/killall -9 signLoop.php";
-				//	system($cmd,$output);
-
-			
-
-					logEntry("Resetting to due to event/pause");
+				if($type == "sequence") {
+					//we got a sequence... get the name
+					
+						$sequenceName = $obj->{'Sequence'};
+						logEntry("Sequence name: ".$sequenceName);
+						
+						if(strtoupper($sequenceName) == "PROJ-ON.FSEQ") {
+							logEntry("turning on proj");
+							sendCommand("ON");
+							
+						} elseif (strtoupper($sequenceName) == "PROJ-OFF.FSEQ") {
+							
+							logEntry("turning off proj");
+								sendCommand("OFF");
+								
+						} elseif (strtoupper($sequenceName) == "PROJ-VIDEO-INPUT.FSEQ") {
+							
+							logEntry("video input projector");
+								sendCommand("VIDEO");
+						}
+						
 					exit(0);
 				}
 
@@ -92,7 +105,7 @@ function logEntry($data) {
 
 //function send the message
 
-function sendLineMessage($songTitle,$songArtist) {
+function sendCommand($projectorCommand) {
 
 	global $projectorControlSettingsFile,$default_color,$errno, $errstr, $cfgTimeOut;
  if (file_exists($projectorControlSettingsFile)) {
@@ -114,12 +127,12 @@ function sendLineMessage($songTitle,$songArtist) {
 		$DEVICE = $configParts[1];
 		
 		$configParts=explode("=",$settingParts[1]);
-		$DEVICE_CONNECTION_TYPE = $configParts[2];
+		$DEVICE_CONNECTION_TYPE = $configParts[1];
 	
-		$configParts=explode("=",$settingParts[3]);
+		$configParts=explode("=",$settingParts[2]);
 		$IP = $configParts[1];
 	
-		$configParts=explode("=",$settingParts[4]);
+		$configParts=explode("=",$settingParts[3]);
 		$PORT = $configParts[1];
 
 
@@ -127,15 +140,22 @@ function sendLineMessage($songTitle,$songArtist) {
 	}
 
         logEntry("reading config file");
-        logEntry("Station_ID: ".$STATION_ID." DEVICE: ".$DEVICE." DEVICE_CONNECTION_TYPE: ".$DEVICE_CONNECTION_TYPE." IP: ".$IP. " PORT: ".$PORT." LOOPMESSAGE: ".$LOOPMESSAGE." STATIC TEXT PRE: ".$STATIC_TEXT_PRE. " STATIC TEXT POST: ".$STATIC_TEXT_POST." LOOP TIME: ".$LOOPTIME."  Color: ".$cl_color);
+        logEntry(" DEVICE: ".$DEVICE." DEVICE_CONNECTION_TYPE: ".$DEVICE_CONNECTION_TYPE." IP: ".$IP. " PORT: ".$PORT);
 
 
 	
-			$cmd = "/usr/bin/php /opt/fpp/plugins/BetaBrite/signLoop.php ".$myPid." ".escapeshellarg_special($line);
+			$cmd = "/usr/bin/php /opt/fpp/plugins/ProjectorControl/proj.php -d".$DEVICE_CONNECTION_TYPE." -h".$IP." -c".$projectorCommand;
+			logEntry("Projector Command: ".$cmd);
 			
             exec($cmd,$output);	
-	
-
+            
+            //sleep(3);
+            
+            $statusCmd = "/usr/bin/php /opt/fpp/plugins/ProjectorControl/proj.php -d".$DEVICE_CONNECTION_TYPE." -h".$IP." -cSTATUS";
+            system($statusCmd,$output);
+            
+            logEntry("Projector status: ".$output[0]);
+			exit(0);
 }
 
 	
