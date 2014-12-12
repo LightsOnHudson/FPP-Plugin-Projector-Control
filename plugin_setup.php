@@ -14,14 +14,14 @@ $projectorOFFSequence = "PROJ-OFF.fseq";
 $projectorVIDEOSequence = "PROJ-VIDEO-INPUT.fseq";
 
 //create blank sequence files
-fopen($settings['sequenceDirectory'].$projectorONSequence, "w") or die("Unable to open file!");
-fclose($settings['sequenceDirectory'].$projectorONSequence);
+fopen($settings['sequenceDirectory']."/".$projectorONSequence, "w") or die("Unable to open file!");
+fclose($settings['sequenceDirectory']."/".$projectorONSequence);
 
-fopen($settings['sequenceDirectory'].$projectorOFFSequence, "w") or die("Unable to open file!");
-fclose($settings['sequenceDirectory'].$projectorOFFSequence);
+fopen($settings['sequenceDirectory']."/".$projectorOFFSequence, "w") or die("Unable to open file!");
+fclose($settings['sequenceDirectory']."/".$projectorOFFSequence);
 
-fopen($settings['sequenceDirectory'].$projectorVIDEOSequence, "w") or die("Unable to open file!");
-fclose($settings['sequenceDirectory'].$projectorVIDEOSequence);
+fopen($settings['sequenceDirectory']."/".$projectorVIDEOSequence, "w") or die("Unable to open file!");
+fclose($settings['sequenceDirectory']."/".$projectorVIDEOSequence);
 
 if(isset($_POST['submit']))
 {
