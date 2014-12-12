@@ -1,49 +1,64 @@
 #!/usr/bin/php
 <?php
-
+error_reporting(0);
 include 'php_serial.class.php';
-require_once 'projectorCommands.inc'; 
+include_once('projectorCommands.inc');
 
+$skipJSsettings = 1;
+include_once '/opt/fpp/www/config.php';
 
-$logFile = "/home/pi/media/logs/projectorcontrol.log";
+$projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.projectorControl";
+
+$logFile = $settings['logDirectory'] . "/projectorcontrol.log";
+
+logEntry("opening log file: ".$logFile);
 //$cfgServer="192.168.192.15";
 $cfgPort="3001";
 $cfgTimeOut=10;
 $DEBUG=false;
+$SERIAL_DEVICE="";
 
-
-
-logEntry("COMMDNDS LOADED?? ".$ON);
 $options = getopt("c:d:h:p:s:");
-$DEVICE="serial";
 
-
-if($DEBUG)
-	var_dump($options);
 
 if($options["d"] == "") {
 	echo "Must specify device type using -d: (-dIP or -dSERIAL) \n";
-	exit(1);
+	exit(0);
 }
 
-if($options["d"] != "" && $options["h"] == "") {
+if($options["d"] == "IP" && $options["h"] == "") {
 	echo "If using -dIP must supply hostname or IP xxx.xxx.xxx.xxx\n";
-	exit(1);
+	exit(0);
 }
 
 if($options["h"] != "" && $options["p"] == "") {
 	$PORT = "3001";
 }
 
+if($options["d"] == "SERIAL" && $options["s"] =="" ) {
+	logEntry("MUST SPECIFY PORT -sttyUSB");
+	exit(0);
+	
+}
+
 if($options["s"] != "" && $options["d"] == "SERIAL") {
-	$SERIAL_DEVICE=$options["s"];
+	$SERIAL_DEVICE="/dev/".$options["s"];
+}
+
+if($options["p"] !="" && $options["d"] == "IP") {
+	$PORT = $options["p"];
 }
 
 if(strtoupper($options["d"]) =="SERIAL") {
+	logEntry("SERIAL DEVICE OPEN: ".$SERIAL_DEVICE);
 
 	$serial = new phpSerial;
 
 	$serial->deviceSet($SERIAL_DEVICE);
+	$serial->confBaudRate(19200);
+	$serial->confParity("none");
+	$serial->confCharacterLength(8);
+	$serial->confStopBits(1);
 	$serial->deviceOpen();
 	$DEVICE="SERIAL";
 }
@@ -102,7 +117,7 @@ switch (strtoupper($options["c"])) {
 }
 
 
-logEntry("Sending command: ".$cmd);
+logEntry("Sending command: on dvice: ".$DEVICE." ".$cmd);
 
 switch ($DEVICE) {
 	

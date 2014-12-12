@@ -15,6 +15,8 @@ $projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.pr
 //$DEBUG=true;
 $logFile = $settings['logDirectory']."/projectorcontrol.log";
 
+logEntry("opening log file: ".$logFile);
+
 $callbackRegisters = "media\n";
 
 
@@ -79,12 +81,12 @@ function processCallback($argv) {
 						} elseif (strtoupper($sequenceName) == "PROJ-OFF.FSEQ") {
 							
 							logEntry("turning off proj");
-								sendCommand($OFF);
+								sendCommand("OFF");
 								
 						} elseif (strtoupper($sequenceName) == "PROJ-VIDEO-INPUT.FSEQ") {
 							
 							logEntry("video input projector");
-								sendCommand("VIDEO_INPUT");
+								sendCommand("VIDEO");
 						}
 						
 					exit(0);
@@ -150,29 +152,28 @@ function sendCommand($projectorCommand) {
 	//# Send line to scroller
 	$cmd = "/opt/fpp/plugins/ProjectorControl/proj.php ";
 	
-	$cmd .= $DEVICE_CONNECTION_TYPE. " ";
-	
+	$cmd .= "-d".$DEVICE_CONNECTION_TYPE;
 	
 	
 	switch ($DEVICE_CONNECTION_TYPE) {
 		
 		case "SERIAL":
-			$DEVICE=$DEVICE;
-			$SERIALCMD = "-dSERIAL -c".$projectorCommand;
+		
+			$SERIALCMD = " -s".$DEVICE." -c".$projectorCommand;
 			$cmd .= $SERIALCMD;
 			
 			break;
 			
 		case "IP":
-			$IPCMD = "-dIP -h".$IP. "-c".$projectorCommand;
+			$IPCMD = " -h".$IP. " -c".$projectorCommand;
 			$cmd .= $IPCMD;
 			break;
 			
 	}
 	
 	
-	logEntry("COMMAND: ".$cmd."\"".$projectorCommand."\" ".$DEVICE);
-	system($cmd."\"".$projectorCommand."\" ".$DEVICE,$output);
+	logEntry("COMMAND: ".$cmd);
+	system($cmd,$output);
 	
 		//system($cmd."\"".$line."\" ".$DEVICE,$output);
 }
