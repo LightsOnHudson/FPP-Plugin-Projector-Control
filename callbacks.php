@@ -1,8 +1,9 @@
 #!/usr/bin/php
 <?
 error_reporting(0);
-include 'projectorCommands.inc';
 
+
+include_once('projectorCommands.inc');
 
 $skipJSsettings = 1;
 include_once '/opt/fpp/www/config.php';
@@ -73,7 +74,7 @@ function processCallback($argv) {
 						
 						if(strtoupper($sequenceName) == "PROJ-ON.FSEQ") {
 							logEntry("turning on proj");
-							sendCommand($ON);
+							sendCommand("ON");
 							
 						} elseif (strtoupper($sequenceName) == "PROJ-OFF.FSEQ") {
 							
@@ -83,7 +84,7 @@ function processCallback($argv) {
 						} elseif (strtoupper($sequenceName) == "PROJ-VIDEO-INPUT.FSEQ") {
 							
 							logEntry("video input projector");
-								sendCommand($VIDEO_INPUT);
+								sendCommand("VIDEO_INPUT");
 						}
 						
 					exit(0);
@@ -147,22 +148,24 @@ function sendCommand($projectorCommand) {
 
 			logEntry("INSIDE SEND");
 	//# Send line to scroller
-	$cmd = "/opt/fpp/plugins/ProjectorControl/ProjectorControl";
+	$cmd = "/opt/fpp/plugins/ProjectorControl/proj.php ";
 	
 	$cmd .= $DEVICE_CONNECTION_TYPE. " ";
+	
+	
 	
 	switch ($DEVICE_CONNECTION_TYPE) {
 		
 		case "SERIAL":
 			$DEVICE=$DEVICE;
-			
+			$SERIALCMD = "-dSERIAL -c".$projectorCommand;
+			$cmd .= $SERIALCMD;
 			
 			break;
 			
 		case "IP":
-			$DEVICE="\"".$IP.":".$PORT."\"";
-			//$DEVICE=$IP;
-			//$DEVICE = $IP." ".$PORT;
+			$IPCMD = "-dIP -h".$IP. "-c".$projectorCommand;
+			$cmd .= $IPCMD;
 			break;
 			
 	}
