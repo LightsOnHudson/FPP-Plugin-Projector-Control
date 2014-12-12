@@ -3,6 +3,12 @@
 
 $projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.projectorControl";
 
+
+//arg0 is  the program
+//arg1 is the first argument in the registration this will be --list
+//$DEBUG=true;
+$logFile = $settings['logDirectory']."/projectorcontrol.log";
+
 $projectorONSequence = "PROJ-ON.fseq";
 $projectorOFFSequence = "PROJ-OFF.fseq";
 $projectorVIDEOSequence = "PROJ-VIDEO-INPUT.fseq";

@@ -1,14 +1,18 @@
 #!/usr/bin/php
 <?
 error_reporting(0);
-include 'config.inc';
+include 'projectorCommands.inc';
 
-$projectorControlSettingsFile = "/home/pi/media/plugins/projectorControl.settings";
-include 'php_serial.class.php';
+
+$skipJSsettings = 1;
+include_once '/opt/fpp/www/config.php';
+
+$projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.projectorControl";
+
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
 //$DEBUG=true;
-$logFile = "/home/pi/media/logs/projectorcontrol.log";
+$logFile = $settings['logDirectory']."/projectorcontrol.log";
 
 $callbackRegisters = "media\n";
 
@@ -69,17 +73,17 @@ function processCallback($argv) {
 						
 						if(strtoupper($sequenceName) == "PROJ-ON.FSEQ") {
 							logEntry("turning on proj");
-							sendCommand("ON");
+							sendCommand($ON);
 							
 						} elseif (strtoupper($sequenceName) == "PROJ-OFF.FSEQ") {
 							
 							logEntry("turning off proj");
-								sendCommand("OFF");
+								sendCommand($OFF);
 								
 						} elseif (strtoupper($sequenceName) == "PROJ-VIDEO-INPUT.FSEQ") {
 							
 							logEntry("video input projector");
-								sendCommand("VIDEO");
+								sendCommand($VIDEO_INPUT);
 						}
 						
 					exit(0);
@@ -135,29 +139,40 @@ function sendCommand($projectorCommand) {
 		$configParts=explode("=",$settingParts[3]);
 		$PORT = $configParts[1];
 
-
-                
+  
 	}
 
         logEntry("reading config file");
         logEntry(" DEVICE: ".$DEVICE." DEVICE_CONNECTION_TYPE: ".$DEVICE_CONNECTION_TYPE." IP: ".$IP. " PORT: ".$PORT);
 
-
+			logEntry("INSIDE SEND");
+	//# Send line to scroller
+	$cmd = "/opt/fpp/plugins/ProjectorControl/ProjectorControl";
 	
-			$cmd = "/usr/bin/php /opt/fpp/plugins/ProjectorControl/proj.php -d".$DEVICE_CONNECTION_TYPE." -h".$IP." -c".$projectorCommand;
-			logEntry("Projector Command: ".$cmd);
+	$cmd .= $DEVICE_CONNECTION_TYPE. " ";
+	
+	switch ($DEVICE_CONNECTION_TYPE) {
+		
+		case "SERIAL":
+			$DEVICE=$DEVICE;
 			
-            exec($cmd,$output);	
-            
-            //sleep(3);
-            
-            $statusCmd = "/usr/bin/php /opt/fpp/plugins/ProjectorControl/proj.php -d".$DEVICE_CONNECTION_TYPE." -h".$IP." -cSTATUS";
-            system($statusCmd,$output);
-            
-            logEntry("Projector status: ".$output[0]);
-			exit(0);
+			
+			break;
+			
+		case "IP":
+			$DEVICE="\"".$IP.":".$PORT."\"";
+			//$DEVICE=$IP;
+			//$DEVICE = $IP." ".$PORT;
+			break;
+			
+	}
+	
+	
+	logEntry("COMMAND: ".$cmd."\"".$projectorCommand."\" ".$DEVICE);
+	system($cmd."\"".$projectorCommand."\" ".$DEVICE,$output);
+	
+		//system($cmd."\"".$line."\" ".$DEVICE,$output);
 }
-
 	
 
 ?>
