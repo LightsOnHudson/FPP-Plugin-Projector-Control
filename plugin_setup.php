@@ -1,22 +1,21 @@
 <?php
 //$DEBUG=true;
 
-$sequenceFolder = "/home/pi/media/sequences/";
-$projectorControlSettingsFile = "/home/pi/media/plugins/projectorControl.settings";
+$projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.projectorControl";
 
 $projectorONSequence = "PROJ-ON.fseq";
 $projectorOFFSequence = "PROJ-OFF.fseq";
 $projectorVIDEOSequence = "PROJ-VIDEO-INPUT.fseq";
 
 //create blank sequence files
-fopen($sequenceFolder.$projectorONSequence, "w") or die("Unable to open file!");
-fclose($sequenceFolder.$projectorONSequence);
+fopen($settings['sequenceDirectory'].$projectorONSequence, "w") or die("Unable to open file!");
+fclose($settings['sequenceDirectory'].$projectorONSequence);
 
-fopen($sequenceFolder.$projectorOFFSequence, "w") or die("Unable to open file!");
-fclose($sequenceFolder.$projectorOFFSequence);
+fopen($settings['sequenceDirectory'].$projectorOFFSequence, "w") or die("Unable to open file!");
+fclose($settings['sequenceDirectory'].$projectorOFFSequence);
 
-fopen($sequenceFolder.$projectorVIDEOSequence, "w") or die("Unable to open file!");
-fclose($sequenceFolder.$projectorVIDEOSequence);
+fopen($settings['sequenceDirectory'].$projectorVIDEOSequence, "w") or die("Unable to open file!");
+fclose($settings['sequenceDirectory'].$projectorVIDEOSequence);
 
 if(isset($_POST['submit']))
 {
