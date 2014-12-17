@@ -6,19 +6,22 @@ include_once('projectorCommands.inc');
 
 $skipJSsettings = 1;
 include_once '/opt/fpp/www/config.php';
+$pluginName  = "ProjectorControl";
 
-$projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.projectorControl";
+include_once 'functions.inc.php';
 
-$logFile = $settings['logDirectory'] . "/projectorcontrol.log";
 
-logEntry("opening log file: ".$logFile);
+$logFile = $settings['logDirectory'] . "/".$pluginName.".log";
+$myPid = getmypid();
+
 //$cfgServer="192.168.192.15";
 $cfgPort="3001";
 $cfgTimeOut=10;
 $DEBUG=false;
 $SERIAL_DEVICE="";
+$callBackPid="";
 
-$options = getopt("c:d:h:p:s:");
+$options = getopt("c:d:h:p:s:z:");
 
 
 if($options["d"] == "") {
@@ -48,6 +51,10 @@ if($options["s"] != "" && $options["d"] == "SERIAL") {
 if($options["p"] !="" && $options["d"] == "IP") {
 	$PORT = $options["p"];
 }
+if($options["z"] != "") {
+	$callBackPid = $options["z"];
+}
+logEntry("callback pid: ".$callBackPid);
 
 if(strtoupper($options["d"]) =="SERIAL") {
 	logEntry("SERIAL DEVICE OPEN: ".$SERIAL_DEVICE);
@@ -117,7 +124,7 @@ switch (strtoupper($options["c"])) {
 }
 
 
-logEntry("Sending command: on dvice: ".$DEVICE." ".$cmd);
+logEntry("Sending command: on device: ".$DEVICE." COMMAND: ".$cmd);
 
 switch ($DEVICE) {
 	
@@ -140,14 +147,4 @@ switch ($DEVICE) {
 	break;
 	
 }
-
-	function logEntry($data) {
-	
-		global $logFile;
-	
-		$data = $_SERVER['PHP_SELF']." : ".$data;
-		$logWrite= fopen($logFile, "a") or die("Unable to open file!");
-		fwrite($logWrite, date('Y-m-d h:i:s A',time()).": ".$data."\n");
-		fclose($logWrite);
-	}
 ?>

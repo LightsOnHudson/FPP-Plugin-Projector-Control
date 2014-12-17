@@ -1,105 +1,67 @@
 <?php
 //$DEBUG=true;
 
-$projectorControlSettingsFile = $settings['mediaDirectory'] . "/config/plugin.projectorControl";
+$skipJSsettings = 1;
+//include_once '/opt/fpp/www/config.php';
+include_once '/opt/fpp/www/common.php';
 
+$pluginName = "ProjectorControl";
+
+include_once 'functions.inc.php';
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
 //$DEBUG=true;
-$logFile = $settings['logDirectory']."/projectorcontrol.log";
+$logFile = $settings['logDirectory']."/".$pluginName.".log";
+$sequenceExtension = ".fseq";
 
-$projectorONSequence = "PROJ-ON.fseq";
-$projectorOFFSequence = "PROJ-OFF.fseq";
-$projectorVIDEOSequence = "PROJ-VIDEO-INPUT.fseq";
+//logEntry("open log file: ".$logFile);
 
-//create blank sequence files
-fopen($settings['sequenceDirectory']."/".$projectorONSequence, "w") or die("Unable to open file!");
-fclose($settings['sequenceDirectory']."/".$projectorONSequence);
 
-fopen($settings['sequenceDirectory']."/".$projectorOFFSequence, "w") or die("Unable to open file!");
-fclose($settings['sequenceDirectory']."/".$projectorOFFSequence);
 
-fopen($settings['sequenceDirectory']."/".$projectorVIDEOSequence, "w") or die("Unable to open file!");
-fclose($settings['sequenceDirectory']."/".$projectorVIDEOSequence);
+$DEBUG = false;
+$projectorONSequence = "PROJ-ON";
+$projectorOFFSequence = "PROJ-OFF";
+$projectorVIDEOSequence = "PROJ-VIDEO-INPUT";
+
+createProjectorSequenceFiles($settings);
 
 if(isset($_POST['submit']))
 {
-    
-    $device = htmlspecialchars($_POST['device']);
-    $device_connection_type = htmlspecialchars($_POST['device_connection_type']);
-   
-    $ip= htmlspecialchars($_POST['ip']);
-    $port= htmlspecialchars($_POST['port']);
-   
-		//echo "Station Id set to: ".$name;
-
-		$projectorSettings = fopen($projectorControlSettingsFile, "w") or die("Unable to open file!");
-		
-		$txt .= "DEVICE=".$device."\r\n";
-		$txt .= "DEVICE_CONNECTION_TYPE=".$device_connection_type."\r\n";
-
-		$txt .= "IP=".trim($ip)."\r\n";
-		$txt .= "PORT=".trim($port)."\r\n";
-		
-		fwrite($projectorSettings, $txt);
-		fclose($projectorSettings);
-		
-		$DEVICE=$device;
-		$DEVICE_CONNECTION_TYPE=$device_connection_type;
-		$IP =$ip;
-		$PORT =$port;
-		
-
-	//add the ability for GROWL to show changes upon submit :)
-	//	$.jGrowl("Station Id: $STATION_ID");	
-        
-  
- 
-
-} else {
-
-	if($DEBUG)
-		echo "READING FILE: <br/> \n";
-	//try to read the settings file if available
-
-
-	if (file_exists($projectorControlSettingsFile)) {
-		$filedata=file_get_contents($projectorControlSettingsFile);
-	} 
 	
-	if($filedata !="" )
-	{
-		$settingParts = explode("\r",$filedata);
 
-		
-		$configParts=explode("=",$settingParts[0]);
-		$DEVICE = $configParts[1];
-		
-		$configParts=explode("=",$settingParts[1]);
-		$DEVICE_CONNECTION_TYPE = $configParts[1];
+	$IP=trim($_POST["IP"]);
+	$PORT=trim($_POST["PORT"]);
 	
-		$configParts=explode("=",$settingParts[2]);
-		$IP = $configParts[1];
+	$DEVICE=trim($_POST["DEVICE"]);
+	$DEVICE_CONNECTION_TYPE=trim($_POST["DEVICE_CONNECTION_TYPE"]);
 	
-		$configParts=explode("=",$settingParts[3]);
-		$PORT = $configParts[1];
+	$ENABLED=$_POST["ENABLED"];
 
+	//	echo "Writring config fie <br/> \n";
 
-                
-	}
-	fclose($file_handle);
-
-}
-        if($DEBUG) {
+	WriteSettingToFile("DEVICE",$DEVICE,$pluginName);
+	WriteSettingToFile("DEVICE_CONNECTION_TYPE",$DEVICE_CONNECTION_TYPE,$pluginName);
+	WriteSettingToFile("IP",$IP,$pluginName);
+	WriteSettingToFile("PORT",$PORT,$pluginName);
 	
-		echo "DEVICE: ".$DEVICE."<br/> \n";
-		
-                echo "IP: ".$IP."<br/> \n";
-                echo "PORT: ".$PORT."<br/> \n";
-                echo "DEVICE CONNECTION TYPE: ".$DEVICE_CONNECTION_TYPE."<br/> \n";
-              
-                }
+	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
+
+
+} 
+
+
+	
+	$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
+	$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
+	$IP = ReadSettingFromFile("IP",$pluginName);
+	$PORT = ReadSettingFromFile("PORT",$pluginName);
+	
+	$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
+
+
+
+
 ?>
 
 <html>
@@ -125,10 +87,19 @@ Manually Set Station ID<br>
 <p/>
 
 <?
+echo "ENABLE PLUGIN: ";
+
+if($ENABLED == "on" || $ENABLED == 1) {
+	echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
+	//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+} else {
+	echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
+}
+echo "<p/>\n";
 
 echo "Connection type: \n";
 
-echo "<select name=\"device_connection_type\"> \n";
+echo "<select name=\"DEVICE_CONNECTION_TYPE\"> \n";
                         if($DEVICE_CONNECTION_TYPE != "")
                         {
 				switch ($DEVICE_CONNECTION_TYPE)
@@ -158,7 +129,7 @@ echo "<p/> \n";
 
 echo "<p/> \n";
 echo "SERIAL DEVICE: \n";
-echo "<select name=\"device\"> \n";
+echo "<select name=\"DEVICE\"> \n";
         foreach(scandir("/dev/") as $fileName)
         {
                 if (preg_match("/^ttyUSB[0-9]+/", $fileName)) {
@@ -176,12 +147,12 @@ echo "</select> \n";
 
 <p/>
 IP: 
-<input type="text" value="<? if($IP !="" ) { echo $IP; } else { echo "";}?>" name="ip" id="ip"></input>
+<input type="text" value="<? if($IP !="" ) { echo $IP; } else { echo "";}?>" name="IP" id="PORT"></input>
 
 <p/>
 
 PORT:
-<input type="text" value="<? if($PORT !="" ) { echo $PORT; } else { echo "";}?>" name="port" id="port"></input>
+<input type="text" value="<? if($PORT !="" ) { echo $PORT; } else { echo "";}?>" name="PORT" id="PORT"></input>
 
 
 <p/>
