@@ -47,7 +47,7 @@ function escapeshellarg_special($file) {
 
 function sendCommand($projectorCommand) {
 
-	global $pluginName,$myPid;
+	global $pluginName,$myPid,$pluginDirectory;
 	
 	$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
 	$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
@@ -60,8 +60,8 @@ function sendCommand($projectorCommand) {
 //	logEntry(" DEVICE: ".$DEVICE." DEVICE_CONNECTION_TYPE: ".$DEVICE_CONNECTION_TYPE." IP: ".$IP. " PORT: ".$PORT);
 
 	logEntry("INSIDE SEND");
-	//# Send line to scroller
-	$cmd = "/opt/fpp/plugins/ProjectorControl/proj.php ";
+	//# Send line to  Projector
+	$cmd = $pluginDirectory."/".$pluginName."/proj.php ";
 
 	$cmd .= "-d".$DEVICE_CONNECTION_TYPE;
 
