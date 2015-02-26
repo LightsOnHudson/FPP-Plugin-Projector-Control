@@ -26,9 +26,11 @@ $myPid = getmypid();
 //$DEBUG=true;
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
 
-$ENABLED="";
+$pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
+if (file_exists($pluginConfigFile))
+	$pluginSettings = parse_ini_file($pluginConfigFile);
 
-$ENABLED = trim(urldecode(ReadSettingFromFile("ENABLED",$pluginName)));
+$ENABLED = $pluginSettings['ENABLED'];
 
 
 if($ENABLED != "on" && $ENABLED != "1") {

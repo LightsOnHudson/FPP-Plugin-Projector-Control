@@ -8,6 +8,8 @@ include_once '/opt/fpp/www/common.php';
 $pluginName = "ProjectorControl";
 
 include_once 'functions.inc.php';
+include 'projectorCommands.inc';
+
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
@@ -20,11 +22,8 @@ $sequenceExtension = ".fseq";
 
 
 $DEBUG = false;
-$projectorONSequence = "PROJ-ON";
-$projectorOFFSequence = "PROJ-OFF";
-$projectorVIDEOSequence = "PROJ-VIDEO-INPUT";
 
-createProjectorSequenceFiles($settings);
+
 
 if(isset($_POST['submit']))
 {
@@ -44,24 +43,49 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("DEVICE_CONNECTION_TYPE",$DEVICE_CONNECTION_TYPE,$pluginName);
 	WriteSettingToFile("IP",$IP,$pluginName);
 	WriteSettingToFile("PORT",$PORT,$pluginName);
-	
+	WriteSettingToFile("PROJECTOR",urlencode($_POST["PROJECTOR"]),$pluginName);
 	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
 
+	
 
 } 
 
 
 	
-	$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
-	$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
-	$IP = ReadSettingFromFile("IP",$pluginName);
-	$PORT = ReadSettingFromFile("PORT",$pluginName);
+	//$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
+	$DEVICE = $pluginSettings['DEVICE'];
 	
-	$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
+	//$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
+	$DEVICE_CONNECTION_TYPE = $pluginSettings['DEVICE_CONNECTION_TYPE'];
+	
+	//$IP = ReadSettingFromFile("IP",$pluginName);
+	$IP = $pluginSettings['IP'];
+	
+	//$PORT = ReadSettingFromFile("PORT",$pluginName);
+	$PORT = $pluginSettings['PORT'];
+	
+	//$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
+	$ENABLED = $pluginSettings['ENABLED'];
+	
+	//$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
+	$PROJECTOR = $pluginSettings['PROJECTOR'];
 
+	$PROJECTOR_READ = $PROJECTOR;
+	
+	
+	foreach ($PROJECTORS as $projector) {
+	
+		if($projector['NAME'] == $PROJECTOR_READ) {
+		
+			$projectorONSequence = "PROJ-ON";
+			$projectorOFFSequence = "PROJ-OFF";
+			$projectorVIDEOSequence = "PROJ-VIDEO-INPUT";
 
+			createProjectorEventFiles();
+		}
+	}
 
-
+//	echo "Projector read: ".$PROJECTOR_READ."<br/> \n";
 ?>
 
 <html>
@@ -82,7 +106,7 @@ if(isset($_POST['submit']))
 <li>Configure your connection type, IP, Serial</li>
 </ul>
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
 Manually Set Station ID<br>
 <p/>
 
@@ -143,6 +167,12 @@ echo "<select name=\"DEVICE\"> \n";
                 }
         }
 echo "</select> \n";
+
+echo "<p/> \n";
+echo "Projector: \n";
+printProjectorSelect();
+
+
 ?>
 
 <p/>

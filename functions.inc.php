@@ -1,24 +1,153 @@
 <?php
 
-function createProjectorSequenceFiles($settings) {
+//print the different projectors for plugin setup
+function printProjectorSelect() {
 	
-	//print_r($settings);
+	global $PROJECTORS,$PROJECTOR_READ;
 	
-	//logEntry("Creating projector shell files");
+	//print_r($PROJECTORS);
 	
+	echo "<select name=\"PROJECTOR\"> \n";
+	
+	foreach ($PROJECTORS as $projector) {
+		
+		if($projector['NAME'] == $PROJECTOR_READ) {
+			echo "<option selected value=\"".$projector['NAME']."\">".$projector['NAME']."</option> \n";
+		} else {
+			echo "<option value=\"".$projector['NAME']."\">".$projector['NAME']."</option> \n";
+		}
+	}
+	
+	
+	
+	echo "</select> \n";
+	
+}
 
-	global $projectorONSequence, $projectorOFFSequence,$projectorVIDEOSequence,$sequenceExtension;
+//get the next available event filename
+function getNextEventFilename() {
+	
+	$MAX_MAJOR_DIGITS=2;
+	$MAX_MINOR_DIGITS=2;
+	global $eventDirectory;
+	
+	//echo "Event Directory: ".$eventDirectory."<br/> \n";
+	
+	$MAJOR=array();
+	$MINOR=array();
+	
+	$MAJOR_INDEX=0;
+	$MINOR_INDEX=0;
+	
+	$EVENT_FILES = directoryToArray($eventDirectory, false);
+	//print_r($EVENT_FILES);
 
+	foreach ($EVENT_FILES as $eventFile) {
+		
+		$eventFileParts = explode("_",$eventFile);
+		
+		$MAJOR[] = (int)basename($eventFileParts[0]);
+		//$MAJOR = $eventFileParts[0];
+		
+		$minorTmp = explode(".fevt",$eventFileParts[1]);
+		
+		$MINOR[] = (int)$minorTmp[0];
+		
+		//echo "MAJOR: ".$MAJOR." MINOR: ".$MINOR."\n";
+		//print_r($MAJOR);
+		//print_r($MINOR);
+		
+	}
 	
-	//create blank sequence files
-	fopen($settings['sequenceDirectory']."/".$projectorONSequence.$sequenceExtension, "w") or die("Unable to open file!");
-	fclose($settings['sequenceDirectory']."/".$projectorONSequence);
+	$MAJOR_INDEX = max(array_values($MAJOR));
+	$MINOR_INDEX = max(array_values($MINOR));
 	
-	fopen($settings['sequenceDirectory']."/".$projectorOFFSequence.$sequenceExtension, "w") or die("Unable to open file!");
-	fclose($settings['sequenceDirectory']."/".$projectorOFFSequence);
+	//echo "Major max: ".$MAJOR_INDEX." MINOR MAX: ".$MINOR_INDEX."\n";
 	
-	fopen($settings['sequenceDirectory']."/".$projectorVIDEOSequence.$sequenceExtension, "w") or die("Unable to open file!");
-	fclose($settings['sequenceDirectory']."/".$projectorVIDEOSequence);
+	
+	
+	if($MAJOR_INDEX <= 0) {
+		$MAJOR_INDEX=1;
+	}
+	if($MINOR_INDEX <= 0) {
+		$MINOR_INDEX=1;
+		
+	} else {
+	
+		$MINOR_INDEX++;
+	}
+	
+	$MAJOR_INDEX = str_pad($MAJOR_INDEX, $MAX_MAJOR_DIGITS, '0', STR_PAD_LEFT);
+	$MINOR_INDEX = str_pad($MINOR_INDEX, $MAX_MINOR_DIGITS, '0', STR_PAD_LEFT);
+	//for now just return the next MINOR index up and keep the same Major
+	$newIndex=$MAJOR_INDEX."_".$MINOR_INDEX.".fevt";
+	echo "new index: ".$newIndex."\n";
+	return $newIndex;
+}
+
+function directoryToArray($directory, $recursive) {
+	$array_items = array();
+	if ($handle = opendir($directory)) {
+		while (false !== ($file = readdir($handle))) {
+			if ($file != "." && $file != "..") {
+				if (is_dir($directory. "/" . $file)) {
+					if($recursive) {
+						$array_items = array_merge($array_items, directoryToArray($directory. "/" . $file, $recursive));
+					}
+					$file = $directory . "/" . $file;
+					$array_items[] = preg_replace("/\/\//si", "/", $file);
+				} else {
+					$file = $directory . "/" . $file;
+					$array_items[] = preg_replace("/\/\//si", "/", $file);
+				}
+			}
+		}
+		closedir($handle);
+	}
+	return $array_items;
+}
+function createProjectorEventFiles() {
+	
+	global $eventDirectory,$PROJECTORS,$PROJECTOR_READ;
+	
+	
+		
+	//echo "next event file name available: ".$nextEventFilename."\n";
+
+	$PROJECTOR_FOUND=false;
+	
+	for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
+	
+		if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR_READ) {
+		
+		//	echo "CMD: ".$cmd."\n";
+			//	print_r($PROJECTORS[$projectorIndex]);
+			while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {
+			//	echo "key: ".$key." -- value: ".$val."\n";
+
+				if($key != "NAME" && $key != "BAUD_RATE" && $key != "CHAR_BITS" && $key != "PARITY" && $key != "STOP_BITS" && $key != "VALID_STATUS_0" && $key != "VALID_STATUS_1" && $key != "VALID_STATUS_2")
+				{
+					$nextEventFilename = getNextEventFilename();
+					$MAJOR=substr($nextEventFilename,0,2);
+					$MINOR=substr($nextEventFilename,3,2);
+					$eventData  ="";
+					$eventData  = "majorID=".(int)$MAJOR."\n";
+					$eventData .= "minorID=".(int)$MINOR."\n";
+					$eventData .= "name='PROJECTOR-".$key."'\n";
+					$eventData .= "effect=''\n";
+					$eventData .= "startChannel=\n";
+					$eventData .= "script=''\n";
+					
+					echo "eventData: ".$eventData."\n";
+					file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);
+				}
+				
+				//echo "$key => $val\n";
+			}
+		}
+	}
+	
+	
 	
 }
 
@@ -47,19 +176,19 @@ function escapeshellarg_special($file) {
 
 function sendCommand($projectorCommand) {
 
-	global $pluginName,$myPid,$pluginDirectory;
+	global $pluginName,$myPid,$pluginDirectory,$DEVICE,$DEVICE_CONNECTION_TYPE,$IP,$PORT;
 	
-	$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
-	$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
-	$IP = ReadSettingFromFile("IP",$pluginName);
-	$PORT = ReadSettingFromFile("PORT",$pluginName);
+	//$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
+	//$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
+	//$IP = ReadSettingFromFile("IP",$pluginName);
+	//$PORT = ReadSettingFromFile("PORT",$pluginName);
 	
-	$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
+	//$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
 
 //	logEntry("reading config file");
 //	logEntry(" DEVICE: ".$DEVICE." DEVICE_CONNECTION_TYPE: ".$DEVICE_CONNECTION_TYPE." IP: ".$IP. " PORT: ".$PORT);
 
-	logEntry("INSIDE SEND");
+	//logEntry("INSIDE SEND");
 	//# Send line to  Projector
 	$cmd = $pluginDirectory."/".$pluginName."/proj.php ";
 
