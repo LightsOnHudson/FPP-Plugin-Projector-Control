@@ -8,8 +8,9 @@ include_once '/opt/fpp/www/common.php';
 $pluginName = "ProjectorControl";
 
 include_once 'functions.inc.php';
+include_once 'commonFunctions.inc.php';
 include 'projectorCommands.inc';
-
+$myPid = getmypid();
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
@@ -73,17 +74,17 @@ if(isset($_POST['submit']))
 	$PROJECTOR_READ = $PROJECTOR;
 	
 	
-	foreach ($PROJECTORS as $projector) {
+	//foreach ($PROJECTORS as $projector) {
 	
-		if($projector['NAME'] == $PROJECTOR_READ) {
+	//	if($projector['NAME'] == $PROJECTOR_READ) {
 		
-			$projectorONSequence = "PROJ-ON";
-			$projectorOFFSequence = "PROJ-OFF";
-			$projectorVIDEOSequence = "PROJ-VIDEO-INPUT";
+	//		$projectorONSequence = "PROJ-ON";
+	//		$projectorOFFSequence = "PROJ-OFF";
+	//		$projectorVIDEOSequence = "PROJ-VIDEO-INPUT";
 
 			createProjectorEventFiles();
-		}
-	}
+	//	}
+	//}
 
 //	echo "Projector read: ".$PROJECTOR_READ."<br/> \n";
 ?>
@@ -157,9 +158,10 @@ echo "<select name=\"DEVICE\"> \n";
         foreach(scandir("/dev/") as $fileName)
         {
                 if (preg_match("/^ttyUSB[0-9]+/", $fileName)) {
-			$filename .= "/dev/";
-			if($device == $filename)
-			{
+//echo "DEVICE: ".$DEVICE. " -- ".$fileName
+	if ($DEVICE == $fileName) {
+			
+			
                         	echo "<option selected value=\"".$fileName."\">".$fileName."</option> \n";
 			} else {
                        		echo "<option value=\"".$fileName."\">".$fileName."</option> \n";

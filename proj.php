@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-//error_reporting(0);
+error_reporting(0);
 include 'php_serial.class.php';
 include_once('projectorCommands.inc');
 
@@ -11,6 +11,7 @@ include_once '/opt/fpp/www/common.php';
 $pluginName  = "ProjectorControl";
 
 include_once 'functions.inc.php';
+include_once 'commonFunctions.inc.php';
 
 $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
@@ -71,6 +72,7 @@ if($options["h"] != "" && $options["p"] == "") {
 
 if($options["d"] == "SERIAL" && $options["s"] =="" ) {
 	logEntry("MUST SPECIFY PORT -sttyUSB");
+	echo "Must specify PORT -sttyUSB[x]\n";
 	exit(0);
 	
 }
@@ -102,10 +104,11 @@ $PROJECTOR_FOUND=false;
 for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 	
 	if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR_READ) {
-		echo "CMD: ".$cmd."\n";
-	//	print_r($PROJECTORS[$projectorIndex]);
+		//echo "CMD: ".$cmd."\n";
+		//print_r($PROJECTORS);
+		//print_r($PROJECTORS[$projectorIndex]);
 			while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {
-				echo "key: ".$key." -- value: ".$val."\n";
+			logEntry( "key: ".$key." -- value: ".$val);
 				if(strtoupper(trim($key)) == $cmd) {
 					$PROJECTOR_FOUND=true;
 					$PROJECTOR_CMD = $val;
@@ -120,7 +123,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 	}
 }
 
-logEntry("PROJECTOR CMD FOUND: PROJECTOR: ".$PROJECTOR_READ." CMD: ".$cmd." : ".$PROJECTOR_CMD);
+logEntry("PROJECTOR CMD FOUND: PROJECTOR: ".$PROJECTOR_READ." CMD: ".$cmd." : ".hexdec($PROJECTOR_CMD));
 logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
 logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
 logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
