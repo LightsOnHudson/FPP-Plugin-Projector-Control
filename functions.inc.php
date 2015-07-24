@@ -116,9 +116,11 @@ function createProjectorEventFiles() {
 					//	echo "eventData: ".$eventData."<br/>\n";
 						file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);
 						
+						//$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key;
+						//createScriptFile("PROJECTOR-".$key.".sh",$scriptCMD);
+					}
 						$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key;
 						createScriptFile("PROJECTOR-".$key.".sh",$scriptCMD);
-					}
 				}
 				
 				//echo "$key => $val\n";

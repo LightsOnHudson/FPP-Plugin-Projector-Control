@@ -19,7 +19,7 @@ function createScriptFile($scriptFilename,$scriptCMD) {
 
 	
 	$data .= "\n";
-	$data .= "#Script to run randomizer\n";
+	$data .= "#Script to run \n";
 	$data .= "#Created by ".$pluginName."\n";
 	$data .= "#\n";
 	$data .= "/usr/bin/php ".$scriptCMD."\n";
