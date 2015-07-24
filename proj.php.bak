@@ -87,7 +87,7 @@ if($options["p"] !="" && $options["d"] == "IP") {
 if($options["z"] != "") {
 	$callBackPid = $options["z"];
 }
-//logEntry("callback pid: ".$callBackPid);
+logEntry("callback pid: ".$callBackPid);
 
 $DEVICE= trim(strtoupper($options["d"]));
 
@@ -110,7 +110,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 			while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {
 			//logEntry( "key: ".$key." -- value: ".$val);
 				if(strtoupper(trim($key)) == $cmd) {
-			//logEntry( "key: ".$key." -- value: ".$val);
+			logEntry( "key: ".$key." -- value: ".$val);
 					$PROJECTOR_FOUND=true;
 					$PROJECTOR_CMD = $val;
 					$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
@@ -126,8 +126,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 logEntry("--------------");
 logEntry("PROJECTOR FOUND");
 logEntry("PROJECTOR: ".$PROJECTOR_READ);
-$PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
-logEntry("PROJECTOR CMD2: ".$PCMD);
+logEntry("PROJECTOR CMD: ".$PROJECTOR_CMD);
 logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
 logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
 logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
@@ -142,7 +141,7 @@ if(!$PROJECTOR_FOUND) {
 
 logEntry("-------");
 logEntry("Sending command");
-logEntry(" COMMAND: ".$PCMD);
+logEntry(" COMMAND: ".$PROJECTOR_CMD);
 
 switch ($DEVICE) {
 	
@@ -157,11 +156,11 @@ switch ($DEVICE) {
         $serial->confCharacterLength($PROJECTOR_CHAR_BITS);
         $serial->confStopBits($PROJECTOR_STOP_BITS);
         $serial->deviceOpen();
+        $DEVICE="SERIAL";
 	
 		
 	$serial->sendMessage("$PROJECTOR_CMD");
 	sleep(1);
-	logEntry("RETURN DATA: ".hex_dump($serial->readPort()));
 	$serial->deviceClose();
 	exit(0);
 	
@@ -175,6 +174,7 @@ switch ($DEVICE) {
         if(!$fs) {
                 logEntry("ERROR connecting to projector controller");// "Error connecting to projector controller";
         }
+        $DEVICE="IP";		
 	fputs($fs,$PROJECTOR_CMD);
 	sleep(1);
 	fclose($fs);

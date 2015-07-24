@@ -108,7 +108,7 @@ if(isset($_POST['submit']))
 </ul>
 
 <form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
-Manually Set Station ID<br>
+<br>
 <p/>
 
 <?

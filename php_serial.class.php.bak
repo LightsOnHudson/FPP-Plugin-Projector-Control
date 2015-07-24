@@ -469,7 +469,14 @@ class phpSerial
 	 */
 	function readPort ($count = 0)
 	{
+		if ($this->_dState !== SERIAL_DEVICE_OPENED)
+		{
+			trigger_error("Device must be opened to read it", E_USER_WARNING);
+			return false;
+		}
 
+		if ($this->_os === "linux")
+		{
 			$content = ""; $i = 0;
 
 			if ($count !== 0)
@@ -487,7 +494,11 @@ class phpSerial
 			}
 
 			return $content;
+		}
+		elseif ($this->_os === "windows")
+		{
 			/* Do nohting : not implented yet */
+		}
 
 		trigger_error("Reading serial port is not implemented for Windows", E_USER_WARNING);
 		return false;

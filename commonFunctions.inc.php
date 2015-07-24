@@ -118,4 +118,26 @@ function directoryToArray($directory, $recursive) {
 	return $array_items;
 }
 
+
+//check all the event files for a string matching this and return true/false if exist
+function checkEventFilesForKey($keyCheckString) {
+	global $eventDirectory;
+
+	$keyExist = false;
+	$eventFiles = array();
+
+	$eventFiles = directoryToArray($eventDirectory, false);
+	foreach ($eventFiles as $eventFile) {
+
+		if( strpos(file_get_contents($eventFile),$keyCheckString) !== false) {
+			// do stuff
+			$keyExist= true;
+			break;
+			// return $keyExist;
+		}
+	}
+
+	return $keyExist;
+
+}
 ?>
