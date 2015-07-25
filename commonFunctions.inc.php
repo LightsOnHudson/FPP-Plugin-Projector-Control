@@ -13,7 +13,7 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	//create update script
 	//$gitUpdateCMD = "sudo cd ".$settings['pluginDirectory']."/".$pluginName."/; sudo /usr/bin/git git pull ".$gitURL." ".$branch;
 
-	$gitUpdateCMD = "sudo ".$settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
+	$gitUpdateCMD = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
 	
 	$file = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
 	
@@ -26,9 +26,15 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	
 			logEntry("Git Update cmd: ".$gitUpdateCMD);
 	
-			exec($gitUpdateCMD,$gitResult);
+			//give execute permissions to file
+			$execCMD = "sudo chmod +x ".$file;
+			exec($execCMD);
+			
+			sleep(1);
+			
+			system($gitUpdateCMD,$gitResult);
 	
-			print_r($gitResult);
+			//print_r($gitResult);
 	
 			logEntry("Git result: ".$gitResult);
 	
