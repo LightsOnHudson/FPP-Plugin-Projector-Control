@@ -7,10 +7,15 @@ include_once '/opt/fpp/www/common.php';
 
 $pluginName = "ProjectorControl";
 
+$pluginUpdateFile = $settings['pluginDirectory']."/".$pluginName."/"."pluginUpdate.inc";
+
+
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 include 'projectorCommands.inc';
 $myPid = getmypid();
+
+$gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-Projector-Control.git";
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
@@ -18,13 +23,18 @@ $myPid = getmypid();
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
 $sequenceExtension = ".fseq";
 
+logEntry("plugin update file: ".$pluginUpdateFile);
+
 //logEntry("open log file: ".$logFile);
 
 
 
 $DEBUG = false;
 
-
+if(isset($_POST['updatePlugin']))
+{
+	updatePluginFromGitHub($gitURL, $branch="master", $pluginName);
+}
 
 if(isset($_POST['submit']))
 {
@@ -194,6 +204,15 @@ PORT:
 
 <p>To report a bug, please file it against the Projector Control plugin project on Git: https://github.com/LightsOnHudson/FPP-Plugin-Projector-Control
 
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
+<?
+ if(file_exists($pluginUpdateFile))
+ {
+ 	//echo "updating plugin included";
+	include $pluginUpdateFile;
+}
+?>
+</form>
 </fieldset>
 </div>
 <br />

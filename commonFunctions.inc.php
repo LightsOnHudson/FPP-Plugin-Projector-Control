@@ -1,5 +1,22 @@
 <?php
 
+//update plugin
+
+function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
+	
+	
+	global $settings;
+	logEntry ("updating plugin: ".$pluginName);
+	
+	logEntry("settings: ".$settings['pluginDirectory']);
+	
+	//create update script
+	$gitUpdateCMD = "/usr/bin/git git pull ".$gitURL." ".$branch;
+	
+	logEntry("Git Update cmd: ".$gitUpdateCMD);
+	
+	
+}
 //create script to randmomize
 function createScriptFile($scriptFilename,$scriptCMD) {
 
@@ -19,7 +36,7 @@ function createScriptFile($scriptFilename,$scriptCMD) {
 
 	
 	$data .= "\n";
-	$data .= "#Script to run \n";
+	$data .= "#Script to run randomizer\n";
 	$data .= "#Created by ".$pluginName."\n";
 	$data .= "#\n";
 	$data .= "/usr/bin/php ".$scriptCMD."\n";
