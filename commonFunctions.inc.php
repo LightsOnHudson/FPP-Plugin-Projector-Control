@@ -22,13 +22,13 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	$scriptInfo .= "cd " . $settings['pluginDirectory'] . "/".$pluginName."/ \n";
 			$scriptInfo .= "sudo /usr/bin/git pull ".$gitURL." ".$branch;
 			// Write the contents back to the file
-			file_put_contents($file, $scriptInfo);
+			//file_put_contents($file, $scriptInfo);
 	
 			
 	
 			//give execute permissions to file
-			$execCMD = "sudo chmod +x ".$file;
-			exec($execCMD);
+			//$execCMD = "sudo chmod +x ".$file;
+			//exec($execCMD);
 			
 			sleep(1);
 			
@@ -39,8 +39,14 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	
 			//print_r($gitResult);
 	
-			logEntry("Git result: ".$gitResult);
-	
+			logEntry("Git result: ".$gitResult[0]);
+			
+			if(strtoupper(trim($gitResult[0])) === "ALREADY UP-TO-DATE.")
+			{
+				$gitResult[0] = "Plugin is up to date";
+			} else {
+				$gitResult[0] = "Updated plugin from GitHub";
+			}
 			return $gitResult[0];
 	
 	
