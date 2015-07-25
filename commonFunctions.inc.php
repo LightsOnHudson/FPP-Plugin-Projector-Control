@@ -11,9 +11,27 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	logEntry("settings: ".$settings['pluginDirectory']);
 	
 	//create update script
-	$gitUpdateCMD = "/usr/bin/git git pull ".$gitURL." ".$branch;
+	//$gitUpdateCMD = "sudo cd ".$settings['pluginDirectory']."/".$pluginName."/; sudo /usr/bin/git git pull ".$gitURL." ".$branch;
+
+	$gitUpdateCMD = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
 	
-	logEntry("Git Update cmd: ".$gitUpdateCMD);
+	$file = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
+	
+	
+	$scriptInfo = "#!/bin/bash \n";
+	$scriptInfo .= "cd " . $settings['pluginDirectory'] . "/".$pluginName."/ \n";
+			$scriptInfo .= "sudo /usr/bin/git git pull ".$gitURL." ".$branch;
+			// Write the contents back to the file
+			file_put_contents($file, $scriptInfo);
+	
+			logEntry("Git Update cmd: ".$gitUpdateCMD);
+	
+			passthru($gitUpdateCMD,$gitResult);
+	
+			print_r($gitResult);
+	
+			logEntry("Git result: ".$gitResult);
+	
 	
 	
 }
