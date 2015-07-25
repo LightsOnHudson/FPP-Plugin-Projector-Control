@@ -13,20 +13,20 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	//create update script
 	//$gitUpdateCMD = "sudo cd ".$settings['pluginDirectory']."/".$pluginName."/; sudo /usr/bin/git git pull ".$gitURL." ".$branch;
 
-	$gitUpdateCMD = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
+	$gitUpdateCMD = "sudo ".$settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
 	
 	$file = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
 	
 	
 	$scriptInfo = "#!/bin/bash \n";
 	$scriptInfo .= "cd " . $settings['pluginDirectory'] . "/".$pluginName."/ \n";
-			$scriptInfo .= "sudo /usr/bin/git git pull ".$gitURL." ".$branch;
+			$scriptInfo .= "sudo /usr/bin/git pull ".$gitURL." ".$branch;
 			// Write the contents back to the file
 			file_put_contents($file, $scriptInfo);
 	
 			logEntry("Git Update cmd: ".$gitUpdateCMD);
 	
-			passthru($gitUpdateCMD,$gitResult);
+			exec($gitUpdateCMD,$gitResult);
 	
 			print_r($gitResult);
 	
