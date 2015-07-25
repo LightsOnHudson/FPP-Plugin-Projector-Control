@@ -24,7 +24,7 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 			// Write the contents back to the file
 			file_put_contents($file, $scriptInfo);
 	
-			logEntry("Git Update cmd: ".$gitUpdateCMD);
+			
 	
 			//give execute permissions to file
 			$execCMD = "sudo chmod +x ".$file;
@@ -32,12 +32,16 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 			
 			sleep(1);
 			
-			system($gitUpdateCMD,$gitResult);
+			$gitUpdateCMD = "sudo cd " . $settings['pluginDirectory'] . "/".$pluginName."/; sudo /usr/bin/git pull ".$gitURL." ".$branch;
+			logEntry("Git Update cmd: ".$gitUpdateCMD);
+			
+			exec($gitUpdateCMD,$gitResult);
 	
 			//print_r($gitResult);
 	
 			logEntry("Git result: ".$gitResult);
 	
+			return $gitResult[0];
 	
 	
 }

@@ -33,7 +33,9 @@ $DEBUG = false;
 
 if(isset($_POST['updatePlugin']))
 {
-	updatePluginFromGitHub($gitURL, $branch="master", $pluginName);
+	$updateResult = updatePluginFromGitHub($gitURL, $branch="master", $pluginName);
+	
+	echo $updateResult."<br/> \n";
 }
 
 if(isset($_POST['submit']))
