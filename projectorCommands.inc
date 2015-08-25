@@ -1,5 +1,17 @@
 <?php 
 $PROJECTORS = Array(
+// To add another projector fill out the below and remove the //
+//     Array("NAME" => "NAME_OF_PROJECTOR",
+//              
+//                "ON" => "\x30\x30\x21\x0D",
+//                "OFF" => "\x30\x30\x22\x0D",
+//                "VIDEO" => "\x30\x30\x5F\x76\x31",
+//
+//                "BAUD_RATE" => "9600",
+//                "CHAR_BITS" => "8",
+//                "STOP_BITS" => "1",
+//                "PARITY" => "none"
+//),
 	Array("NAME" => "Mitsubishi_FD730U",
 
 		"ON" => "\x30\x30\x21\x0D",
