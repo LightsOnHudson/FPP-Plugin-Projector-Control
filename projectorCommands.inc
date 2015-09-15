@@ -12,6 +12,22 @@ $PROJECTORS = Array(
 //                "STOP_BITS" => "1",
 //                "PARITY" => "none"
 //),
+	Array("NAME" => "EPSON_EX5200",
+		
+				"ON" => "\x50\x57\x52\x20\x4f\x4e",
+				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46",
+				"VIDEO" => "\x30\x30\x5F\x76\x31",
+				"INPUT1" => "\x49\x4e\x50\x55\x54\x31",
+				"INPUT3" => "\x49\x4e\x50\x55\x54\x33",
+				"VIDEO" => "\x56\x49\x44\x45\x4f",
+				"VIDEO(RCA)" => "\x56\x49\x44\x45\x4f\x28\x52\x43\x41\x29",
+				"VIDEO(S)" => "\x56\x49\x44\x45\x4f\x28\x53\x29",
+		
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+),
 	Array("NAME" => "Mitsubishi_FD730U",
 
 		"ON" => "\x30\x30\x21\x0D",
