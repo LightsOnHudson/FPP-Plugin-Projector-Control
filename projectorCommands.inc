@@ -12,6 +12,22 @@ $PROJECTORS = Array(
 //                "STOP_BITS" => "1",
 //                "PARITY" => "none"
 //),
+		Array("NAME" => "Viewsonic_PDJ5132",
+		
+				"ON" => "\x06\x14\x00\x04\x00\x34\x11\x00\x00\x5D",
+				"OFF" => "\x06\x14\x00\x04\x00\x34\x11\x01\x00\x5E",
+				"VGA" => "\x06\x14\x00\x04\x00\x34\x13\x01\x00\x60",
+				"VGA2" => "\x06\x14\x00\x04\x00\x34\x13\x01\x08\x68",
+				"COMPOSITE" => "\x06\x14\x00\x04\x00\x34\x13\x01\x05\x65",
+				"SVIDEO" => "\x06\x14\x00\x04\x00\x34\x13\x01\x06\x66",
+				"HDMI" => "\x06\x14\x00\x04\x00\x34\x13\x01\x03\x63",
+				
+		
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+),
 	Array("NAME" => "EPSON_EX5200",
 		
 				"ON" => "\x50\x57\x52\x20\x4f\x4e",
