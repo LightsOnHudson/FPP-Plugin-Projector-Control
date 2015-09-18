@@ -45,100 +45,76 @@ $ENABLED = $pluginSettings['ENABLED'];
 //$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
 $PROJECTOR = $pluginSettings['PROJECTOR'];
 
-$PROJECTOR_READ = $PROJECTOR;
+logEntry("PROJECTOR: ".$PROJECTOR);
 
-if(trim($PROJECTOR_READ == "" )) {
+if(trim($PROJECTOR == "" )) {
 	logEntry("No Projector configured in plugin, exiting");
 	exit(0);
 	
 }
 
-$options = getopt("c:d:h:p:s:z:");
+$options = getopt("c:");
 
 
-if($options["d"] == "") {
-	echo "Must specify device type using -d: (-dIP or -dSERIAL) \n";
-	exit(0);
-}
+$SERIAL_DEVICE="/dev/".$DEVICE;
 
-if($options["d"] == "IP" && $options["h"] == "") {
-	echo "If using -dIP must supply hostname or IP xxx.xxx.xxx.xxx\n";
-	exit(0);
-}
 
-if($options["h"] != "" && $options["p"] == "") {
-	$PORT = "3001";
-}
-
-if($options["d"] == "SERIAL" && $options["s"] =="" ) {
-	logEntry("MUST SPECIFY PORT -sttyUSB");
-	echo "Must specify PORT -sttyUSB[x]\n";
-	exit(0);
-	
-}
-
-if($options["s"] != "" && $options["d"] == "SERIAL") {
-	$SERIAL_DEVICE="/dev/".$options["s"];
-}
-
-if($options["p"] !="" && $options["d"] == "IP") {
-	$PORT = $options["p"];
-}
 if($options["z"] != "") {
 	$callBackPid = $options["z"];
 }
 //logEntry("callback pid: ".$callBackPid);
 
-$DEVICE= trim(strtoupper($options["d"]));
 
-
-
+logEntry("option C: ".$options["c"]);
 $cmd= strtoupper(trim($options["c"]));
 
 //loop through the array of projectors to get the command
 $projectorIndex = 0;
 //set the found flag, do not send a command if the name and command cannot be found
 
+
+//print_r($PROJECTORS);
 $PROJECTOR_FOUND=false;
 
 for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
+
 	
-	if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR_READ) {
-	//	echo "CMD: ".$cmd."\n";
-	//	print_r($PROJECTORS);
-	//	print_r($PROJECTORS[$projectorIndex]);
+	if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR) {
+			logEntry("Projector index: ".$projectorIndex);
+			logEntry("Looking for command string for cmd: ".$cmd);
+
 			while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {
-			//logEntry( "key: ".$key." -- value: ".$val);
+				//logEntry( "Key: ".$key. "  \t VAL:".$val);
+
 				if(strtoupper(trim($key)) == $cmd) {
-			//logEntry( "key: ".$key." -- value: ".$val);
 					$PROJECTOR_FOUND=true;
 					$PROJECTOR_CMD = $val;
 					$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
 					$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
 					$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
 					$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
-					continue;	
+					logEntry("--------------");
+					logEntry("PROJECTOR FOUND");
+					logEntry("PROJECTOR: ".$PROJECTOR_READ);
+					$PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
+					logEntry("PROJECTOR CMD2: ".$PCMD);
+					logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
+					logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
+					logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
+					logEntry("PARITY: ".$PROJECTOR_PARITY);
 				}
-  			  //echo "$key => $val\n";
+
+
+
 			}
+	
 	}
 }
-logEntry("--------------");
-logEntry("PROJECTOR FOUND");
-logEntry("PROJECTOR: ".$PROJECTOR_READ);
-$PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
-logEntry("PROJECTOR CMD2: ".$PCMD);
-logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
-logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
-logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
-logEntry("PARITY: ".$PROJECTOR_PARITY);
+
 if(!$PROJECTOR_FOUND) {
-	logEntry("No projector command found: exiting");
+	logEntry("projector command not found: exiting");
 	exit(0);
-	
 }
-
-
 
 logEntry("-------");
 logEntry("Sending command");
