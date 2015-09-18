@@ -120,7 +120,7 @@ logEntry("-------");
 logEntry("Sending command");
 logEntry(" COMMAND: ".$PCMD);
 
-switch ($DEVICE) {
+switch ($DEVICE_CONNECTION_TYPE) {
 	
 	case "SERIAL":
 	logEntry("Sending SERIAL COMMAND");
