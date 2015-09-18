@@ -1,5 +1,8 @@
 <?php 
 $PROJECTORS = Array(
+
+//Updated: Sept 18, 2015
+
 // To add another projector fill out the below and remove the //
 //     Array("NAME" => "NAME_OF_PROJECTOR",
 //              
