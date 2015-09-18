@@ -13,26 +13,18 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	//create update script
 	//$gitUpdateCMD = "sudo cd ".$settings['pluginDirectory']."/".$pluginName."/; sudo /usr/bin/git git pull ".$gitURL." ".$branch;
 
-	$gitUpdateCMD = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
+	$pluginUpdateCMD = "/opt/fpp/scripts/update_plugin ".$pluginName;
+
+	logEntry("update command: ".$pluginUpdateCMD);
+
+
+	exec($pluginUpdateCMD, $updateResult);
+
+	logEntry("update result: ".print_r($updateResult));
+
+	//loop through result	
+	return ($updateResult);
 	
-	$file = $settings['pluginDirectory']."/".$pluginName."/updatePlugin.sh";
-	
-	
-			
-			$gitUpdateCMD = "/opt/fpp/scripts/update_plugin ".$pluginName;
-			logEntry("Git Update cmd: ".$gitUpdateCMD);
-			
-			exec($gitUpdateCMD,$gitResult);
-	
-			logEntry("Git result: ".$gitResult[0]);
-			
-			if(strtoupper(trim($gitResult[0])) === "ALREADY UP-TO-DATE.")
-			{
-				$gitResult[0] = "Plugin is up to date";
-			} else {
-				$gitResult[0] = "Updated plugin from GitHub";
-			}
-			return $gitResult[0];
 	
 	
 }
