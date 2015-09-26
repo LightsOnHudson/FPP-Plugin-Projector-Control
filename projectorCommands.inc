@@ -194,6 +194,21 @@ Array("NAME" => "Optoma_H181X",
 		"STOP_BITS" => "1",
 		"PARITY" => "none"
 ),
+		Array("NAME" => "Optoma_EX525_ST",
+					
+				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
+				"OFF" => "\x7E\x30\x30\x30\x30\x20\x32\x0D",
+				"DVI_D" => "\x7E\x30\x30\x31\x32\x20\x32\x0D",
+				"DVI_A" => "\x7E\x30\x30\x31\x32\x20\x33\x0D",
+				"VGA" => "\x7E\x30\x30\x31\x32\x20\x35\x0D",
+				"VIDEO" => "\x7E\x30\x30\x31\x32\x20\x310X39\x0D",
+				"SVIDEO" => "\x7E\x30\x30\x31\x32\x20\x39\x0D",
+		
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),
 Array("NAME" => "Mitsubishi_EX320U/EW330U/EX320U-ST",
 					
 		"ON" => "\x30\x30\x21\x0D",
