@@ -114,11 +114,12 @@ if(isset($_POST['submit']))
 <li>NONE</li>
 </ul>
 
+<!-- 
 <p>Configuration:
 <ul>
 <li>Configure your connection type, IP, Serial</li>
 </ul>
-
+-->
 <form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
 <br>
 <p/>
