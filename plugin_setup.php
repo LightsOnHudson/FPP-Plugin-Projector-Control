@@ -143,7 +143,7 @@ echo "<select name=\"DEVICE_CONNECTION_TYPE\"> \n";
 				{
 					case "SERIAL":
                                 		echo "<option selected value=\"".$DEVICE_CONNECTION_TYPE."\">".$DEVICE_CONNECTION_TYPE."</option> \n";
-                                		echo "<option value=\"IP\">IP</option> \n";
+                               // 		echo "<option value=\"IP\">IP</option> \n";
                                 		break;
 					case "IP":
                                 		echo "<option selected value=\"".$DEVICE_CONNECTION_TYPE."\">".$DEVICE_CONNECTION_TYPE."</option> \n";
@@ -157,7 +157,7 @@ echo "<select name=\"DEVICE_CONNECTION_TYPE\"> \n";
 			} else {
 
                                 echo "<option value=\"SERIAL\">SERIAL</option> \n";
-                                echo "<option value=\"IP\">IP</option> \n";
+                           //     echo "<option value=\"IP\">IP</option> \n";
 			}
                 
         
@@ -188,7 +188,7 @@ printProjectorSelect();
 
 
 ?>
-
+<!--   
 <p/>
 IP: 
 <input type="text" value="<? if($IP !="" ) { echo $IP; } else { echo "";}?>" name="IP" id="PORT"></input>
@@ -198,7 +198,7 @@ IP:
 PORT:
 <input type="text" value="<? if($PORT !="" ) { echo $PORT; } else { echo "";}?>" name="PORT" id="PORT"></input>
 
-
+-->
 <p/>
 <input id="submit_button" name="submit" type="submit" class="buttons" value="Save Config">
 </form>
