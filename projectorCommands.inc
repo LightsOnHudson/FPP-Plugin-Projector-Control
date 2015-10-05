@@ -1,6 +1,7 @@
 <?php 
 $PROJECTORS = Array(
 
+//October 5: added PJLINK basic
 //Updated: Sept 18, 2015
 //This this template to add additional projectors
 
@@ -16,6 +17,22 @@ $PROJECTORS = Array(
 //                "STOP_BITS" => "1",
 //                "PARITY" => "none"
 //),
+		Array("NAME" => "PJLINK",
+				"PROTOCOL" => "PJLINK",
+				"ON" => "set_power_state 1",
+				"OFF" => "set_power_state 0",
+				"RGB" => "set_input INPUT_RGB",
+				"VIDEO" => "set_input INPUT_VIDEO",
+				"DIGITAL" => "set_input INPUT_DIGITAL",
+				"VIDEO(RCA)" => "\xBE\xEF\x03\x06\x00\x6E\xD3\x01\x00\x00\x20\x01\x00",
+				"VIDEO(S)" => "\xBE\xEF\x03\x06\x00\x9E\xD3\x01\x00\x00\x20\x02\x00",
+				"IP" => "192.168.192.200",
+				"PASSWORD" => "1234"
+				//"BAUD_RATE" => "19200",
+				//"CHAR_BITS" => "8",
+				//"STOP_BITS" => "1",
+				//"PARITY" => "none"
+		),
 		Array("NAME" => "Hitachi_CPX445",
 		
 				"ON" => "\xBE\xEF\x03\x06\x00\xBA\xD2\x01\x00\x00\x60\x01\x00",

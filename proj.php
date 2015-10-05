@@ -93,6 +93,9 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 					$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
 					$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
 					$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
+					if($PROJECTOR[$projectorIndex]['PROTOCOL'] == "PJLINK") {
+						logEntry("PJLINK Projector");
+					}
 					logEntry("--------------");
 					logEntry("PROJECTOR FOUND");
 					logEntry("PROJECTOR: ".$PROJECTOR_READ);
