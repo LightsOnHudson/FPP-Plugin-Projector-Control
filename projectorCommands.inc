@@ -47,6 +47,17 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "EPSON_EH_TW5900",
+		
+				"ON" => "\x50\x57\x52\x20\x4f\x4e\x0d\x0a",
+				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46\x0d\x0a",
+				"HDMI1" => "\x53\x4f\x55\x52\x43\x45\x20\x33\x30\x0d\x0a",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),
 		Array("NAME" => "EPSON_PWRLITE_500",
 		
 				"ON" => "\x50\x57\x52\x20\x4f\x4e",
