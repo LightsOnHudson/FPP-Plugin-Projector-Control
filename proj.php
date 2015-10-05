@@ -100,7 +100,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						
 						$IP = $PROJECTORS[$projectorIndex]['IP'];
 						$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
-						$PJLINK_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl";
+						$PJLINK_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
 						$PJLINK_CMD .= $IP." ";
 						$PJLINK_CMD .= $PROJECTOR_CMD." ";
 						$PJLINK_CMD .= "-p ".$PROJ_PASSWORD;
