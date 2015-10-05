@@ -95,6 +95,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 					logEntry("PROJECTOR: ".$PROJECTOR_READ);
 					
 					if($PROJECTORS[$projectorIndex]['PROTOCOL'] == "PJLINK") {
+						$DEVICE_CONNECTION_TYPE = "PJLINK";
 						logEntry("PJLINK Projector");
 						
 						$IP = $PROJECTORS[$projectorIndex]['IP'];
@@ -103,8 +104,9 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						$PJLINK_CMD .= $IP." ";
 						$PJLINK_CMD .= $PROJECTOR_CMD." ";
 						$PJLINK_CMD .= "-p ".$PROJ_PASSWORD;
-						logEntry("PJLINK CMD: ".$PJLINK_CMD);
 						
+						logEntry("PJLINK CMD: ".$PJLINK_CMD);
+						$PROJECTOR_CMD = $PJLINK_CMD;
 						
 					} else {
 						
@@ -120,8 +122,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						
 						
 					}
-					$PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
-					logEntry("PROJECTOR CMD2: ".$PCMD);
+					
 					
 					
 				}
@@ -139,11 +140,24 @@ if(!$PROJECTOR_FOUND) {
 }
 
 logEntry("-------");
+$PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
+//logEntry("PROJECTOR CMD2: ".$PCMD);
 logEntry("Sending command");
-logEntry(" COMMAND: ".$PCMD);
+logEntry("HEX DECODED COMMAND: ".$PCMD);
 
 switch ($DEVICE_CONNECTION_TYPE) {
 	
+	case "PJLINK":
+		logEntry("Sending PJLINK Command");
+		logEntry("PJLINK CMD: ".$PROJECTOR_CMD);
+		
+		system($PROJECTOR_CMD,$PJLINK_RESULT);
+		logEntry("PJLINK RESULT: ".$PJLINK_RESULT[0]);
+		
+		exit(0);
+		
+		break;
+		
 	case "SERIAL":
 	logEntry("Sending SERIAL COMMAND");
 	logEntry("SERIAL DEVICE: ".$SERIAL_DEVICE);
