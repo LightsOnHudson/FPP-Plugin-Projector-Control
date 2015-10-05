@@ -89,22 +89,35 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 				if(strtoupper(trim($key)) == $cmd) {
 					$PROJECTOR_FOUND=true;
 					$PROJECTOR_CMD = $val;
-					$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
-					$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
-					$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
-					$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
-					if($PROJECTORS[$projectorIndex]['PROTOCOL'] == "PJLINK") {
-						logEntry("PJLINK Projector");
-					}
+					
 					logEntry("--------------");
 					logEntry("PROJECTOR FOUND");
 					logEntry("PROJECTOR: ".$PROJECTOR_READ);
+					
+					if($PROJECTORS[$projectorIndex]['PROTOCOL'] == "PJLINK") {
+						logEntry("PJLINK Projector");
+						
+						$PJLINK_CMD =  $settings['pluginDirectory'] . "/." .$pluginName. "/pjlinkutil.pl";
+						logEntry("PJLINK CMD: ".$PJLINK_CMD);
+						
+					} else {
+						
+						$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
+						$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
+						$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
+						$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
+						
+						logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
+						logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
+						logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
+						logEntry("PARITY: ".$PROJECTOR_PARITY);
+						
+						
+					}
 					$PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
 					logEntry("PROJECTOR CMD2: ".$PCMD);
-					logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
-					logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
-					logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
-					logEntry("PARITY: ".$PROJECTOR_PARITY);
+					
+					
 				}
 
 
