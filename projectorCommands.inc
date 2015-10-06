@@ -24,8 +24,7 @@ $PROJECTORS = Array(
 				"RGB" => "set_input INPUT_RGB",
 				"VIDEO" => "set_input INPUT_VIDEO",
 				"DIGITAL" => "set_input INPUT_DIGITAL",
-				"VIDEO(RCA)" => "\xBE\xEF\x03\x06\x00\x6E\xD3\x01\x00\x00\x20\x01\x00",
-				"VIDEO(S)" => "\xBE\xEF\x03\x06\x00\x9E\xD3\x01\x00\x00\x20\x02\x00",
+				
 				"IP" => "192.168.192.200",
 				"PASSWORD" => "1234"
 				//"BAUD_RATE" => "19200",
