@@ -132,7 +132,7 @@ $PROJECTORS = Array(
 		"CHAR_BITS" => "8",
 		"STOP_BITS" => "1",
 		"PARITY" => "none"
-),
+),
 	Array("NAME" => "BenQ_PB7200",
 
 		"ON" => "\xBE\xEF\x03\x19\x00\x83\xA9\x01\x23\x03\xCC\xCC\xFF\xFF\xFF\xFF\x01\x00\x00\x00\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC",
@@ -150,7 +150,7 @@ $PROJECTORS = Array(
 		"STOP_BITS" => "1",
 		"PARITY" => "none"
 ),
-	Array("NAME" => "BenQ_W770ST/MS510",
+	Array("NAME" => "BenQ_W770ST_MS510",
 
 		//*pow=on#
 		"ON" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x6E\x23\x0D",
@@ -158,9 +158,7 @@ $PROJECTORS = Array(
 		"OFF" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x66\x66\x23\x0D",
 		//*sour=vid#
 		"VIDEO" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x76\x69\x64\x23\x0D",
-			
 		"HDMI-1" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x68\x64\x6D\x69\x23\x0D",
-			
 		"HDMI-2" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x68\x64\x6D\x69\x32\x23\x0D",
         "PC" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x52\x47\x42\x23\x0D",
  		"STATUS" => "\x0D\x2A\x70\x6F\x77\x3D\x3F\x23\x0D", 
@@ -243,7 +241,7 @@ Array("NAME" => "Optoma_H181X",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-Array("NAME" => "Mitsubishi_EX320U/EW330U/EX320U-ST",
+Array("NAME" => "Mitsubishi_EX320U_EW330U_EX320U-ST",
 					
 		"ON" => "\x30\x30\x21\x0D",
 		"OFF" => "\x30\x30\x22\x0D",
