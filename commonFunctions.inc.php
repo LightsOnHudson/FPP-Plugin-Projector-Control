@@ -1,6 +1,6 @@
 <?php
 
-//update plugin
+
 
 function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	
