@@ -32,6 +32,21 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),
+		Array("NAME" => "Casio_XJV1",
+		
+				"ON" => "\x50\x57\x52\x31",
+				"OFF" => "\x50\x57\x52\x30",
+				"RGB" => "\x53\x52\x43\x30",
+				"HDMI" => "\x53\x52\x43\x37",
+				"COMPONENT" => "\x53\x52\x43\x31",
+				
+		
+				"BAUD_RATE" => "19200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
+		
 		Array("NAME" => "Hitachi_CPX445",
 		
 				"ON" => "\xBE\xEF\x03\x06\x00\xBA\xD2\x01\x00\x00\x60\x01\x00",
