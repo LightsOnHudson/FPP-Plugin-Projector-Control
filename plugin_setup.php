@@ -44,6 +44,11 @@ if(isset($_POST['submit']))
 
 	$IP=trim($_POST["IP"]);
 	$PORT=trim($_POST["PORT"]);
+
+	$BAUD_RATE=trim($_POST["BAUD_RATE"]);
+	$CHAR_BITS=trim($_POST["CHAR_BITS"]);
+	$STOP_BITS=trim($_POST["STOP_BITS"]);
+	$PARITY=trim($_POST["PARITY"]);
 	
 	$DEVICE=trim($_POST["DEVICE"]);
 	$DEVICE_CONNECTION_TYPE=trim($_POST["DEVICE_CONNECTION_TYPE"]);
@@ -52,6 +57,11 @@ if(isset($_POST['submit']))
 
 	//	echo "Writring config fie <br/> \n";
 
+	WriteSettingToFile("BAUD_RATE",$BAUD_RATE,$pluginName);
+	WriteSettingToFile("CHAR_BITS",$CHAR_BITS,$pluginName);
+	WriteSettingToFile("STOP_BITS",$STOP_BITS,$pluginName);
+	WriteSettingToFile("PARITY",$PARITY,$pluginName);
+	
 	WriteSettingToFile("DEVICE",$DEVICE,$pluginName);
 	WriteSettingToFile("DEVICE_CONNECTION_TYPE",$DEVICE_CONNECTION_TYPE,$pluginName);
 	WriteSettingToFile("IP",$IP,$pluginName);
@@ -67,6 +77,11 @@ if(isset($_POST['submit']))
 	
 	//$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
 	$DEVICE = $pluginSettings['DEVICE'];
+	
+	$BAUD_RATE = $pluginSettings['BAUD_RATE'];
+	$CHAR_BITS = $pluginSettings['CHAR_BITS'];
+	$STOP_BITS = $pluginSettings['STOP_BITS'];
+	$PARITY = $pluginSettings['PARITY'];
 	
 	//$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
 	$DEVICE_CONNECTION_TYPE = $pluginSettings['DEVICE_CONNECTION_TYPE'];
@@ -188,7 +203,24 @@ echo "Projector: \n";
 printProjectorSelect();
 
 
+echo "<p/> \n";
+echo "Baud Rate: \n";
+echo "<input type=\"text\" size=\"8\" value=\"".$BAUD_RATE."\" name=\"BAUD_RATE\"> \n";
+
+echo "<p/> \n";
+echo "CHAR BITS: \n";
+echo "<input type=\"text\" size=\"2\" value=\"".$CHAR_BITS."\" name=\"CHAR_BITS\"> \n";
+
+echo "<p/> \n";
+echo "STOP BITS: \n";
+echo "<input type=\"text\" size=\"2\" value=\"".$STOP_BITS."\" name=\"STOP_BITS\"> \n";
+
+echo "<p/> \n";
+echo "Parity (none, even, odd): \n";
+echo "<input type=\"text\" size=\"8\" value=\"".$PARITY."\" name=\"PARITY\"> \n";
+
 ?>
+
 <!--   
 <p/>
 IP: 

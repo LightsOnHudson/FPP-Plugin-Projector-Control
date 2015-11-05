@@ -110,11 +110,35 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						
 					} else {
 						
-						$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
-						$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
-						$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
-						$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
+						if($pluginSettings['BAUD_RATE'] !="")
+						{
+							$PROJECTOR_BAUD = $pluginSettings['BAUD_RATE'];
+						} else {
+							$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
+						}
+
+						if($pluginSettings['CHAR_BITS'] !="")
+						{
+							$PROJECTOR_CHAR_BITS = $pluginSettings['CHAR_BITS'];
+						} else {
+							$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
+						}
+
+						if($pluginSettings['STOP_BITS'] !="")
+						{
+							$PROJECTOR_STOP_BITS = $pluginSettings['STOP_BITS'];
+						} else {
+							$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
+						}
+
+						if($pluginSettings['PARITY'] !="")
+						{
+							$PROJECTOR_PARITY = $pluginSettings['PARITY'];
+						} else {
+							$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
+						}
 						
+					
 						logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
 						logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
 						logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
