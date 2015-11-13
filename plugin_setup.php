@@ -64,10 +64,11 @@ if(isset($_POST['submit']))
 	
 	WriteSettingToFile("DEVICE",$DEVICE,$pluginName);
 	WriteSettingToFile("DEVICE_CONNECTION_TYPE",$DEVICE_CONNECTION_TYPE,$pluginName);
-	WriteSettingToFile("IP",$IP,$pluginName);
+	WriteSettingToFile("IP",urlencode($IP),$pluginName);
 	WriteSettingToFile("PORT",$PORT,$pluginName);
 	WriteSettingToFile("PROJECTOR",urlencode($_POST["PROJECTOR"]),$pluginName);
 	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
+	WriteSettingToFile("PROJ_PASSWORD",urlencode($_POST["PROJ_PASSWORD"]),$pluginName);
 
 	
 
@@ -96,8 +97,8 @@ if(isset($_POST['submit']))
 	$ENABLED = $pluginSettings['ENABLED'];
 	
 	//$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
-	$PROJECTOR = $pluginSettings['PROJECTOR'];
-
+	$PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
+	$PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 	$PROJECTOR_READ = $PROJECTOR;
 	
 	
@@ -129,12 +130,12 @@ if(isset($_POST['submit']))
 <li>NONE</li>
 </ul>
 
-<!-- 
+
 <p>Configuration:
 <ul>
-<li>Configure your connection type, IP, Serial</li>
+<li>Configure your connection type, IP/PJLINK, Serial</li>
 </ul>
--->
+
 <form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
 <br>
 <p/>
@@ -159,7 +160,7 @@ echo "<select name=\"DEVICE_CONNECTION_TYPE\"> \n";
 				{
 					case "SERIAL":
                                 		echo "<option selected value=\"".$DEVICE_CONNECTION_TYPE."\">".$DEVICE_CONNECTION_TYPE."</option> \n";
-                               // 		echo "<option value=\"IP\">IP</option> \n";
+                                		echo "<option value=\"IP\">IP</option> \n";
                                 		break;
 					case "IP":
                                 		echo "<option selected value=\"".$DEVICE_CONNECTION_TYPE."\">".$DEVICE_CONNECTION_TYPE."</option> \n";
@@ -173,7 +174,7 @@ echo "<select name=\"DEVICE_CONNECTION_TYPE\"> \n";
 			} else {
 
                                 echo "<option value=\"SERIAL\">SERIAL</option> \n";
-                           //     echo "<option value=\"IP\">IP</option> \n";
+                                echo "<option value=\"IP\">IP</option> \n";
 			}
                 
         
@@ -221,13 +222,19 @@ echo "<input type=\"text\" size=\"8\" value=\"".$PARITY."\" name=\"PARITY\"> \n"
 
 ?>
 
-<!--   
+  
 <p/>
-IP: 
-<input type="text" value="<? if($IP !="" ) { echo $IP; } else { echo "";}?>" name="IP" id="PORT"></input>
+PJLINK IP: 
+<input type="text" value="<? if($IP !="" ) { echo $IP; } else { echo "";}?>" name="IP" id="IP"></input>
+
+<p/>
+<p/>
+PJLINK PASSWORD: 
+<input type="text" value="<? if($PROJ_PASSWORD !="" ) { echo $PROJ_PASSWORD; } else { echo "";}?>" name="PROJ_PASSWORD" id="PROJ_PASSWORD"></input>
 
 <p/>
 
+<!-- 
 PORT:
 <input type="text" value="<? if($PORT !="" ) { echo $PORT; } else { echo "";}?>" name="PORT" id="PORT"></input>
 

@@ -43,7 +43,9 @@ $PORT = $pluginSettings['PORT'];
 $ENABLED = $pluginSettings['ENABLED'];
 
 //$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
-$PROJECTOR = $pluginSettings['PROJECTOR'];
+$PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
+$IP = urldecode($pluginSettings['PROJECTOR']);
+$PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 
 logEntry("PROJECTOR: ".$PROJECTOR);
 
@@ -98,8 +100,15 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						$DEVICE_CONNECTION_TYPE = "PJLINK";
 						logEntry("PJLINK Projector");
 						
-						$IP = $PROJECTORS[$projectorIndex]['IP'];
-						$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
+						if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
+							$IP= $PROJECTORS[$projectorIndex]['IP'];
+						}
+						
+						
+						if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
+							$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
+						}
+						
 						$PJLINK_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
 						$PJLINK_CMD .= $IP." ";
 						$PJLINK_CMD .= $PROJECTOR_CMD." ";

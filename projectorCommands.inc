@@ -26,8 +26,8 @@ $PROJECTORS = Array(
 				"VIDEO" => "set_input INPUT_VIDEO",
 				"DIGITAL" => "set_input INPUT_DIGITAL",
 				
-				"IP" => "192.168.192.200",
-				"PASSWORD" => "1234"
+				"IP" => "",
+				"PASSWORD" => ""
 				//"BAUD_RATE" => "19200",
 				//"CHAR_BITS" => "8",
 				//"STOP_BITS" => "1",
