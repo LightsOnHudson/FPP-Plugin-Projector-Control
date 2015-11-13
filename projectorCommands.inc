@@ -17,6 +17,7 @@ $PROJECTORS = Array(
 //                "STOP_BITS" => "1",
 //                "PARITY" => "none"
 //),
+
 		Array("NAME" => "PJLINK",
 				"PROTOCOL" => "PJLINK",
 				"ON" => "set_power_state 1",
@@ -32,6 +33,35 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),
+		Array("NAME" => "Panasonic_PT-LB50NTU",
+		
+				"ON" => "\x50\x4f\x4e",
+				"OFF" => "\x50\x4f\x46\x46",
+				"VID" => "\x56\x49\x44",
+				"RG1" => "\x52\x47\x31",
+				"RG2" => "\x52\x47\x32",
+				"SVIDEO" => "\x53\x56\x44",
+				"NWP" => "\x4e\x57\x50",
+		
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
+		Array("NAME" => "Panasonic_PT-LB50U",
+		
+				"ON" => "\x50\x4f\x4e",
+				"OFF" => "\x50\x4f\x46\x46",
+				"VID" => "\x56\x49\x44",
+				"RG1" => "\x52\x47\x31",
+				"RG2" => "\x52\x47\x32",
+				"SVIDEO" => "\x53\x56\x44",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Casio_XJV1",
 		
 				"ON" => "\x50\x57\x52\x31",
@@ -189,7 +219,7 @@ $PROJECTORS = Array(
 		"PARITY" => "none"
 ),
 
-	Array("NAME" => "NEC/NEC_MT1065",
+	Array("NAME" => "NEC_GENERIC_NEC_MT1065",
 					
 		"ON" => "\x02\x00\x00\x00\x00\x02",
 		"OFF" => "\x02\x01\x00\x00\x00\x03",
