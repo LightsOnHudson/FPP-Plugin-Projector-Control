@@ -44,7 +44,7 @@ $ENABLED = $pluginSettings['ENABLED'];
 
 //$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
 $PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
-$IP = urldecode($pluginSettings['PROJECTOR']);
+//$IP = urldecode($pluginSettings['PROJECTOR']);
 $PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 
 logEntry("PROJECTOR: ".$PROJECTOR);
