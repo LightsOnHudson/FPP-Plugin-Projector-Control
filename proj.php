@@ -48,6 +48,7 @@ $IP = urldecode($pluginSettings['PROJECTOR']);
 $PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 
 logEntry("PROJECTOR: ".$PROJECTOR);
+//
 
 if(trim($PROJECTOR == "" )) {
 	logEntry("No Projector configured in plugin, exiting");
