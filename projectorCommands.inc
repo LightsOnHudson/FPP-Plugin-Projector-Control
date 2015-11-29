@@ -260,13 +260,14 @@ Array("NAME" => "NEC_PA622u",
 		"STOP_BITS" => "1",
 		"PARITY" => "none"
 ),
-Array("NAME" => "Optoma_H181X",
+
+Array("NAME" => "Optoma_H181X_GT760",
 					
 		"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 		"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
 		"HDMI" => "\x7E\x30\x30\x31\x32\x20\x31\x0D",
 		"VGA" => "\x7E\x30\x30\x31\x32\x20\x35\x0D",
-		"VIDEO" => "\x7E\x30\x30\x31\x32\x20\x31\X30\x0D",
+		"VIDEO" => "\x7E\x30\x30\x31\x32\x20\x31\x30\x0D",
 				
 		"BAUD_RATE" => "9600",
 		"CHAR_BITS" => "8",
