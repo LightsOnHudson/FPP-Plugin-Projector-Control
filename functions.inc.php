@@ -7,13 +7,13 @@ $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 if ($socket === false) {
     logEntry("socket_create() failed: reason: " . socket_strerror(socket_last_error()));
 } else {
-   logEntry("TCPIP CONNECTED");
+   logEntry("TCPIP Socket Created");
 }
 
 
 $result = socket_connect($socket, $IP, $PORT);
 if ($result === false) {
-    logEntry("socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)));
+    logEntry("socket_connect() failed. Reason: ($result) " . socket_strerror(socket_last_error($socket)));
 } else {
     logEntry("TCPIP CONNECTED");
 }
