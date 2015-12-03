@@ -244,6 +244,9 @@ switch ($DEVICE_CONNECTION_TYPE) {
 
         if(!$fs) {
                 logEntry("ERROR connecting to projector controller");// "Error connecting to projector controller";
+        		fclose($fs);
+        		exit(0);
+        		break;
         }
 	fputs($fs,$PROJECTOR_CMD);
 	$buffer = "";
