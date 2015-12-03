@@ -97,7 +97,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 					
 					logEntry("--------------");
 					logEntry("PROJECTOR FOUND");
-					logEntry("PROJECTOR: ".$PROJECTOR_READ);
+					logEntry("PROJECTOR: ".$PROJECTOR);
 					
 					if($PROJECTORS[$projectorIndex]['PROTOCOL'] == "PJLINK") {
 						$DEVICE_CONNECTION_TYPE = "PJLINK";
@@ -246,6 +246,17 @@ switch ($DEVICE_CONNECTION_TYPE) {
                 logEntry("ERROR connecting to projector controller");// "Error connecting to projector controller";
         }
 	fputs($fs,$PROJECTOR_CMD);
+	$buffer = "";
+	
+	while(!feof($socket))
+	{
+		$buffer .=fgets($socket, 4096);
+	}
+	
+	logEntry("BUFFER READ BACK: ".$buffer);
+	//print_r($buffer);
+	//echo "<br /><br /><br />";
+	//var_dump($buffer);
 	sleep(1);
 	fclose($fs);
 	exit(0);
