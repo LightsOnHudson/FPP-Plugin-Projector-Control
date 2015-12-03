@@ -13,7 +13,7 @@ $pluginUpdateFile = $settings['pluginDirectory']."/".$pluginName."/"."pluginUpda
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 include 'projectorCommands.inc';
-require_once 'version.inc';
+include_once 'version.inc';
 
 $myPid = getmypid();
 
@@ -133,6 +133,7 @@ if(isset($_POST['submit']))
 <?
 
 echo "VER: ".$VERSION;
+echo "<br/> \n";
 
 echo "ENABLE PLUGIN: ";
 
