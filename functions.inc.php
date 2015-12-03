@@ -1,34 +1,36 @@
 <?php
 function sendTCP($IP, $PORT, $cmd) {
 	
-	$socket = fsockopen($IP, $PORT, $errno, $errstr);
-
 	
+/* Create a TCP/IP socket. */
+$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+if ($socket === false) {
+    logEntry("socket_create() failed: reason: " . socket_strerror(socket_last_error()));
+} else {
+   logEntry("TCPIP CONNECTED");
+}
 
-	if($socket)
-	{
-		logEntry( "Connected to : ".$IP.":".$PORT);
-	}
-	else
-	{
-		logEntry( "Connection FAILED! to : ".$IP.":".$PORT);
-	}
+echo "Attempting to connect to '$address' on port '$service_port'...";
+$result = socket_connect($socket, $address, $service_port);
+if ($result === false) {
+    logEntry("socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)));
+} else {
+    logEntry("TCPIP CONNECTED");
+}
 
-	fputs($socket, "$cmd \r\n");
 
-	$buffer = "";
+socket_write($socket, $cmd, strlen($cmd));
 
-	while(!feof($socket))
-	{
-		$buffer .=fgets($socket, 4096);
-	}
 
-		logEntry("Data Received: ".$buffer);
-	//print_r($buffer);
-	//echo "<br /><br /><br />";
-	//var_dump($buffer);
+logEntry("Reading response");
+while ($out = socket_read($socket, 2048)) {
+    logEntry($out);
+}
 
-	fclose($socket);
+logEntry("Closing socket...");
+socket_close($socket);
+logEntry("OK");
+
 }
 function hex_dump($data, $newline="\n")
 {

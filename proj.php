@@ -1,6 +1,9 @@
 #!/usr/bin/php
 <?php
 error_reporting(0);
+//added Dec 3 2015
+ob_implicit_flush();
+
 include 'php_serial.class.php';
 include_once('projectorCommands.inc');
 
@@ -240,28 +243,8 @@ switch ($DEVICE_CONNECTION_TYPE) {
 	case "IP":
        // $cfgServer = $options["h"];
 	logEntry("SENDING IP COMMAND");
-        $fs = fsockopen($IP, $PORT, $errno, $errstr, $cfgTimeOut);
-
-        if(!$fs) {
-                logEntry("ERROR connecting to projector controller");// "Error connecting to projector controller";
-        		fclose($fs);
-        		exit(0);
-        		break;
-        }
-	fputs($fs,$PROJECTOR_CMD);
-	$buffer = "";
-	
-	while(!feof($socket))
-	{
-		$buffer .=fgets($socket, 4096);
-	}
-	
-	logEntry("BUFFER READ BACK: ".$buffer);
-	//print_r($buffer);
-	//echo "<br /><br /><br />";
-	//var_dump($buffer);
-	sleep(1);
-	fclose($fs);
+       
+		sendTCP($IP, $PORT, $PROJECTOR_CMD);
 	exit(0);
 	break;
 	
