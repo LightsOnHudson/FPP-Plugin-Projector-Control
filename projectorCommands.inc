@@ -38,12 +38,14 @@ $PROJECTORS = Array(
 		),
 		Array("NAME" => "EPSON_PWRLITE_93_NETWORK",
 				"PROTOCOL" => "TCP",
-				"ON" => "\x50\x57\x52\x20\x4f\x4e",
-				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46",
+				"ON" => "PWR ON",
+				"OFF" => "PWR OFF",
+				//"ON" => "\x50\x57\x52\x20\x4f\x4e",
+				//"OFF" => "\x50\x57\x52\x20\x4f\x46\x46",
 		
 				"IP" => "",
 				"PASSWORD" => "",
-				"PORT" => "3629",
+				"PORT" => "3629", //OR 3620 possibly 3629 = ESCport
 				//"BAUD_RATE" => "19200",
 				//"CHAR_BITS" => "8",
 				//"STOP_BITS" => "1",
