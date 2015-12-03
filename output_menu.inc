@@ -1,7 +1,7 @@
 <?php
 
 $pages = Array(
-	'name' => "ProjectorControl",
+	'name' => "Projector Control",
 	'type' => "output",
 	'page' => "plugin_setup.php");
 

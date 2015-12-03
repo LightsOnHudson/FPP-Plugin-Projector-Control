@@ -8,7 +8,7 @@ include_once '/opt/fpp/www/common.php';
 $pluginName = "ProjectorControl";
 
 $pluginUpdateFile = $settings['pluginDirectory']."/".$pluginName."/"."pluginUpdate.inc";
-
+$VERSION_FILE ="version.inc";
 
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
@@ -101,20 +101,8 @@ if(isset($_POST['submit']))
 	$PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 	$PROJECTOR_READ = $PROJECTOR;
 	
-	
-	//foreach ($PROJECTORS as $projector) {
-	
-	//	if($projector['NAME'] == $PROJECTOR_READ) {
-		
-	//		$projectorONSequence = "PROJ-ON";
-	//		$projectorOFFSequence = "PROJ-OFF";
-	//		$projectorVIDEOSequence = "PROJ-VIDEO-INPUT";
-
 			createProjectorEventFiles();
-	//	}
-	//}
-
-//	echo "Projector read: ".$PROJECTOR_READ."<br/> \n";
+	
 ?>
 
 <html>
@@ -141,6 +129,12 @@ if(isset($_POST['submit']))
 <p/>
 
 <?
+if(file_exists($VERSION_FILE))
+{
+	//echo "updating plugin included";
+	include $VERSION_FILE;
+}
+
 echo "ENABLE PLUGIN: ";
 
 if($ENABLED == "on" || $ENABLED == 1) {

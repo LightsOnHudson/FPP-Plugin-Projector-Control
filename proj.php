@@ -13,6 +13,8 @@ $pluginName  = "ProjectorControl";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 
+//added TCPIP network control to port configured in projectorCommands.inc.php
+
 $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
@@ -118,6 +120,28 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						logEntry("PJLINK CMD: ".$PJLINK_CMD);
 						$PROJECTOR_CMD = $PJLINK_CMD;
 						
+					} elseif ($PROJECTORS[$projectorIndex]['PROTOCOL'] == "TCP") {
+						$DEVICE_CONNECTION_TYPE = "IP";
+						logEntry("TCP/IP Projector");
+						
+						if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
+							$IP= $PROJECTORS[$projectorIndex]['IP'];
+						}
+						
+						
+						if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
+							$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
+						}
+						$PORT= $PROJECTORS[$projectorIndex]['PORT'];
+						
+						//$IP_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
+						//$IP_CMD .= $IP." ";
+						//$IP_CMD = $PROJECTOR_CMD;//." ";
+						//$IP_CMD .= "-p ".$PROJ_PASSWORD;
+						
+						logEntry("TCPIP IP: ".$IP." PORT: ".$PORT." CMD: ".$PROJECTOR_CMD);
+						//$PROJECTOR_CMD = $IP_CMD;
+						
 					} else {
 						
 						if($pluginSettings['BAUD_RATE'] !="")
@@ -214,9 +238,9 @@ switch ($DEVICE_CONNECTION_TYPE) {
 	break;
 	
 	case "IP":
-        $cfgServer = $options["h"];
+       // $cfgServer = $options["h"];
 	logEntry("SENDING IP COMMAND");
-        $fs = fsockopen($cfgServer, $PORT, $errno, $errstr, $cfgTimeOut);
+        $fs = fsockopen($IP, $PORT, $errno, $errstr, $cfgTimeOut);
 
         if(!$fs) {
                 logEntry("ERROR connecting to projector controller");// "Error connecting to projector controller";

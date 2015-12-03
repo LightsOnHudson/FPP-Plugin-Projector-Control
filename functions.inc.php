@@ -1,4 +1,35 @@
 <?php
+function sendTCP($IP, $PORT, $cmd) {
+	
+	$socket = fsockopen($IP, $PORT, $errno, $errstr);
+
+	
+
+	if($socket)
+	{
+		logEntry( "Connected to : ".$IP.":".$PORT);
+	}
+	else
+	{
+		logEntry( "Connection FAILED! to : ".$IP.":".$PORT);
+	}
+
+	fputs($socket, "$cmd \r\n");
+
+	$buffer = "";
+
+	while(!feof($socket))
+	{
+		$buffer .=fgets($socket, 4096);
+	}
+
+		logEntry("Data Received: ".$buffer);
+	//print_r($buffer);
+	//echo "<br /><br /><br />";
+	//var_dump($buffer);
+
+	fclose($socket);
+}
 function hex_dump($data, $newline="\n")
 {
   static $from = '';

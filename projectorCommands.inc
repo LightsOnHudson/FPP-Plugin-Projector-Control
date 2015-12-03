@@ -1,9 +1,12 @@
 <?php
-$PROJECTORS = Array(
-
 //October 5: added PJLINK basic
 //Updated: Sept 18, 2015
 //This this template to add additional projectors
+//Dec 3 2015
+//Added Epson PWRLITE 93 Network IP type ESC commands
+$PROJECTORS = Array(
+
+
 
 // To add another projector fill out the below and remove the //
 //     Array("NAME" => "NAME_OF_PROJECTOR",
@@ -33,6 +36,19 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),
+		Array("NAME" => "EPSON_PWRLITE_93_NETWORK",
+				"PROTOCOL" => "TCP",
+				"ON" => "\x50\x57\x52\x20\x4f\x4e",
+				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46",
+		
+				"IP" => "",
+				"PASSWORD" => "",
+				"PORT" => "3629",
+				//"BAUD_RATE" => "19200",
+				//"CHAR_BITS" => "8",
+				//"STOP_BITS" => "1",
+				//"PARITY" => "none"
+		),		
 		Array("NAME" => "Panasonic_PT-LB50NTU",
 		
 				"ON" => "\x50\x4f\x4e",
