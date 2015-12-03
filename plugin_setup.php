@@ -13,6 +13,8 @@ $VERSION_FILE ="version.inc";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 include 'projectorCommands.inc';
+require_once 'version.inc';
+
 $myPid = getmypid();
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-Projector-Control.git";
@@ -129,11 +131,8 @@ if(isset($_POST['submit']))
 <p/>
 
 <?
-if(file_exists($VERSION_FILE))
-{
-	//echo "updating plugin included";
-	include $VERSION_FILE;
-}
+
+echo "VER: ".$VERSION;
 
 echo "ENABLE PLUGIN: ";
 
