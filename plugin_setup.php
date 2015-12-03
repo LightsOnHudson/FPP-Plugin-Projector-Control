@@ -8,7 +8,7 @@ include_once '/opt/fpp/www/common.php';
 $pluginName = "ProjectorControl";
 
 $pluginUpdateFile = $settings['pluginDirectory']."/".$pluginName."/"."pluginUpdate.inc";
-$VERSION_FILE ="version.inc";
+
 
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
