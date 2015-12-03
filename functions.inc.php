@@ -10,8 +10,8 @@ if ($socket === false) {
    logEntry("TCPIP CONNECTED");
 }
 
-echo "Attempting to connect to '$address' on port '$service_port'...";
-$result = socket_connect($socket, $address, $service_port);
+
+$result = socket_connect($socket, $IP, $PORT);
 if ($result === false) {
     logEntry("socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)));
 } else {
