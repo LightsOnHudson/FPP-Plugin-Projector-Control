@@ -6,3 +6,4 @@ then
     cpan install Net::PJLink
 fi
 popd
+exec /opt/fpp/scripts/update_plugin ProjectorControl
