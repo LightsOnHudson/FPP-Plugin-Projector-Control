@@ -51,7 +51,7 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),		
-		Array("NAME" => "Panasonic_PT-LB50NTU",
+		Array("NAME" => "Panasonic_PT_LB50NTU",
 		
 				"ON" => "\x50\x4f\x4e",
 				"OFF" => "\x50\x4f\x46\x46",
@@ -66,7 +66,23 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 				),
-		Array("NAME" => "Panasonic_PT-LB50U",
+		Array("NAME" => "Panasonic_PT_LB50U",
+		
+				"ON"  => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x4E\x03",
+				"OFF" => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x46\x03",
+				"HD1" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x48\x44\x31\03",
+				"HD2" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x48\x44\x32\x03",
+				"PC1" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x50\x43\x31\x03",
+				"PC2" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x50\x43\x32\x03",
+				"SVIDEO" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x53\x56\x44\x03",
+				"DVID" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x56\x49\x44\x03",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
+		Array("NAME" => "Panasonic_RZ_670",
 		
 				"ON" => "\x50\x4f\x4e",
 				"OFF" => "\x50\x4f\x46\x46",
@@ -74,7 +90,7 @@ $PROJECTORS = Array(
 				"RG1" => "\x52\x47\x31",
 				"RG2" => "\x52\x47\x32",
 				"SVIDEO" => "\x53\x56\x44",
-				
+		
 				"BAUD_RATE" => "9600",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
