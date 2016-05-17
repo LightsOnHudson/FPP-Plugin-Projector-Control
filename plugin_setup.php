@@ -126,7 +126,7 @@ if(isset($_POST['submit']))
 <li>Configure your connection type, IP/PJLINK, Serial</li>
 </ul>
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
 <br>
 <p/>
 
@@ -240,7 +240,7 @@ PORT:
 
 <p>To report a bug, please file it against the Projector Control plug-in project on Git: https://github.com/LightsOnHudson/FPP-Plugin-Projector-Control
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=ProjectorControl&page=plugin_setup.php">
 <?
  if(file_exists($pluginUpdateFile))
  {
