@@ -4,6 +4,7 @@
 //This this template to add additional projectors
 //Dec 3 2015
 //Added Epson PWRLITE 93 Network IP type ESC commands
+//Updated with Dell_2400MP 5/19/2016 pat
 $PROJECTORS = Array(
 
 
