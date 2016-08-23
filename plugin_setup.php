@@ -55,7 +55,7 @@ if(isset($_POST['submit']))
 	$DEVICE=trim($_POST["DEVICE"]);
 	$DEVICE_CONNECTION_TYPE=trim($_POST["DEVICE_CONNECTION_TYPE"]);
 	
-	$ENABLED=$_POST["ENABLED"];
+	//$ENABLED=$_POST["ENABLED"];
 
 	//	echo "Writring config fie <br/> \n";
 
@@ -137,12 +137,12 @@ echo "<br/> \n";
 
 echo "ENABLE PLUGIN: ";
 
-if($ENABLED == "on" || $ENABLED == 1) {
-	echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
-	//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
-} else {
-	echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
-}
+//if($ENABLED == "on" || $ENABLED == 1) {
+//	echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
+	PrintSettingCheckbox("Projector Control", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+//} else {
+//	echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
+//}
 echo "<p/>\n";
 
 echo "Connection type: \n";
