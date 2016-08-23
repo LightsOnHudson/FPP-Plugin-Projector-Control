@@ -69,7 +69,7 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("IP",urlencode($IP),$pluginName);
 	WriteSettingToFile("PORT",$PORT,$pluginName);
 	WriteSettingToFile("PROJECTOR",urlencode($_POST["PROJECTOR"]),$pluginName);
-	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
+	//WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
 	WriteSettingToFile("PROJ_PASSWORD",urlencode($_POST["PROJ_PASSWORD"]),$pluginName);
 
 	
@@ -96,7 +96,7 @@ if(isset($_POST['submit']))
 	$PORT = $pluginSettings['PORT'];
 	
 	//$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
-	$ENABLED = $pluginSettings['ENABLED'];
+	$ENABLED = urldecode($pluginSettings['ENABLED']);
 	
 	//$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
 	$PROJECTOR = urldecode($pluginSettings['PROJECTOR']);

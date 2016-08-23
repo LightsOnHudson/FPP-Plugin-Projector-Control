@@ -45,7 +45,7 @@ $IP = $pluginSettings['IP'];
 $PORT = $pluginSettings['PORT'];
 
 //$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
-$ENABLED = $pluginSettings['ENABLED'];
+$ENABLED = urldecode($pluginSettings['ENABLED']);
 
 //$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
 $PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
