@@ -55,10 +55,16 @@ $PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 logEntry("PROJECTOR: ".$PROJECTOR);
 //
 
-if(trim($PROJECTOR == "" )) {
+if(trim($PROJECTOR) == "") {
 	logEntry("No Projector configured in plugin, exiting");
 	exit(0);
 	
+}
+
+if($ENABLED != "ON") {
+	logEntry("Plugin is DISABLED, exiting");
+	exit(0);
+
 }
 
 $options = getopt("c:");
