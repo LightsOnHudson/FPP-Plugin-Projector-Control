@@ -343,6 +343,22 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Optoma_X600",
+					
+				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
+				"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
+				"HDMI" => "\x7E\x30\x30\x31\x32\x20\x31\x0D",
+				"HDMI2" => "\x7E\x30\x30\x31\x32\x20\x31\\x35\x0D",
+				"VGA1" => "\x7E\x30\x30\x31\x32\x20\x35\x0D",
+				"VGA2" => "\x7E\x30\x30\x31\x32\x20\x36\x0D",
+				"VIDEO" => "\x7E\x30\x30\x31\x32\x20\x31\x30\x0D",
+				"SVIDEO" => "\x7E\x30\x30\x31\x32\x20\x39\x0D",
+		
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Optoma_H181X_GT760",
 							
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
