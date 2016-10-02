@@ -51,7 +51,16 @@ $PROJECTORS = Array(
 				//"CHAR_BITS" => "8",
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
-		),		
+		),	
+		Array("NAME" => "Proxima_6850",
+		
+				"ON" => "\x31\x11\x3F",
+				"OFF" => "\x31\x11\x3E",
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),
 		Array("NAME" => "Panasonic_PT_LB50NTU",
 		
 				"ON" => "\x50\x4f\x4e",
