@@ -295,6 +295,18 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "BenQ_MX613ST",
+		
+				"ON" => "\x38\x30\x31\x73\x21\x30\x30\x31\x0D",
+				"OFF" => "\x38\x30\x31\x73\x21\x30\x30\x32\x0D",
+				//"VIDEO" => "\x30\x30\x5F\x76\x31",
+		
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
+		
 		Array("NAME" => "NEC_NP4001",
 					
 				"ON" => "\x02\x00\x00\x00\x00\x02",
