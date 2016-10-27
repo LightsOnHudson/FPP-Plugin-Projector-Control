@@ -340,6 +340,29 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "NEC_NP400_NETWORK",
+				"PROTOCOL" => "TCP",
+				//"ON" => "IMPWR ON?",
+				//"OFF" => "IMPWR OFF?",
+				
+				"IP" => "",
+				"PASSWORD" => "",
+				"PORT" => "7142", //OR 3620 possibly 3629 = ESCport
+				
+					
+				"ON" =>  "\x02\x00\x00\x00\x00\x02",
+				"OFF" => "\x02\x01\x00\x00\x00\x03",
+				"VIDEO_IN" => "\x02\x03\x00\x00\x02\x01\x06\x0E",
+				"PC1" => "\x02\x03\x00\x00\x02\x01\x01\x09",
+				"PC2" => "\x02\x03\x00\x00\x02\x01\x02\x0A",
+				"PC3" => "\x02\x03\x00\x00\x02\x01\x1A\x22",
+				"VIDEO" => "\x02\x03\x00\x00\x02\x01\x06\x0E",
+				"SVIDEO" => "\x02\x03\x00\x00\x02\x01\x0B\x13",
+				"PICTURE_OFF" => "\x02\x10\x00\x00\x00\x12",
+				"PICTURE_ON" => "\x02\x11\x00\x00\x00\x13",
+		
+				
+				),
 		Array("NAME" => "NEC_GENERIC_NEC_MT1065",
 					
 				"ON" => "\x02\x00\x00\x00\x00\x02",
