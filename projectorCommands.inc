@@ -37,6 +37,23 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),
+		Array("NAME" => "NETWORK_4352",
+				"PROTOCOL" => "TCP",
+				//"ON" => "IMPWR ON?",
+				//"OFF" => "IMPWR OFF?",
+				"ON" => "set_power_state 1",
+				"OFF" => "set_power_state 0",
+				//"RGB" => "set_input INPUT_RGB",
+				//"VIDEO" => "set_input INPUT_VIDEO",
+				//"DIGITAL" => "set_input INPUT_DIGITAL",
+				"IP" => "",
+				"PASSWORD" => "",
+				"PORT" => "4352", //OR 3620 possibly 3629 = ESCport
+				//"BAUD_RATE" => "19200",
+		//"CHAR_BITS" => "8",
+		//"STOP_BITS" => "1",
+		//"PARITY" => "none"
+		),
 		Array("NAME" => "EPSON_PWRLITE_93_NETWORK",
 				"PROTOCOL" => "TCP",
 				//"ON" => "IMPWR ON?",
