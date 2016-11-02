@@ -139,7 +139,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-		Array("NAME" => "Casio_XJV1",
+		Array("NAME" => "Casio_XJV1_HEX",
 		
 				"ON" => "\x50\x57\x52\x31",
 				"OFF" => "\x50\x57\x52\x30",
@@ -153,6 +153,20 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Casio_XJV1_ASCII",
+		
+				"ON" => "(PWR1)",
+				"OFF" => "(PWR0)",
+				"RGB" => "(SRC0)",
+				"HDMI" => "(SRC7)",
+				"AUTO" => "(SRC6)",
+		
+		
+				"BAUD_RATE" => "19200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		
 		Array("NAME" => "Hitachi_CPX445",
 		
