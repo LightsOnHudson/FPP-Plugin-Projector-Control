@@ -235,6 +235,17 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Viewsonic_PJD5153",
+				//Added Nov 21 2016
+		
+				"ON" => "\x06\x14\x00\x04\x00\x34\x11\x00\x00\x5D",
+				"OFF" => "\x06\x14\x00\x04\x00\x34\x11\x01\x00\x5E",
+				
+				"BAUD_RATE" => "115200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Viewsonic_PJD5255",
 		
 				"ON" => "\x06\x14\x00\x04\x00\x34\x11\x00\x00\x5D",
@@ -322,7 +333,7 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "BenQ_MX819ST",
-		
+			//added nov 21 2016
 				"ON" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x6E\x23\x0D",
 				"OFF" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x66\x66\x23\x0D",
 				"YPBR_1" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x52\x47\x42\x23\x0D", //2a 73 6f 75 72 3d 52 47 42 23	
