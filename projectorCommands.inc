@@ -554,5 +554,52 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Samsung_Commercial_Flat_Panel_MDC",
+		
+				//Power
+		
+				"ON"     => "\xAA\x11\xFE\x01\x01\x11",
+		
+				"OFF"    => "\xAA\x11\xFE\x01\x00\x10",
+		
+				//Inputs
+		
+				"SVIDEO"             => "\xAA\x14\xFE\x01\x04\x17",//not available on test tv
+		
+				"VIDEO"               => "\xAA\x14\xFE\x01\x0C\x1F",
+		
+				"YPbPr"                => "\xAA\x14\xFE\x01\x08\x1B",
+		
+				"PC"                      => "\xAA\x14\xFE\x01\x14\x27",
+		
+				"DVIVid"              => "\xAA\x14\xFE\x01\x1F\x32",
+		
+				"PC1"                    => "\xAA\x14\xFE\x01\x15\x28",//not available on test tv
+		
+				"PC2"    => "\xAA\x14\xFE\x01\x16\x29",//not available on test tv
+		
+				"DVID"                 => "\xAA\x14\xFE\x01\x18\x2B",
+		
+				"BNC"                   => "\xAA\x14\xFE\x01\x1E\x31",
+		
+				"MagicNet"         => "\xAA\x14\xFE\x01\x20\x33",//not available on test tv
+		
+				"HDMI"                => "\xAA\x14\xFE\x01\x21\x34",
+		
+				"ATV"                   => "\xAA\x14\xFE\x01\x30\x43",//not available on test tv
+		
+				"DTV"                   => "\xAA\x14\xFE\x01\x40\x53",//not available on test tv
+		
+		
+		
+				"BAUD_RATE" => "9600",
+		
+				"CHAR_BITS" => "8",
+		
+				"STOP_BITS" => "1",
+		
+				"PARITY" => "none"
+		
+				)
 );
 ?>
