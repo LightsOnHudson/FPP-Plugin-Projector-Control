@@ -542,13 +542,23 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-		Array("NAME" => "Mitsubishi_EX320U_EW330U_EX320U-ST",
+		Array("NAME" => "Mitsubishi_EX320U_EW330U_EX320U_ST",
 							
 				"ON" => "\x30\x30\x21\x0D",
 				"OFF" => "\x30\x30\x22\x0D",
 				"VIDEO" => "\x30\x30\x5F\x76\x31\x0D",
 				"HDMI" => "\x30\x30\x5F\x64\x31\x0D",		
 				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),
+		Array("NAME" => "Panasonic_PT_F200",
+					
+				"ON" => "\x02\x50\x4F\x4E\x03",
+                "OFF" => "\x02\x50\x4F\x46\x03",
+		
 				"BAUD_RATE" => "9600",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
