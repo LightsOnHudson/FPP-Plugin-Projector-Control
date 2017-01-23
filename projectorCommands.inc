@@ -69,6 +69,21 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),	
+		Array("NAME" => "Sanyo_PLC_XP200L",
+		
+				"ON" => "\x43\x30\x30\x0D",
+				"OFF_IMMEDIATE" => "\x43\x30\x31\x0D",
+				"OFF_SLOW" => "\x43\x30\x32\x0D",
+				"INPUT1" => "\x43\x30\x35\x0D",
+				"INPUT2" => "\x43\x30\x36\x0D",
+				"INPUT3" => "\x43\x30\x37\x0D",
+				
+		
+				"BAUD_RATE" => "19200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Proxima_6850",
 		
 				"ON" => "\x31\x11\x3F",
