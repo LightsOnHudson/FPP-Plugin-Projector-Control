@@ -93,6 +93,21 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Panasonic_PT_AE900U",
+		
+				"ON" => "\x50\x4f\x4e",
+				"OFF" => "\x50\x4f\x46\x46",
+				"VID" => "\x56\x49\x44",
+				"RG1" => "\x52\x47\x31",
+				"HDMI" => "\x48\x44\x4d",
+				"SVIDEO" => "\x53\x56\x44",
+				"YUV" => "\x59\x55\x56",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Panasonic_PT_LB50NTU",
 		
 				"ON" => "\x50\x4f\x4e",
