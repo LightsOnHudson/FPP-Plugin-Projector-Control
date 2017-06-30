@@ -69,6 +69,21 @@ $PROJECTORS = Array(
 				//"STOP_BITS" => "1",
 				//"PARITY" => "none"
 		),	
+		Array("NAME" => "Hitatchi_CPX_1250",
+				
+				"ON" => "\x01\x00\x00\x60\x01\x00",
+				"OFF" => "\x01\x00\x00\x60\x00\x00",
+				
+				"RGB" => "\x01\x00\x00\x20\x00\x00",
+				"VIDEO" => "\x01\x00\x00\x20\x01\x00",
+				"COMPONENT" => "\x01\x00\x00\x20\x05\x00",
+				
+				
+				"BAUD_RATE" => "19200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Sanyo_PLC_XP200L",
 		
 				"ON" => "\x43\x30\x30\x0D",
