@@ -696,6 +696,21 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "NEC_LCD4000",
+				
+				"ON" => "\x30\x30\x21\x0D",
+				"OFF" => "\x30\x30\x22\x0D",
+				"RGB1" => "\x30\x30\x21\x0D\x5F\x72\x31\x0D",
+				"RGB2" => "\x30\x30\x21\x0D\x5F\x72\x32\x0D",
+				"RGB3" => "\x30\x30\x21\x0D\x5F\x72\x33\x0D",
+				"VIDEO" => "\x30\x30\x21\x0D\x5F\x76\x31\x0D",
+				"DVD" => "\x30\x30\x21\x0D\x5F\x76\x32\x0D",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "Samsung_Commercial_Flat_Panel_MDC",
 		
 				//Power
