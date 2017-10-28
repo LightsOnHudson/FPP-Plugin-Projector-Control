@@ -468,6 +468,24 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 				),
+		Array("NAME" => "NEC_MT1050",
+				
+				"ON" =>			"\x02\x00\x00\x00\x00\x02",
+				"OFF" =>		"\x02\x01\x00\x00\x00\x03",
+				"VIDEO_IN" =>	"\x02\x03\x00\x00\x02\x01\x06\x0E",
+				"RGB1" =>		"\x02\x03\x00\x00\x02\x01\x01\x09",
+				"RGB2" =>		"\x02\x03\x00\x00\x02\x01\x02\x0A",
+				//"PC3" =>		"\x02\x03\x00\x00\x02\x01\x1A\x22",
+				"VIDEO" =>		"\x02\x03\x00\x00\x02\x01\x06\x0E",
+				"SVIDEO" =>		"\x02\x03\x00\x00\x02\x01\x0B\x13",
+				"PICTURE_OFF" =>"\x02\x10\x00\x00\x00\x12",
+				"PICTURE_ON" => "\x02\x11\x00\x00\x00\x13",
+				
+				"BAUD_RATE" => "38400",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
 		Array("NAME" => "NEC_V260X",
 				
 				"ON" =>			"\x02\x00\x00\x00\x00\x02",
