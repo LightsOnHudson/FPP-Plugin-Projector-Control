@@ -190,6 +190,21 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Sharp_PGD2500X",
+				
+				"ON" => "\x50\x4f\x57\x52\x20\x20\x20\x31\x0d",
+				"OFF" => "\x50\x4f\x57\x52\x20\x20\x20\x30\x0d",
+				//"VID" => "\x56\x49\x44",
+				//"RG1" => "\x52\x47\x31",
+				//"RG2" => "\x52\x47\x32",
+				//"SVIDEO" => "\x53\x56\x44",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+				),
+		
 		Array("NAME" => "Panasonic_RZ_670",
 		
 				"ON" => "\x50\x4f\x4e",
