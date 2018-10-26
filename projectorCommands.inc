@@ -342,20 +342,16 @@ $PROJECTORS = Array(
 				),
 		Array("NAME" => "EPSON_PWRLITE_500_PWRLITE_93",
 		
-				"ON" => "\x50\x57\x52\x20\x4f\x4e",
-				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46",
-				//"VIDEO" => "\x30\x30\x5F\x76\x31",
-				//"INPUT1" => "\x49\x4e\x50\x55\x54\x31",
-				//"INPUT3" => "\x49\x4e\x50\x55\x54\x33",
-				//"VIDEO" => "\x56\x49\x44\x45\x4f",
-				//"VIDEO(RCA)" => "\x56\x49\x44\x45\x4f\x28\x52\x43\x41\x29",
-				//"VIDEO(S)" => "\x56\x49\x44\x45\x4f\x28\x53\x29",
-		
+				"ON" => "\x50\x57\x52\x20\x4f\x4e\x0d",
+				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46\x0d",
+				"AVMute_ON" => "\x4d\x55\x54\x45\x20\x4f\x4e\x0d",
+				"AVMute_OFF" => "\x4d\x55\x54\x45\x20\x4f\x46\x46\x0d",
+
 				"BAUD_RATE" => "9600",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-		),
+				),
 		Array("NAME" => "Viewsonic_PJD5153",
 				//Added Nov 21 2016
 		
