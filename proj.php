@@ -11,7 +11,9 @@ $skipJSsettings = 1;
 include_once '/opt/fpp/www/config.php';
 include_once '/opt/fpp/www/common.php';
 
-$pluginName  = "ProjectorControl";
+//$pluginName  = "ProjectorControl";
+$pluginName = basename(dirname(__FILE__));  //pjd 8-10-2019   added per dkulp
+
 
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
