@@ -19,7 +19,7 @@ include_once 'version.inc';
 
 $myPid = getmypid();
 
-$gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-Projector-Control.git";
+$gitURL = "https://github.com/FalconChristmas/FPP-Plugin-Projector-Control.git";
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
@@ -240,7 +240,7 @@ PORT:
 </form>
 
 
-<p>To report a bug, please file it against the Projector Control plug-in project on Git: https://github.com/LightsOnHudson/FPP-Plugin-Projector-Control
+<p>To report a bug, please file it against the Projector Control plug-in project on Git: https://github.com/FalconChristmas/FPP-Plugin-Projector-Control
 
 <form method="post" action="http://<? echo $_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=<?php echo $pluginName;?>&page=plugin_setup.php">
 <?
