@@ -1,7 +1,6 @@
 #!/usr/bin/php
 <?php
-
-$eventDirectory = "/home/fpp/media/events"; //once working, change to variable reference
+$eventDirectory = "/home/fpp/media/events";
 
 
 $dir = new DirectoryIterator ($eventDirectory); //iterate through event files
