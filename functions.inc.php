@@ -139,12 +139,17 @@ function createProjectorEventFiles() {
 						$MAJOR=substr($nextEventFilename,0,2);
 						$MINOR=substr($nextEventFilename,3,2);
 						$eventData  ="";
-						$eventData  = "majorID=".(int)$MAJOR."\n";
-						$eventData .= "minorID=".(int)$MINOR."\n";
-						$eventData .= "name='PROJECTOR-".$key."'\n";
-						$eventData .= "effect=''\n";
-						$eventData .= "startChannel=\n";
-						$eventData .= "script='PROJECTOR-".$key.".sh'\n";
+                        			$eventData  ="{\n";
+                        			$eventData .= "\t\"command\": \"Run Script\",\n";
+                        			$eventData .= "\t\"args\": [\n";
+                        			$eventData .= "\t\t\"PROJECTOR-".$key.".sh\",\n";
+                        			$eventData .= "\t\t\"\",\n";
+                       	 			$eventData .= "\t\t\"\"\n";
+                        			$eventData .= "\t],\n";
+                        			$eventData .= "\t\"name\": \"PROJECTOR-".$key."\",\n";
+                        			$eventData .= "\t\"majorId\": ".(int)$MAJOR.",\n";
+                        			$eventData .= "\t\"minorId\": ".(int)$MINOR."\n";
+                        			$eventData .= "}";
 						
 					//	echo "eventData: ".$eventData."<br/>\n";
 						file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);
