@@ -21,7 +21,7 @@ function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
 	exec($pluginUpdateCMD, $updateResult);
 
 	//logEntry("update result: ".print_r($updateResult));
-
+//
 	//loop through result	
 	return;// ($updateResult);
 	
