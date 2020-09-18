@@ -474,7 +474,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 				),
-		Array("NAME" => "BenQ_W770ST_MS510",
+		Array("NAME" => "BenQ_W770ST_MS510_TH671ST",
 
 				"ON" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x6E\x23\x0D",
 				"OFF" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x66\x66\x23\x0D",
