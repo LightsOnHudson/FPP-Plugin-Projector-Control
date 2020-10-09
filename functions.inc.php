@@ -1,7 +1,27 @@
 <?php
 function sendTCP($IP, $PORT, $cmd) {
 	
-	
+
+if($PORT == "23") {
+
+logEntry("We have a TELNET port");
+
+
+$fp=pfsockopen($IP,23);
+
+logEntry("Telnet session opening ...");
+
+sleep(4);
+
+//fputs($fp,$header1); 
+$cmd .= "\r";
+fputs($fp,$cmd);
+//fputs($fp,"(LMP?)\r");
+sleep(2); 
+fclose($fp);
+return;
+}
+
 /* Create a TCP/IP socket. */
 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 if ($socket === false) {
