@@ -1,13 +1,10 @@
 <?php
-//October 5: added PJLINK basic
-//Updated: Sept 18, 2015
 //This this template to add additional projectors
-//Dec 3 2015
-//Added Epson PWRLITE 93 Network IP type ESC commands
-//Updated with Dell_2400MP 5/19/2016 pat
+//If Protocol = TCP and PORT = 23, then you can put commands in as ASCII added as TELNET support. 10/9/2020 Pat
+//
+//
+
 $PROJECTORS = Array(
-
-
 
 // To add another projector fill out the below and remove the //
 //     Array("NAME" => "NAME_OF_PROJECTOR",
@@ -32,10 +29,6 @@ $PROJECTORS = Array(
 				
 				"IP" => "",
 				"PASSWORD" => ""
-				//"BAUD_RATE" => "19200",
-				//"CHAR_BITS" => "8",
-				//"STOP_BITS" => "1",
-				//"PARITY" => "none"
 		),
 		Array("NAME" => "NETWORK_4352",
 				"PROTOCOL" => "TCP",
@@ -49,10 +42,6 @@ $PROJECTORS = Array(
 				"IP" => "",
 				"PASSWORD" => "",
 				"PORT" => "4352", //OR 3620 possibly 3629 = ESCport
-				//"BAUD_RATE" => "19200",
-		//"CHAR_BITS" => "8",
-		//"STOP_BITS" => "1",
-		//"PARITY" => "none"
 		),
 		Array("NAME" => "EPSON_PWRLITE_93_NETWORK",
 				"PROTOCOL" => "TCP",
@@ -64,29 +53,17 @@ $PROJECTORS = Array(
 				"IP" => "",
 				"PASSWORD" => "",
 				"PORT" => "3629", //OR 3620 possibly 3629 = ESCport
-				//"BAUD_RATE" => "19200",
-				//"CHAR_BITS" => "8",
-				//"STOP_BITS" => "1",
-				//"PARITY" => "none"
 		),	
 		Array("NAME" => "Hitatchi_CPX_1250",
-				
-				//"ON" => "\x01\x00\x00\x60\x01\x00",
 				"ON" => "\xBE\xEF\x03\x06\x00\xBA\xD2\x01\x00\x00\x60\x01\x00",
-				//"OFF" => "\x01\x00\x00\x60\x00\x00",
 				"OFF" => "\xBE\xEF\x03\x06\x00\x2A\xD3\x01\x00\x00\x60\x00\x00",
-			//	"RGB" => "\x01\x00\x00\x20\x00\x00",
-			//	"VIDEO" => "\x01\x00\x00\x20\x01\x00",
-			//	"COMPONENT" => "\x01\x00\x00\x20\x05\x00",
-				
 				
 				"BAUD_RATE" => "19200",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Sanyo_PLC_XP200L",
-		
 				"ON" => "\x43\x30\x30\x0D",
 				"OFF_IMMEDIATE" => "\x43\x30\x31\x0D",
 				"OFF_SLOW" => "\x43\x30\x32\x0D",
@@ -99,9 +76,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Sanyo_PLC_HP7000L",
-				
 				"ON" => "\x43\x30\x30\x0D",
 				"OFF_IMMEDIATE" => "\x43\x30\x31\x0D",
 				"OFF_SLOW" => "\x43\x30\x32\x0D",
@@ -114,9 +90,27 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
-		Array("NAME" => "Proxima_6850",
+		),
+		Array("NAME" => "Dukane_ImagePRO8758",
+				"ON" => "\x28\x50\x57\x52\x31\x29",
+				"OFF" => "\x28\x50\x57\x52\x30\x29",
+				
+				"BAUD_RATE" => "19200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),
+		Array("NAME" => "Dukane_ImagePRO8758_NETWORK",
+		// This projector uses TELNET to connect, see note at tope of file.
+				"PROTOCOL" => "TCP",
+				"ON" => "(PWR1)",
+				"OFF" => "(PWR0)",
 		
+				"IP" => "",
+				"PASSWORD" => "",
+				"PORT" => "23", //OR 3620 possibly 3629 = ESCport
+		),					
+		Array("NAME" => "Proxima_6850",
 				"ON" => "\x31\x11\x3F",
 				"OFF" => "\x31\x11\x3E",
 				"BAUD_RATE" => "9600",
@@ -125,7 +119,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Panasonic_PT_AE900U",
-		
 				"ON" => "\x50\x4f\x4e",
 				"OFF" => "\x50\x4f\x46\x46",
 				"VID" => "\x56\x49\x44",
@@ -138,9 +131,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Panasonic_PT_LB50NTU",
-		
 				"ON" => "\x50\x4f\x4e",
 				"OFF" => "\x50\x4f\x46\x46",
 				"VID" => "\x56\x49\x44",
@@ -155,7 +147,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Panasonic_PT_LB50U",
-				
 				"ON"  => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x4E\x03",
 				"OFF" => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x46\x03",
 				"HD1" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x48\x44\x31\x03",
@@ -171,7 +162,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Panasonic_PT_DW6300",
-		
 				"ON"  => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x4E\x03",
 				"OFF" => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x46\x03",
 				"HD1" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x48\x44\x31\03",
@@ -191,22 +181,15 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Sharp_PGD2500X",
-				
 				"ON" => "\x50\x4f\x57\x52\x20\x20\x20\x31\x0d",
 				"OFF" => "\x50\x4f\x57\x52\x20\x20\x20\x30\x0d",
-				//"VID" => "\x56\x49\x44",
-				//"RG1" => "\x52\x47\x31",
-				//"RG2" => "\x52\x47\x32",
-				//"SVIDEO" => "\x53\x56\x44",
 				
 				"BAUD_RATE" => "9600",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
-		
+		),
 		Array("NAME" => "Panasonic_RZ_670",
-		
 				"ON" => "\x50\x4f\x4e",
 				"OFF" => "\x50\x4f\x46\x46",
 				"VID" => "\x56\x49\x44",
@@ -227,7 +210,6 @@ $PROJECTORS = Array(
 				"HDMI" => "\x53\x52\x43\x37",
 				"COMPONENT" => "\x53\x52\x43\x31",
 				
-		
 				"BAUD_RATE" => "19200",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
@@ -240,14 +222,12 @@ $PROJECTORS = Array(
 				"RGB" => "(SRC0)",
 				"HDMI" => "(SRC7)",
 				"AUTO" => "(SRC6)",
-		
-		
+
 				"BAUD_RATE" => "19200",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
-		
+		),
 		Array("NAME" => "Hitachi_CPX445",
 		
 				"ON" => "\xBE\xEF\x03\x06\x00\xBA\xD2\x01\x00\x00\x60\x01\x00",
@@ -275,7 +255,7 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Dell_2300_MP ",
 		
 				"ON" => "\xBE\xEF\x10\x05\x00\xC7\xBF\x11\x11\x01\x00\x02",
@@ -300,7 +280,7 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Dell_2400MP",
 		
 				"ON" => "\xBE\xEF\x10\x05\x00\xC6\xFF\x11\x11\x01\x00\x01",
@@ -328,18 +308,12 @@ $PROJECTORS = Array(
 		
 				"ON" => "\x50\x4f\x57\x52\x20\x4f\x4e",
 				"OFF" => "\x50\x4f\x57\x52\x20\x4f\x46\x46",
-				//"VIDEO" => "\x30\x30\x5F\x76\x31",
-				//"INPUT1" => "\x49\x4e\x50\x55\x54\x31",
-				//"INPUT3" => "\x49\x4e\x50\x55\x54\x33",
-				//"VIDEO" => "\x56\x49\x44\x45\x4f",
-				//"VIDEO(RCA)" => "\x56\x49\x44\x45\x4f\x28\x52\x43\x41\x29",
-				//"VIDEO(S)" => "\x56\x49\x44\x45\x4f\x28\x53\x29",
 		
 				"BAUD_RATE" => "9600",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "EPSON_PWRLITE_500_PWRLITE_93",
 		
 				"ON" => "\x50\x57\x52\x20\x4f\x4e\x0d",
@@ -351,10 +325,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Viewsonic_PJD5153",
-				//Added Nov 21 2016
-		
 				"ON" => "\x06\x14\x00\x04\x00\x34\x11\x00\x00\x5D",
 				"OFF" => "\x06\x14\x00\x04\x00\x34\x11\x01\x00\x5E",
 				
@@ -362,9 +334,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Viewsonic_PJD5255",
-		
 				"ON" => "\x06\x14\x00\x04\x00\x34\x11\x00\x00\x5D",
 				"OFF" => "\x06\x14\x00\x04\x00\x34\x11\x01\x00\x5E",
 				"VGA" => "\x06\x14\x00\x04\x00\x34\x13\x01\x00\x60",
@@ -377,9 +348,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Viewsonic_PJD5555w",
-
 				"ON" => "\x06\x14\x00\x04\x00\x34\x11\x00\x00\x5D",
 				"OFF" => "\x06\x14\x00\x04\x00\x34\x11\x01\x00\x5E",
 				"VGA" => "\x06\x14\x00\x04\x00\x34\x13\x01\x00\x60",
@@ -436,7 +406,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "BenQ_PB7200",
-
 				"ON" => "\xBE\xEF\x03\x19\x00\x83\xA9\x01\x23\x03\xCC\xCC\xFF\xFF\xFF\xFF\x01\x00\x00\x00\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC",
 				"OFF" => "\xBE\xEF\x03\x19\x00\x13\x68\x01\x23\x03\xCC\xCC\xFF\xFF\xFF\xFF\x00\x00\x00\x00\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC",
 				"VIDEO_IN" => "\xBE\xEF\x03\x19\x00\x9B\x88\x01\xDA\x02\xCC\xCC\x00\x00\x00\x00\x05\x00\x00\x00\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC",
@@ -450,7 +419,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "BenQ_MX819ST",
-			//added nov 21 2016
 				"ON" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x6E\x23\x0D",
 				"OFF" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x66\x66\x23\x0D",
 				"YPBR_1" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x52\x47\x42\x23\x0D", //2a 73 6f 75 72 3d 52 47 42 23	
@@ -462,20 +430,13 @@ $PROJECTORS = Array(
 				"HDMI_2" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x68\x64\x6D\x69\x32\x23\x0D", //2a 73 6f 75 72 3d 68 64 6d 69 32 23
 				"VIDEO" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x76\x69\x64\x23\x0D", //2a 73 6f 75 72 3d 76 69 64 23
 				"SVIDEO" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x73\x76\x69\x64\x23\x0D", //2a 73 6f 75 72 3d 73 76 69 64 23	
-				//"STATUS" => "\x0D\x2A\x70\x6F\x77\x3D\x3F\x23\x0D",
-				//"BLANK-ON" => "\x0d\x2a\x62\x6c\x61\x6e\x6b\x3d\x6f\x6e\x23\x0d",
-				//"BLANK-OFF" => "\x0d\x2a\x62\x6c\x61\x6e\x6b\x3d\x6f\x66\x66\x23\x0d",
-				//				"VALID_STATUS_0" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x50\x4F\x57\x3D\x4F\x46\x46\x23\x0D\x0A",
-		//				"VALID_STATUS_1" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x50\x4F\x57\x3D\x4F\x4E\x23\x0D\x0A",
-		//				"VALID_STATUS_2" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x42\x6C\x6F\x63\x6B\x20\x69\x74\x65\x6D\x23\x0D\x0A\x00",
-		//				"VALID_STATUS_3" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x50\x4F\x57\x3D\x4F\x4E\x23\x0D\x0A",
+
 				"BAUD_RATE" => "115200",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
-		Array("NAME" => "BenQ_W770ST_MS510",
-
+		),
+		Array("NAME" => "BenQ_W770ST_MS510_TH671ST",
 				"ON" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x6E\x23\x0D",
 				"OFF" => "\x0D\x2A\x70\x6F\x77\x3D\x6F\x66\x66\x23\x0D",
 				"VIDEO" => "\x0D\x2A\x73\x6F\x75\x72\x3D\x76\x69\x64\x23\x0D",
@@ -485,28 +446,22 @@ $PROJECTORS = Array(
 				"STATUS" => "\x0D\x2A\x70\x6F\x77\x3D\x3F\x23\x0D", 
 				"BLANK-ON" => "\x0d\x2a\x62\x6c\x61\x6e\x6b\x3d\x6f\x6e\x23\x0d",
 				"BLANK-OFF" => "\x0d\x2a\x62\x6c\x61\x6e\x6b\x3d\x6f\x66\x66\x23\x0d",
-//				"VALID_STATUS_0" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x50\x4F\x57\x3D\x4F\x46\x46\x23\x0D\x0A",
-//				"VALID_STATUS_1" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x50\x4F\x57\x3D\x4F\x4E\x23\x0D\x0A",
-//				"VALID_STATUS_2" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x42\x6C\x6F\x63\x6B\x20\x69\x74\x65\x6D\x23\x0D\x0A\x00",
-//				"VALID_STATUS_3" => "\x3E\x2A\x70\x6F\x77\x3D\x3F\x23\x0D\x0D\x0A\x2A\x50\x4F\x57\x3D\x4F\x4E\x23\x0D\x0A", 
+
 				"BAUD_RATE" => "115200",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
 		Array("NAME" => "BenQ_MX613ST",
-		
 				"ON" => "\x38\x30\x31\x73\x21\x30\x30\x31\x0D",
 				"OFF" => "\x38\x30\x31\x73\x21\x30\x30\x32\x0D",
-				//"VIDEO" => "\x30\x30\x5F\x76\x31",
 		
 				"BAUD_RATE" => "9600",
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "NEC_NP400",
-					
 				"ON" =>			"\x02\x00\x00\x00\x00\x02",
 				"OFF" =>		"\x02\x01\x00\x00\x00\x03",
 				"VIDEO_IN" =>	"\x02\x03\x00\x00\x02\x01\x06\x0E",
@@ -522,9 +477,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "NEC_MT1050",
-				
 				"ON" =>			"\x02\x00\x00\x00\x00\x02",
 				"OFF" =>		"\x02\x01\x00\x00\x00\x03",
 				"VIDEO_IN" =>	"\x02\x03\x00\x00\x02\x01\x06\x0E",
@@ -540,9 +494,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "NEC_V260X",
-				
 				"ON" =>			"\x02\x00\x00\x00\x00\x02",
 				"OFF" =>		"\x02\x01\x00\x00\x00\x03",
 				"VIDEO_IN" =>	"\x02\x03\x00\x00\x02\x01\x06\x0E",
@@ -558,9 +511,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "NEC_NP4001",
-					
 				"ON" =>			"\x02\x00\x00\x00\x00\x02",
 				"OFF" =>		"\x02\x01\x00\x00\x00\x03",
 				"VIDEO_IN" =>	"\x02\x03\x00\x00\x02\x01\x06\x0E",
@@ -579,13 +531,9 @@ $PROJECTORS = Array(
 		),
 		Array("NAME" => "NEC_NP400_NETWORK",
 				"PROTOCOL" => "TCP",
-				//"ON" => "IMPWR ON?",
-				//"OFF" => "IMPWR OFF?",
-				
 				"IP" => "",
 				"PASSWORD" => "",
-				"PORT" => "7142", //OR 3620 possibly 3629 = ESCport
-				
+				"PORT" => "7142", 		//OR 3620 possibly 3629 = ESCport
 					
 				"ON" =>  "\x02\x00\x00\x00\x00\x02",
 				"OFF" => "\x02\x01\x00\x00\x00\x03",
@@ -597,11 +545,8 @@ $PROJECTORS = Array(
 				"SVIDEO" => "\x02\x03\x00\x00\x02\x01\x0B\x13",
 				"PICTURE_OFF" => "\x02\x10\x00\x00\x00\x12",
 				"PICTURE_ON" => "\x02\x11\x00\x00\x00\x13",
-		
-				
-				),
+		),
 		Array("NAME" => "NEC_GENERIC_NEC_MT1065",
-					
 				"ON" => "\x02\x00\x00\x00\x00\x02",
 				"OFF" => "\x02\x01\x00\x00\x00\x03",
 				"VIDEO_IN" => "\x02\x03\x00\x00\x02\x01\x06\x0E",
@@ -620,7 +565,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "NEC_PA622u",
-					
 				"ON" => "\x02\x00\x00\x00\x00\x02",
 				"OFF" => "\x02\x01\x00\x00\x00\x03",
 				"HDMI_IN1" => "\x02\x03\x00\x00\x02\x01\xA1\xA9",
@@ -640,7 +584,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Optoma_150S",
-					
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 				"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
 				"VGA1" => "\x7E\x30\x30\x31\x32\x20\x35\x0D",
@@ -655,9 +598,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Optoma_X600",
-					
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 				"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
 				"HDMI" => "\x7E\x30\x30\x31\x32\x20\x31\x0D",
@@ -671,9 +613,8 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Optoma_H181X_GT760",
-							
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 				"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
 				"HDMI" => "\x7E\x30\x30\x31\x32\x20\x31\x0D",
@@ -686,7 +627,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Optoma_XW305_ST",
-					
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 				"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
 				"HDMI" => "\x7E\x30\x30\x31\x32\x20\x31\x0D",
@@ -701,7 +641,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Optoma_XW306_ST",
-					
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 				"OFF" => "\x7E\x30\x30\x30\x30\x20\x30\x0D",
 				"VGA_1_SCART" => "\x7E\x30\x30\x31\x32\x20\x37\x0D",
@@ -715,7 +654,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Optoma_EX525_ST",
-					
 				"ON" => "\x7E\x30\x30\x30\x30\x20\x31\x0D",
 				"OFF" => "\x7E\x30\x30\x30\x30\x20\x32\x0D",
 				"DVI_D" => "\x7E\x30\x30\x31\x32\x20\x32\x0D",
@@ -730,7 +668,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Mitsubishi_EX320U_EW330U_EX320U_ST",
-							
 				"ON" => "\x30\x30\x21\x0D",
 				"OFF" => "\x30\x30\x22\x0D",
 				"VIDEO" => "\x30\x30\x5F\x76\x31\x0D",
@@ -742,7 +679,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Panasonic_PT_F200",
-					
 				"ON" => "\x02\x50\x4F\x4E\x03",
                 "OFF" => "\x02\x50\x4F\x46\x03",
 		
@@ -752,7 +688,6 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "NEC_LCD4000",
-				
 				"ON" => "\x30\x30\x21\x0D",
 				"OFF" => "\x30\x30\x22\x0D",
 				"RGB1" => "\x30\x30\x21\x0D\x5F\x72\x31\x0D",
@@ -765,53 +700,29 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
-				),
+		),
 		Array("NAME" => "Samsung_Commercial_Flat_Panel_MDC",
-		
-				//Power
-		
 				"ON"     => "\xAA\x11\xFE\x01\x01\x11",
-		
 				"OFF"    => "\xAA\x11\xFE\x01\x00\x10",
-		
 				//Inputs
-		
-				"SVIDEO"             => "\xAA\x14\xFE\x01\x04\x17",//not available on test tv
-		
-				"VIDEO"               => "\xAA\x14\xFE\x01\x0C\x1F",
-		
-				"YPbPr"                => "\xAA\x14\xFE\x01\x08\x1B",
-		
-				"PC"                      => "\xAA\x14\xFE\x01\x14\x27",
-		
-				"DVIVid"              => "\xAA\x14\xFE\x01\x1F\x32",
-		
-				"PC1"                    => "\xAA\x14\xFE\x01\x15\x28",//not available on test tv
-		
-				"PC2"    => "\xAA\x14\xFE\x01\x16\x29",//not available on test tv
-		
-				"DVID"                 => "\xAA\x14\xFE\x01\x18\x2B",
-		
-				"BNC"                   => "\xAA\x14\xFE\x01\x1E\x31",
-		
-				"MagicNet"         => "\xAA\x14\xFE\x01\x20\x33",//not available on test tv
-		
-				"HDMI"                => "\xAA\x14\xFE\x01\x21\x34",
-		
-				"ATV"                   => "\xAA\x14\xFE\x01\x30\x43",//not available on test tv
-		
-				"DTV"                   => "\xAA\x14\xFE\x01\x40\x53",//not available on test tv
-		
-		
+				"SVIDEO" => "\xAA\x14\xFE\x01\x04\x17",		//not available on test tv
+				"VIDEO"  => "\xAA\x14\xFE\x01\x0C\x1F",
+				"YPbPr"  => "\xAA\x14\xFE\x01\x08\x1B",
+				"PC"     => "\xAA\x14\xFE\x01\x14\x27",
+				"DVIVid" => "\xAA\x14\xFE\x01\x1F\x32",
+				"PC1"    => "\xAA\x14\xFE\x01\x15\x28",		//not available on test tv
+				"PC2"    => "\xAA\x14\xFE\x01\x16\x29",		//not available on test tv
+				"DVID"   => "\xAA\x14\xFE\x01\x18\x2B",
+				"BNC"    => "\xAA\x14\xFE\x01\x1E\x31",
+				"MagicNet" => "\xAA\x14\xFE\x01\x20\x33",	//not available on test tv
+				"HDMI"   => "\xAA\x14\xFE\x01\x21\x34",
+				"ATV"    => "\xAA\x14\xFE\x01\x30\x43",		//not available on test tv
+				"DTV"    => "\xAA\x14\xFE\x01\x40\x53",		//not available on test tv
 		
 				"BAUD_RATE" => "9600",
-		
 				"CHAR_BITS" => "8",
-		
 				"STOP_BITS" => "1",
-		
 				"PARITY" => "none"
-		
-				)
+		)
 );
 ?>
