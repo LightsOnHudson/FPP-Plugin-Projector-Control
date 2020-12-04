@@ -91,6 +91,20 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "EIKI_LC-SXG400",
+				"ON" => "\x43\x30\x30\x0D",
+				"OFF_IMMEDIATE" => "\x43\x30\x31\x0D",
+				"OFF_SLOW" => "\x43\x30\x32\x0D",
+				"INPUT1" => "\x43\x30\x35\x0D",
+				"INPUT2" => "\x43\x30\x36\x0D",
+				"INPUT3" => "\x43\x30\x37\x0D",
+				
+				
+				"BAUD_RATE" => "19200",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),	
 		Array("NAME" => "Dukane_ImagePRO8758",
 				"ON" => "\x28\x50\x57\x52\x31\x29",
 				"OFF" => "\x28\x50\x57\x52\x30\x29",
