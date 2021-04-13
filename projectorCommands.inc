@@ -216,6 +216,15 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
+		Array("NAME" => "Promethan_PRM-45",
+				"ON" => "\x7E\x50\x4E\x0D",
+				"OFF" => "\x7E\x50\x46\x0D",
+				
+				"BAUD_RATE" => "9600",
+				"CHAR_BITS" => "8",
+				"STOP_BITS" => "1",
+				"PARITY" => "none"
+		),	
 		Array("NAME" => "Casio_XJV1_HEX",
 		
 				"ON" => "\x50\x57\x52\x31",
