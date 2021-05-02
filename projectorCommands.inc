@@ -175,7 +175,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-		Array("NAME" => "Panasonic_PT_DW6300",m
+		Array("NAME" => "Panasonic_PT_DW6300",
 				"ON"  => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x4E\x03",
 				"OFF" => "\x02\x41\x44\x5A\x5A\x3B\x50\x4F\x46\x03",
 				"HD1" => "\x02\x41\x44\x5A\x5A\x3B\x49\x49\x53\x3A\x48\x44\x31\03",
