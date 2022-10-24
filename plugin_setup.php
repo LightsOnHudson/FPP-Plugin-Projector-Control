@@ -126,7 +126,7 @@ if(isset($_POST['submit']))
 <p>Configuration:
 <ul>
 <li>Configure your connection type, IP/PJLINK or Serial</li>
-<li>If using <b>PJLINK</b>, you will also need to install Python <b>PJLINK</b> library.</li>
+<li>If using <b>PJLINK</b>, you will also need to install the <b>PJLINK</b> library.</li>
 <li>SSH into the Pi that is running the plugin, and type the following command:  <b>sudo cpan Net::PJLink</b></li>
 This should download the library and then the plugin should work.
 </ul>
