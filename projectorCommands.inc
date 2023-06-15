@@ -591,7 +591,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-		Array("NAME" => "NEC_PA622u",
+		Array("NAME" => "NEC_P401W",
 				"ON" => "\x02\x00\x00\x00\x00\x02",
 				"OFF" => "\x02\x01\x00\x00\x00\x03",
 				"HDMI_IN1" => "\x02\x03\x00\x00\x02\x01\x1A\x22",
@@ -604,7 +604,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-                Array("NAME" => "NEC_P401W",
+                Array("NAME" => "NEC_PA622u",
 				"ON" => "\x02\x00\x00\x00\x00\x02",
 				"OFF" => "\x02\x01\x00\x00\x00\x03",
 				"HDMI_IN1" => "\x02\x03\x00\x00\x02\x01\xA1\xA9",
