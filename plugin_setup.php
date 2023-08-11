@@ -185,7 +185,7 @@ echo "SERIAL DEVICE: \n";
 echo "<select name=\"DEVICE\"> \n";
         foreach(scandir("/dev/") as $fileName)
         {
-                if (preg_match("/^ttyUSB[0-9]+/", $fileName)) {
+                if (preg_match("/tty[ASU][A-Z0-9]+/", $fileName)) {
 //echo "DEVICE: ".$DEVICE. " -- ".$fileName
 	if ($DEVICE == $fileName) {
 			
