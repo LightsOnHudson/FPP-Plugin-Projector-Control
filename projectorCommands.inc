@@ -337,7 +337,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-		Array("NAME" => "EPSON_PWRLITE_500_PWRLITE_93",
+		Array("NAME" => "EPSON_PWRLITE_500_PWRLITE_93_99WH",
 		
 				"ON" => "\x50\x57\x52\x20\x4f\x4e\x0d",
 				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46\x0d",
