@@ -1,5 +1,5 @@
 <?php
-//$DEBUG=true;
+$DEBUG=true;
 
 $skipJSsettings = 1;
 //include_once '/opt/fpp/www/config.php';
@@ -74,8 +74,6 @@ if(isset($_POST['submit']))
 	//WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
 	WriteSettingToFile("PROJ_PASSWORD",urlencode($_POST["PROJ_PASSWORD"]),$pluginName);
 
-	
-
 } 
 
 
@@ -104,9 +102,9 @@ if(isset($_POST['submit']))
 	$PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
 	$PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 	$PROJECTOR_READ = $PROJECTOR;
-	
-			createProjectorEventFiles();
-	
+	// This section will create the script files  -Pat 2/3/2024
+	createProjectorEventFiles();
+
 ?>
 
 <html>
@@ -226,18 +224,16 @@ echo "<input type=\"text\" size=\"8\" value=\"".$PARITY."\" name=\"PARITY\"> \n"
 PJLINK IP: 
 <input type="text" value="<? if($IP !="" ) { echo $IP; } else { echo "";}?>" name="IP" id="IP"></input>
 
+
 <p/>
 <p/>
 PJLINK PASSWORD: 
 <input type="text" value="<? if($PROJ_PASSWORD !="" ) { echo $PROJ_PASSWORD; } else { echo "";}?>" name="PROJ_PASSWORD" id="PROJ_PASSWORD"></input>
-
 <p/>
 
-<!-- 
 PORT:
 <input type="text" value="<? if($PORT !="" ) { echo $PORT; } else { echo "";}?>" name="PORT" id="PORT"></input>
-
--->
+ 
 <p/>
 <input id="submit_button" name="submit" type="submit" class="buttons" value="Save Config">
 </form>
