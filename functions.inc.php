@@ -52,8 +52,7 @@ socket_close($socket);
 logEntry("OK");
 
 }
-function hex_dump($data, $newline="\n")
-{
+function hex_dump($data, $newline="\n") {
   static $from = '';
   static $to = '';
 
@@ -83,8 +82,7 @@ $HEX_OUT ="";
 return $HEX_OUT;
 }
 
-function decode_code($code)
-{
+function decode_code($code) {
     return preg_replace_callback('@\\\(x)?([0-9a-f]{2,3})@',
         function ($m) {
             if ($m[1]) {
@@ -144,8 +142,8 @@ function createProjectorEventFiles() {
 		//iterate through the various keys and make a file for them
 			//	print_r($PROJECTORS[$projectorIndex]);
 		//	echo "Processing files for projector name : ".$PROJECTOR_READ."<br/> \n";
-			while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {
-			//	echo "key: ".$key." -- value: ".$val."\n";
+			foreach($PROJECTORS[$projectorIndex] as $key => $value) {
+				//echo "key: ".$key." -- value: ".$val."\n";
 
 				if($key != "NAME" && $key != "BAUD_RATE" && $key != "CHAR_BITS" && $key != "PARITY" && $key != "STOP_BITS" && $key != "VALID_STATUS_0" && $key != "VALID_STATUS_1" && $key != "VALID_STATUS_2")
 				{
@@ -154,7 +152,7 @@ function createProjectorEventFiles() {
 					$EVENT_CHECK = checkEventFilesForKey("PROJECTOR-".$key);
 					if(!$EVENT_CHECK)
 					{
-					
+/* 	Removed Event creation as it's no loner supported  -Pat 2/3/2024			
 						$nextEventFilename = getNextEventFilename();
 						$MAJOR=substr($nextEventFilename,0,2);
 						$MINOR=substr($nextEventFilename,3,2);
@@ -170,11 +168,11 @@ function createProjectorEventFiles() {
                         			$eventData .= "\t\"majorId\": ".(int)$MAJOR.",\n";
                         			$eventData .= "\t\"minorId\": ".(int)$MINOR."\n";
                         			$eventData .= "}";
-						
+ */						
 					//	echo "eventData: ".$eventData."<br/>\n";
-						file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);
+					//	file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);     // removed for test
 						
-						$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key;
+						$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key;  
 						createScriptFile("PROJECTOR-".$key.".sh",$scriptCMD);
 					}
 				}
