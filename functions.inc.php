@@ -152,7 +152,7 @@ function createProjectorEventFiles() {
 					$EVENT_CHECK = checkEventFilesForKey("PROJECTOR-".$key);
 					if(!$EVENT_CHECK)
 					{
-/* 	Removed Event creation as it's no loner supported  -Pat 2/3/2024			
+/* 				
 						$nextEventFilename = getNextEventFilename();
 						$MAJOR=substr($nextEventFilename,0,2);
 						$MINOR=substr($nextEventFilename,3,2);

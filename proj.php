@@ -1,18 +1,22 @@
 #!/usr/bin/php
 <?php
-error_reporting(0);
+// pat added 3 lines below for debugging 2/4/2024
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+error_reporting(0);   //commented out was in file pat 2/4/2024
+
 //added Dec 3 2015
 ob_implicit_flush();
 
-include 'php_serial.class.php';
+//include 'php_serial.class.php';
+include 'PhpSerial.php';                         //added as replacement pat 2/4/2024
 include_once('projectorCommands.inc');
 
 $skipJSsettings = 1;
 include_once '/opt/fpp/www/config.php';
 include_once '/opt/fpp/www/common.php';
-
-//$pluginName  = "ProjectorControl";
-$pluginName = basename(dirname(__FILE__));  //pjd 8-10-2019   added per dkulp
+$pluginName = basename(dirname(__FILE__));     //pjd 8-10-2019   added per dkulp
 
 
 include_once 'functions.inc.php';
@@ -78,6 +82,7 @@ $SERIAL_DEVICE="/dev/".$DEVICE;
 if($options["z"] != "") {
 	$callBackPid = $options["z"];
 }
+
 //logEntry("callback pid: ".$callBackPid);
 
 
@@ -99,9 +104,9 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 			logEntry("Projector index: ".$projectorIndex);
 			logEntry("Looking for command string for cmd: ".$cmd);
 
-			while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {
-				//logEntry( "Key: ".$key. "  \t VAL:".$val);
-
+			//while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {   // removed for newer php  -pat 2/4/2024
+			foreach($PROJECTORS[$projectorIndex] as $key => $val) {	
+				
 				if(strtoupper(trim($key)) == $cmd) {
 					$PROJECTOR_FOUND=true;
 					$PROJECTOR_CMD = $val;
@@ -239,10 +244,11 @@ switch ($DEVICE_CONNECTION_TYPE) {
         $serial->confStopBits($PROJECTOR_STOP_BITS);
         $serial->deviceOpen();
 	
-		
 	$serial->sendMessage("$PROJECTOR_CMD");
 	sleep(1);
 	logEntry("RETURN DATA: ".hex_dump($serial->readPort()));
+	
+	
 	$serial->deviceClose();
 	exit(0);
 	

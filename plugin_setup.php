@@ -1,5 +1,5 @@
 <?php
-$DEBUG=true;
+$DEBUG=false;
 
 $skipJSsettings = 1;
 //include_once '/opt/fpp/www/config.php';

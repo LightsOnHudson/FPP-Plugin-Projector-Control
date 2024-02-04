@@ -1,8 +1,8 @@
 <?php
 
 
-
-function updatePluginFromGitHub($gitURL, $branch="master", $pluginName) {
+// flip flopped $pluinName and $brnach
+function updatePluginFromGitHub($gitURL, $pluginName, $branch="master") { 
 	
 	
 	global $settings;
