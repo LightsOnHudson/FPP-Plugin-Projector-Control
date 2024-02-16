@@ -1,5 +1,7 @@
 <?php
-
+if (isset($_GET['action']) && $_GET['action'] == 'create_scripts') {
+    create_scripts();
+}
 function sendTCP($IP, $PORT, $cmd) {
 	if($PORT == "23") {
 		logEntry("We have a TELNET port");
