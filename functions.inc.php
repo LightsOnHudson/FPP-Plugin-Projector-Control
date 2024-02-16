@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_GET['action']) && $_GET['action'] == 'create_scripts') {
     create_scripts();
 }
