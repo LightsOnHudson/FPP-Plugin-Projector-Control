@@ -1,85 +1,76 @@
 <?php
+
 function sendTCP($IP, $PORT, $cmd) {
-	
-
-if($PORT == "23") {
-
-logEntry("We have a TELNET port");
-
-
-$fp=pfsockopen($IP,23);
-
-logEntry("Telnet session opening ...");
-
-sleep(4);
-
-//fputs($fp,$header1); 
-$cmd .= "\r";
-fputs($fp,$cmd);
-//fputs($fp,"(LMP?)\r");
-sleep(2); 
-fclose($fp);
-return;
+	if($PORT == "23") {
+		logEntry("We have a TELNET port");
+		$fp=pfsockopen($IP,23);
+		logEntry("Telnet session opening ...");
+		sleep(4);
+		//fputs($fp,$header1); 
+		$cmd .= "\r";
+		fputs($fp,$cmd);
+		//fputs($fp,"(LMP?)\r");
+		sleep(2); 
+		fclose($fp);
+		return;
+	}
+	/* Create a TCP/IP socket. */
+	$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+	if ($socket === false) {
+    	logEntry("socket_create() failed: reason: " . socket_strerror(socket_last_error()));
+	} else {
+   		logEntry("TCPIP Socket Created");
+	}
+	$result = socket_connect($socket, $IP, $PORT);
+	if ($result === false) {
+		logEntry("socket_connect() failed. Reason: ($result) " . socket_strerror(socket_last_error($socket)));
+	} else {
+		logEntry("TCPIP CONNECTED");
+	}
+	socket_write($socket, $cmd, strlen($cmd));
+	logEntry("Reading response");
+	while ($out = socket_read($socket, 2048)) {
+    	logEntry($out);
+	}
+	logEntry("Closing socket...");
+	socket_close($socket);
+	logEntry("OK");
 }
 
-/* Create a TCP/IP socket. */
-$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-if ($socket === false) {
-    logEntry("socket_create() failed: reason: " . socket_strerror(socket_last_error()));
-} else {
-   logEntry("TCPIP Socket Created");
+function get_serialDevices() {
+	$SERIAL_DEVICES=array();
+	logEntry("In get_serialDevices");
+	foreach(scandir("/dev/") as $fileName){
+        if (preg_match("/tty[ASU][A-Z0-9]+/", $fileName)){
+			$SERIAL_DEVICES[$fileName] = $fileName;
+			logEntry("serialDevices " .$fileName);
+		}				
+	}
+	//logEntry("serialDevices array " .var_dump ($SERIAL_DEVICES));
+	return $SERIAL_DEVICES;
 }
 
-
-$result = socket_connect($socket, $IP, $PORT);
-if ($result === false) {
-    logEntry("socket_connect() failed. Reason: ($result) " . socket_strerror(socket_last_error($socket)));
-} else {
-    logEntry("TCPIP CONNECTED");
-}
-
-
-socket_write($socket, $cmd, strlen($cmd));
-
-
-logEntry("Reading response");
-while ($out = socket_read($socket, 2048)) {
-    logEntry($out);
-}
-
-logEntry("Closing socket...");
-socket_close($socket);
-logEntry("OK");
-
-}
 function hex_dump($data, $newline="\n") {
-  static $from = '';
-  static $to = '';
-
-  static $width = 16; # number of bytes per line
-
-  static $pad = '.'; # padding for non-visible characters
-
-  if ($from==='')
-  {
-    for ($i=0; $i<=0xFF; $i++)
-    {
-      $from .= chr($i);
-      $to .= ($i >= 0x20 && $i <= 0x7E) ? chr($i) : $pad;
-    }
-  }
-
-  $hex = str_split(bin2hex($data), $width*2);
-  $chars = str_split(strtr($data, $from, $to), $width);
-
-$HEX_OUT ="";
-  $offset = 0;
-  foreach ($hex as $i => $line)
-  {
-    $HEX_OUT.= sprintf('%6X',$offset).' : '.implode(' ', str_split($line,2)) . ' [' . $chars[$i] . ']';
-    $offset += $width;
-  }
-return $HEX_OUT;
+	static $from = '';
+	static $to = '';
+	static $width = 16; # number of bytes per line
+	static $pad = '.'; # padding for non-visible characters
+	if ($from===''){
+		for ($i=0; $i<=0xFF; $i++){
+			$from .= chr($i);
+			$to .= ($i >= 0x20 && $i <= 0x7E) ? chr($i) : $pad;
+		}
+	}
+	$hex = str_split(bin2hex($data), $width*2);
+	$chars = str_split(strtr($data, $from, $to), $width);
+	$HEX_OUT ="";
+	$offset = 0;
+	foreach ($hex as $i => $line)
+	{
+		$HEX_OUT.= sprintf('%6X',$offset).' : '.implode(' ', str_split($line,2)) . ' [' . $chars[$i] . ']';
+		$offset += $width;
+	}
+	return $HEX_OUT;
 }
 
 function decode_code($code) {
@@ -98,6 +89,38 @@ function decode_code($code) {
             }
         }, $code);
 }
+function getProjectors(){
+	global $PROJECTORS;
+	foreach ($PROJECTORS as $projector) {
+		$PROJECTOR_LIST[$projector['NAME']] = $projector['NAME'];
+		//logEntry("Projectors " .$projector['NAME']);			
+	}	
+	return $PROJECTOR_LIST;
+}
+function create_scripts() {
+	global $scriptDirectory;
+    $delDir = $scriptDirectory."/";
+    $pattern = 'PROJECTOR-*';   
+    // Get an array of file paths matching the pattern
+    $files = glob($delDir . $pattern);
+    
+    // Loop through the files and delete each one
+    foreach ($files as $file) {
+        // Use unlink() function to delete the file
+        if (unlink($file)) {
+            echo "Deleted: $file<br>";
+        } else {
+            echo "Error deleting: $file<br>";
+        }
+    }
+}
+Function getBaudRates(){
+	return $Baud= array("9600"=>"9600","19200"=>"19200","38400"=>"38400","115200"=>"115200");
+}
+
+function getCharBits(){
+	return $Char= array("5"=>"5","6"=>"6","7"=>"7","8"=>"8");	
+}
 
 //print the different projectors for plugin setup
 function printProjectorSelect() {
@@ -105,22 +128,19 @@ function printProjectorSelect() {
 	global $PROJECTORS,$PROJECTOR_READ;
 	
 	//print_r($PROJECTORS);
-	
+	//** this populates the dropdown and sets the selected item to the saved projector */
 	echo "<select name=\"PROJECTOR\"> \n";
 	
 	foreach ($PROJECTORS as $projector) {
-		
 		if($projector['NAME'] == $PROJECTOR_READ) {
 			echo "<option selected value=\"".$projector['NAME']."\">".$projector['NAME']."</option> \n";
+			//logEntry("In foreach projector[name]== Projector_read".$PROJECTOR_READ);
 		} else {
 			echo "<option value=\"".$projector['NAME']."\">".$projector['NAME']."</option> \n";
-		}
-	}
-	
-	
-	
-	echo "</select> \n";
-	
+			//logEntry("in foreach-else projector[name]!= Projector_read ".$projector['NAME']." ".$PROJECTOR_READ);
+		}		
+	}	
+	echo "</select> \n";	
 }
 
 
@@ -129,7 +149,7 @@ function createProjectorEventFiles() {
 	global $eventDirectory,$PROJECTORS,$PROJECTOR_READ,$pluginDirectory,$pluginName,$scriptDirectory,$DEVICE_CONNECTION_TYPE,$DEVICE;
 	
 	
-		
+	logEntry("In CreateProjectorEventFiles");	
 	//echo "next event file name available: ".$nextEventFilename."\n";
 
 	$PROJECTOR_FOUND=false;
@@ -137,17 +157,17 @@ function createProjectorEventFiles() {
 	for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 	
 		if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR_READ) {
-		
+			logEntry("In CreateProjectorEventFiles Projectectorindex==ProjectorRead ".$PROJECTOR_READ);	
 		//	echo "CMD: ".$cmd."\n";
 		//iterate through the various keys and make a file for them
 			//	print_r($PROJECTORS[$projectorIndex]);
 		//	echo "Processing files for projector name : ".$PROJECTOR_READ."<br/> \n";
 			foreach($PROJECTORS[$projectorIndex] as $key => $value) {
 				//echo "key: ".$key." -- value: ".$val."\n";
-
+				logEntry("In CreateProjectorEventFiles Name key and value ".$PROJECTOR_READ. " ".$key."-< ".$value);
 				if($key != "NAME" && $key != "BAUD_RATE" && $key != "CHAR_BITS" && $key != "PARITY" && $key != "STOP_BITS" && $key != "VALID_STATUS_0" && $key != "VALID_STATUS_1" && $key != "VALID_STATUS_2")
 				{
-					
+					logEntry("In CreateProjectorEventFiles not any match ".$key);
 					//check to see that the file doesnt already exist - do a grep and return contents
 					$EVENT_CHECK = checkEventFilesForKey("PROJECTOR-".$key);
 					if(!$EVENT_CHECK)
@@ -171,7 +191,7 @@ function createProjectorEventFiles() {
  */						
 					//	echo "eventData: ".$eventData."<br/>\n";
 					//	file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);     // removed for test
-						
+						logEntry("In CreateProjectorEventFiles data passed to createScriptFiles DeviceConnection ".$DEVICE_CONNECTION_TYPE." ".$DEVICE." key".$key);
 						$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key;  
 						createScriptFile("PROJECTOR-".$key.".sh",$scriptCMD);
 					}

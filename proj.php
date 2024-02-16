@@ -135,7 +135,7 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 						
 						logEntry("PJLINK CMD: ".$PJLINK_CMD);
 						$PROJECTOR_CMD = $PJLINK_CMD;
-						
+						//**saved settings are over-ridden??? */
 					} elseif ($PROJECTORS[$projectorIndex]['PROTOCOL'] == "TCP") {
 						$DEVICE_CONNECTION_TYPE = "IP";
 						logEntry("TCP/IP Projector");

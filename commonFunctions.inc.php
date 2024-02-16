@@ -36,7 +36,7 @@ function createScriptFile($scriptFilename,$scriptCMD) {
 
 	$scriptFilename = $scriptDirectory."/".$scriptFilename;
 
-	logEntry("Creating  script: ".$scriptFilename);
+	logEntry("Creating  script: ".$scriptFilename. " in directory ".$scriptDirectory);
 	
 	$ext = pathinfo($scriptFilename, PATHINFO_EXTENSION);
 
@@ -58,8 +58,8 @@ function createScriptFile($scriptFilename,$scriptCMD) {
 	$fs = fopen($scriptFilename,"w");
 	fputs($fs, $data);
 	fclose($fs);
-
 }
+
 //return the next event file available for use
 
 //get the next available event filename
