@@ -25,7 +25,7 @@
 		{
 			"minFPPVersion": "8.0",
 			"maxFPPVersion": "0",
-			"branch": "v8+update",
+			"branch": "V8+update",
 			"sha": "",
 			"dependencies": {
 			    "plugins": [
