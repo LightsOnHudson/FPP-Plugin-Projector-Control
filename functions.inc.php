@@ -1,7 +1,27 @@
 <?php
 
+require_once("projectorCommands.inc");
+require_once("commonFunctions.inc.php");
+include_once '/opt/fpp/www/common.php';
+
+
+$pluginName = basename(dirname(__FILE__));
+$DEVICE = $pluginSettings['DEVICE'];
+$BAUD_RATE = $pluginSettings['BAUD_RATE'];
+$CHAR_BITS = $pluginSettings['CHAR_BITS'];
+$STOP_BITS = $pluginSettings['STOP_BITS'];
+$PARITY = $pluginSettings['PARITY'];	
+//$DEVICE_CONNECTION_TYPE = $pluginSettings['DEVICE_CONNECTION_TYPE'];
+$IP = $pluginSettings['IP'];
+$PORT = $pluginSettings['PORT'];
+$ENABLED = urldecode($pluginSettings['ENABLED']);
+$PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
+$PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
+$PROJ_PROTOCOL = urldecode($pluginSettings['PROJ_PROTOCOL']);
+$PROJECTOR_READ = $PROJECTOR;
+
 if (isset($_GET['action']) && $_GET['action'] == 'create_scripts') {
-    create_scripts();
+   create_scripts();
 }
 function sendTCP($IP, $PORT, $cmd) {
 	if($PORT == "23") {
@@ -9,10 +29,8 @@ function sendTCP($IP, $PORT, $cmd) {
 		$fp=pfsockopen($IP,23);
 		logEntry("Telnet session opening ...");
 		sleep(4);
-		//fputs($fp,$header1); 
 		$cmd .= "\r";
 		fputs($fp,$cmd);
-		//fputs($fp,"(LMP?)\r");
 		sleep(2); 
 		fclose($fp);
 		return;
@@ -92,31 +110,132 @@ function decode_code($code) {
             }
         }, $code);
 }
+
 function getProjectors(){
 	global $PROJECTORS;
 	foreach ($PROJECTORS as $projector) {
-		$PROJECTOR_LIST[$projector['NAME']] = $projector['NAME'];
-		//logEntry("Projectors " .$projector['NAME']);			
+		$PROJECTOR_LIST[$projector['NAME']] = $projector['NAME'];			
 	}	
 	return $PROJECTOR_LIST;
 }
+
 function create_scripts() {
-	global $scriptDirectory;
-    $delDir = $scriptDirectory."/";
-    $pattern = 'PROJECTOR-*';   
-    // Get an array of file paths matching the pattern
+	logEntry("in create scripts");
+	
+	//delete the old files and create new ones based on the projector chosen.
+	global $PROJECTORS,$PROJECTOR_READ,$pluginDirectory,$pluginName,$scriptDirectory,$IP,
+	$DEVICE,$BAUD_RATE,$CHAR_BITS,$STOP_BITS,$PARITY,$PROJ_PASSWORD,$PORT,$PROJ_PROTOCOL;
+
+	// delete files in the script directory
+	$delDir = $scriptDirectory."/";
+    $pattern = 'PROJECTOR-*';	
     $files = glob($delDir . $pattern);
-    
-    // Loop through the files and delete each one
     foreach ($files as $file) {
-        // Use unlink() function to delete the file
         if (unlink($file)) {
-            echo "Deleted: $file<br>";
+            //echo "Deleted: $file<br>";
         } else {
-            echo "Error deleting: $file<br>";
+            //echo "Error deleting: $file<br>";
         }
     }
+	
+	// delete the files in the $pluginName/commands directory
+	
+	$delDir = $pluginDirectory."/".$pluginName."/"."commands/";
+	logEntry("@@@@ delete directory ".$delDir);
+    $files = glob($delDir . $pattern);
+	
+    foreach ($files as $file) {
+		logEntry("@@@@ delete file ".$file);
+        if (unlink($file)) {
+            logEntry("@@@@ file deleted ".$file);
+        } else {
+            logEntry("@@@@ file not deleted ".$file);
+        }
+    }
+
+	
+	$PROJ_PROTOCOL = "SERIAL"; // Default value
+	$index = -1; // Default index, indicating not found
+	
+foreach ($PROJECTORS as $key => $projector) {
+    if ($projector["NAME"] === $PROJECTOR_READ) {
+
+        $PROJ_PROTOCOL = isset($projector["PROTOCOL"]) ? $projector["PROTOCOL"] : "SERIAL";		
+		WriteSettingToFile("PROJ_PROTOCOL", $PROJ_PROTOCOL, $pluginName);
+
+		if ($PROJ_PROTOCOL=="PJLINK" || $PROJ_PROTOCOL=="TCP"){
+			$DEVICE_CONNECTION_TYPE="IP";
+		}else{
+			$DEVICE_CONNECTION_TYPE="SERIAL";
+		}
+
+		$BAUD_RATE=isset($projector["BAUD_RATE"]) ? $projector["BAUD_RATE"] : "";
+		WriteSettingToFile("BAUD_RATE", $BAUD_RATE, $pluginName);
+
+		$CHAR_BITS=isset($projector["CHAR_BITS"]) ? $projector["CHAR_BITS"] : "";
+		WriteSettingToFile("CHAR_BITS", $CHAR_BITS, $pluginName);
+
+		$STOP_BITS=isset($projector["STOP_BITS"]) ? $projector["STOP_BITS"] : "";
+		WriteSettingToFile("STOP_BITS", $STOP_BITS, $pluginName);
+
+		$PARITY=isset($projector["PARITY"]) ? $projector["PARITY"] : "";
+		WriteSettingToFile("STOP_BITS", $PARITY, $pluginName);
+
+		$IP=isset($projector["IP"]) ? $projector["IP"] : "";
+		WriteSettingToFile("IP", $IP, $pluginName);
+
+		$PROJ_PASSWORD=isset($projector["PROJ_PASSWORD"]) ? $projector["PROJ_PASSWORD"] : "";
+		WriteSettingToFile("PROJ_PASSWORD", $PROJ_PASSWORD, $pluginName);
+
+		$PORT=isset($projector["PORT"]) ? $projector["PORT"] : "";
+		WriteSettingToFile("PORT", $PORT, $pluginName);
+
+		$index = $key; // Save the index
+		foreach($PROJECTORS[$index] as $key => $value){
+			$numCommands=count($PROJECTORS[$index]);				
+			if($key != "NAME" && $key != "BAUD_RATE" && $key != "CHAR_BITS" && $key != "PARITY" && $key != "STOP_BITS" && $key != "VALID_STATUS_0" && $key != "VALID_STATUS_1" && $key != "VALID_STATUS_2"){
+				$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key; 
+				$scriptFilename = $scriptDirectory."/PROJECTOR-".$key.".sh";
+				$description= array(
+					"name" => "Projector Control-Projector " . $key,
+        			"script" => "PROJECTOR-" . $key . ".sh",
+        			"args" => array()
+    			);
+				$descriptions[] = $description;
+				$ext = pathinfo($scriptFilename, PATHINFO_EXTENSION);
+				$data = "";
+				$data .="#!/bin/sh\n";	
+				$data .= "\n";
+				$data .= "#Created by ".$pluginName."\n";
+				$data .= "#\n";
+				$data .= "/usr/bin/php ".$scriptCMD."\n";
+				//save to FPP scripts directory
+				$fs = fopen($scriptFilename,"w");
+				fputs($fs, $data);
+				fclose($fs);
+				//save scripts to commands $pluginName/commands directory
+				$saveDir = $pluginDirectory."/".$pluginName."/"."commands/";
+				$fileName = "PROJECTOR-".$key.".sh";
+				$filePath = $saveDir . $fileName;
+				file_put_contents($filePath, $data);
+			}	
+         
+    	}
+		//save $descriptions.json file
+		$json = json_encode($descriptions, JSON_PRETTY_PRINT);
+		$saveDir = $pluginDirectory."/".$pluginName."/"."commands/";
+		$fileName = "descriptions.json";
+		$filePath = $saveDir . $fileName;
+		file_put_contents($filePath, $json);
+		
+		break; // Stop searching once found
+	}
 }
+	$result = Array("status" => "OK");
+	echo json_encode($result);
+	return;
+}
+
 Function getBaudRates(){
 	return $Baud= array("9600"=>"9600","19200"=>"19200","38400"=>"38400","115200"=>"115200");
 }
@@ -125,99 +244,12 @@ function getCharBits(){
 	return $Char= array("5"=>"5","6"=>"6","7"=>"7","8"=>"8");	
 }
 
-//print the different projectors for plugin setup
-function printProjectorSelect() {
-	
-	global $PROJECTORS,$PROJECTOR_READ;
-	
-	//print_r($PROJECTORS);
-	//** this populates the dropdown and sets the selected item to the saved projector */
-	echo "<select name=\"PROJECTOR\"> \n";
-	
-	foreach ($PROJECTORS as $projector) {
-		if($projector['NAME'] == $PROJECTOR_READ) {
-			echo "<option selected value=\"".$projector['NAME']."\">".$projector['NAME']."</option> \n";
-			//logEntry("In foreach projector[name]== Projector_read".$PROJECTOR_READ);
-		} else {
-			echo "<option value=\"".$projector['NAME']."\">".$projector['NAME']."</option> \n";
-			//logEntry("in foreach-else projector[name]!= Projector_read ".$projector['NAME']." ".$PROJECTOR_READ);
-		}		
-	}	
-	echo "</select> \n";	
-}
-
-
-function createProjectorEventFiles() {
-	
-	global $eventDirectory,$PROJECTORS,$PROJECTOR_READ,$pluginDirectory,$pluginName,$scriptDirectory,$DEVICE_CONNECTION_TYPE,$DEVICE;
-	
-	
-	logEntry("In CreateProjectorEventFiles");	
-	//echo "next event file name available: ".$nextEventFilename."\n";
-
-	$PROJECTOR_FOUND=false;
-	
-	for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
-	
-		if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR_READ) {
-			logEntry("In CreateProjectorEventFiles Projectectorindex==ProjectorRead ".$PROJECTOR_READ);	
-		//	echo "CMD: ".$cmd."\n";
-		//iterate through the various keys and make a file for them
-			//	print_r($PROJECTORS[$projectorIndex]);
-		//	echo "Processing files for projector name : ".$PROJECTOR_READ."<br/> \n";
-			foreach($PROJECTORS[$projectorIndex] as $key => $value) {
-				//echo "key: ".$key." -- value: ".$val."\n";
-				logEntry("In CreateProjectorEventFiles Name key and value ".$PROJECTOR_READ. " ".$key."-< ".$value);
-				if($key != "NAME" && $key != "BAUD_RATE" && $key != "CHAR_BITS" && $key != "PARITY" && $key != "STOP_BITS" && $key != "VALID_STATUS_0" && $key != "VALID_STATUS_1" && $key != "VALID_STATUS_2")
-				{
-					logEntry("In CreateProjectorEventFiles not any match ".$key);
-					//check to see that the file doesnt already exist - do a grep and return contents
-					$EVENT_CHECK = checkEventFilesForKey("PROJECTOR-".$key);
-					if(!$EVENT_CHECK)
-					{
-/* 				
-						$nextEventFilename = getNextEventFilename();
-						$MAJOR=substr($nextEventFilename,0,2);
-						$MINOR=substr($nextEventFilename,3,2);
-						$eventData  ="";
-                        			$eventData  ="{\n";
-                        			$eventData .= "\t\"command\": \"Run Script\",\n";
-                        			$eventData .= "\t\"args\": [\n";
-                        			$eventData .= "\t\t\"PROJECTOR-".$key.".sh\",\n";
-                        			$eventData .= "\t\t\"\",\n";
-                       	 			$eventData .= "\t\t\"\"\n";
-                        			$eventData .= "\t],\n";
-                        			$eventData .= "\t\"name\": \"PROJECTOR-".$key."\",\n";
-                        			$eventData .= "\t\"majorId\": ".(int)$MAJOR.",\n";
-                        			$eventData .= "\t\"minorId\": ".(int)$MINOR."\n";
-                        			$eventData .= "}";
- */						
-					//	echo "eventData: ".$eventData."<br/>\n";
-					//	file_put_contents($eventDirectory."/".$nextEventFilename, $eventData);     // removed for test
-						logEntry("In CreateProjectorEventFiles data passed to createScriptFiles DeviceConnection ".$DEVICE_CONNECTION_TYPE." ".$DEVICE." key".$key);
-						$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key;  
-						createScriptFile("PROJECTOR-".$key.".sh",$scriptCMD);
-					}
-				}
-				
-				//echo "$key => $val\n";
-			}
-		}
-	}
-	
-	
-	
-}
-
-
 function logEntry($data) {
-
 	global $logFile,$myPid,$callBackPid;
 	
 	if($callBackPid != "") {
 		$data = $_SERVER['PHP_SELF']." : [".$callBackPid.":".$myPid."] ".$data;
-	} else { 
-	
+	} else { 	
 		$data = $_SERVER['PHP_SELF']." : [".$myPid."] ".$data;
 	}
 	$logWrite= fopen($logFile, "a") or die("Unable to open file!");
@@ -225,61 +257,35 @@ function logEntry($data) {
 	fclose($logWrite);
 }
 
-
 function escapeshellarg_special($file) {
 	return "'" . str_replace("'", "'\"'\"'", $file) . "'";
 }
 
-
 //function send the message
-
 function sendCommand($projectorCommand) {
-
 	global $pluginName,$myPid,$pluginDirectory,$DEVICE,$DEVICE_CONNECTION_TYPE,$IP,$PORT;
 	
-	//$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
-	//$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
-	//$IP = ReadSettingFromFile("IP",$pluginName);
-	//$PORT = ReadSettingFromFile("PORT",$pluginName);
-	
-	//$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
-
-//	logEntry("reading config file");
-//	logEntry(" DEVICE: ".$DEVICE." DEVICE_CONNECTION_TYPE: ".$DEVICE_CONNECTION_TYPE." IP: ".$IP. " PORT: ".$PORT);
-
-	//logEntry("INSIDE SEND");
 	//# Send line to  Projector
 	$cmd = $pluginDirectory."/".$pluginName."/proj.php ";
-
 	$cmd .= "-d".$DEVICE_CONNECTION_TYPE;
-
-
 	switch ($DEVICE_CONNECTION_TYPE) {
-
 		case "SERIAL":
-
 			$SERIALCMD = " -s".$DEVICE." -c".$projectorCommand;
-			$cmd .= $SERIALCMD;
-				
-			break;
-				
+			$cmd .= $SERIALCMD;				
+			break;				
 		case "IP":
 			$IPCMD = " -h".$IP. " -c".$projectorCommand;
 			$cmd .= $IPCMD;
-			break;
-				
+			break;				
 	}
 
 	$cmd .= " -z".$myPid;
 	
 	logEntry("COMMAND: ".$cmd);
-	system($cmd,$output);
-
-	//system($cmd."\"".$line."\" ".$DEVICE,$output);
+	system($cmd,$output);	
 }
 
-function processSequenceName($sequenceName) {
-	
+function processSequenceName($sequenceName) {	
 	global $projectorONSequence, $projectorOFFSequence,$projectorVIDEOSequence;
 	
 	logEntry("Sequence name: ".$sequenceName);

@@ -8,19 +8,19 @@ error_reporting(0);   //commented out was in file pat 2/4/2024
 
 //added Dec 3 2015
 ob_implicit_flush();
-
+$skipJSsettings = 1;
 //include 'php_serial.class.php';
 include 'PhpSerial.php';                         //added as replacement pat 2/4/2024
 include_once('projectorCommands.inc');
-
-$skipJSsettings = 1;
+include_once 'functions.inc.php';
+include_once 'commonFunctions.inc.php';
 include_once '/opt/fpp/www/config.php';
 include_once '/opt/fpp/www/common.php';
+//@@@@@ IS THIS NEEDED? dECLARED IN FUNCTIONS,INC,PHP
 $pluginName = basename(dirname(__FILE__));     //pjd 8-10-2019   added per dkulp
 
 
-include_once 'functions.inc.php';
-include_once 'commonFunctions.inc.php';
+
 
 //added TCPIP network control to port configured in projectorCommands.inc.php
 
@@ -29,7 +29,9 @@ if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 
 $logFile = $settings['logDirectory'] . "/".$pluginName.".log";
-$myPid = getmypid();
+
+
+$myPid = getmypid(); //@@@@@@@@@@ is this needed?
 
 //$cfgServer="192.168.192.15";
 $cfgPort="3001";
@@ -37,6 +39,8 @@ $cfgTimeOut=10;
 $DEBUG=false;
 $SERIAL_DEVICE="";
 $callBackPid="";
+
+//@@@@@@@@@@@@ Are these needed? Settings are saved in functions.inc.php
 
 //$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
 $DEVICE = $pluginSettings['DEVICE'];
@@ -78,7 +82,7 @@ $options = getopt("c:");
 
 $SERIAL_DEVICE="/dev/".$DEVICE;
 
-
+//@@@@@@@@@@@@@@ is this needed?? I don't see any z: settings
 if($options["z"] != "") {
 	$callBackPid = $options["z"];
 }
@@ -90,121 +94,114 @@ logEntry("option C: ".$options["c"]);
 $cmd= strtoupper(trim($options["c"]));
 
 //loop through the array of projectors to get the command
-$projectorIndex = 0;
+//@@@ is this needed? For loop initializes projectorIndex 
+$projectorIndex = 0; 
 //set the found flag, do not send a command if the name and command cannot be found
 
 
 //print_r($PROJECTORS);
 $PROJECTOR_FOUND=false;
 
+//@@@@ is this needed? Pull values from Globals??
+
 for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 
 	
 	if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR) {
-			logEntry("Projector index: ".$projectorIndex);
-			logEntry("Looking for command string for cmd: ".$cmd);
+		logEntry("proj.php Projector found: ".$PROJECTOR);
+		logEntry("Looking for command string for cmd: ".$cmd);
 
-			//while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {   // removed for newer php  -pat 2/4/2024
-			foreach($PROJECTORS[$projectorIndex] as $key => $val) {	
+		//while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {   // removed for newer php  -pat 2/4/2024
+		foreach($PROJECTORS[$projectorIndex] as $key => $val) {	
+			
+			if(strtoupper(trim($key)) == $cmd) {
+				$PROJECTOR_FOUND=true;
+				$PROJECTOR_CMD = $val;
 				
-				if(strtoupper(trim($key)) == $cmd) {
-					$PROJECTOR_FOUND=true;
-					$PROJECTOR_CMD = $val;
+				logEntry("--------------");
+				logEntry("PROJECTOR FOUND");
+				logEntry("PROJECTOR: ".$PROJECTOR);
+				
+				if($PROJECTORS[$projectorIndex]['PROTOCOL'] == "PJLINK") {
+					$DEVICE_CONNECTION_TYPE = "PJLINK";
+					logEntry("PJLINK Projector");
 					
-					logEntry("--------------");
-					logEntry("PROJECTOR FOUND");
-					logEntry("PROJECTOR: ".$PROJECTOR);
-					
-					if($PROJECTORS[$projectorIndex]['PROTOCOL'] == "PJLINK") {
-						$DEVICE_CONNECTION_TYPE = "PJLINK";
-						logEntry("PJLINK Projector");
-						
-						if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
-							$IP= $PROJECTORS[$projectorIndex]['IP'];
-						}
-						
-						
-						if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
-							$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
-						}
-						
-						$PJLINK_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
-						$PJLINK_CMD .= $IP." ";
-						$PJLINK_CMD .= $PROJECTOR_CMD." ";
-						$PJLINK_CMD .= "-p ".$PROJ_PASSWORD;
-						
-						logEntry("PJLINK CMD: ".$PJLINK_CMD);
-						$PROJECTOR_CMD = $PJLINK_CMD;
-						//**saved settings are over-ridden??? */
-					} elseif ($PROJECTORS[$projectorIndex]['PROTOCOL'] == "TCP") {
-						$DEVICE_CONNECTION_TYPE = "IP";
-						logEntry("TCP/IP Projector");
-						
-						if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
-							$IP= $PROJECTORS[$projectorIndex]['IP'];
-						}
-						
-						
-						if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
-							$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
-						}
-						$PORT= $PROJECTORS[$projectorIndex]['PORT'];
-						
-						//$IP_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
-						//$IP_CMD .= $IP." ";
-						//$IP_CMD = $PROJECTOR_CMD;//." ";
-						//$IP_CMD .= "-p ".$PROJ_PASSWORD;
-						
-						logEntry("TCPIP IP: ".$IP." PORT: ".$PORT." CMD: ".$PROJECTOR_CMD);
-						//$PROJECTOR_CMD = $IP_CMD;
-						
-					} else {
-						
-						if($pluginSettings['BAUD_RATE'] !="")
-						{
-							$PROJECTOR_BAUD = $pluginSettings['BAUD_RATE'];
-						} else {
-							$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
-						}
-
-						if($pluginSettings['CHAR_BITS'] !="")
-						{
-							$PROJECTOR_CHAR_BITS = $pluginSettings['CHAR_BITS'];
-						} else {
-							$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
-						}
-
-						if($pluginSettings['STOP_BITS'] !="")
-						{
-							$PROJECTOR_STOP_BITS = $pluginSettings['STOP_BITS'];
-						} else {
-							$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
-						}
-
-						if($pluginSettings['PARITY'] !="")
-						{
-							$PROJECTOR_PARITY = $pluginSettings['PARITY'];
-						} else {
-							$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
-						}
-						
-					
-						logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
-						logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
-						logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
-						logEntry("PARITY: ".$PROJECTOR_PARITY);
-						
-						
+					if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
+						$IP= $PROJECTORS[$projectorIndex]['IP'];
 					}
 					
 					
+					if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
+						$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
+					}
 					
+					$PJLINK_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
+					$PJLINK_CMD .= $IP." ";
+					$PJLINK_CMD .= $PROJECTOR_CMD." ";
+					$PJLINK_CMD .= "-p ".$PROJ_PASSWORD;
+					
+					logEntry("PJLINK CMD: ".$PJLINK_CMD);
+					$PROJECTOR_CMD = $PJLINK_CMD;
+					//**saved settings are over-ridden??? */
+				} elseif ($PROJECTORS[$projectorIndex]['PROTOCOL'] == "TCP") {
+					$DEVICE_CONNECTION_TYPE = "IP";
+					logEntry("TCP/IP Projector");
+					
+					if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
+						$IP= $PROJECTORS[$projectorIndex]['IP'];
+					}
+					
+					
+					if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
+						$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
+					}
+					$PORT= $PROJECTORS[$projectorIndex]['PORT'];
+					
+					//$IP_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
+					//$IP_CMD .= $IP." ";
+					//$IP_CMD = $PROJECTOR_CMD;//." ";
+					//$IP_CMD .= "-p ".$PROJ_PASSWORD;
+					
+					logEntry("TCPIP IP: ".$IP." PORT: ".$PORT." CMD: ".$PROJECTOR_CMD);
+					//$PROJECTOR_CMD = $IP_CMD;
+					
+				} else {
+					
+					if($pluginSettings['BAUD_RATE'] !="")
+					{
+						$PROJECTOR_BAUD = $pluginSettings['BAUD_RATE'];
+					} else {
+						$PROJECTOR_BAUD=$PROJECTORS[$projectorIndex]['BAUD_RATE'];
+					}
+
+					if($pluginSettings['CHAR_BITS'] !="")
+					{
+						$PROJECTOR_CHAR_BITS = $pluginSettings['CHAR_BITS'];
+					} else {
+						$PROJECTOR_CHAR_BITS=$PROJECTORS[$projectorIndex]['CHAR_BITS'];
+					}
+
+					if($pluginSettings['STOP_BITS'] !="")
+					{
+						$PROJECTOR_STOP_BITS = $pluginSettings['STOP_BITS'];
+					} else {
+						$PROJECTOR_STOP_BITS=$PROJECTORS[$projectorIndex]['STOP_BITS'];
+					}
+
+					if($pluginSettings['PARITY'] !="")
+					{
+						$PROJECTOR_PARITY = $pluginSettings['PARITY'];
+					} else {
+						$PROJECTOR_PARITY=$PROJECTORS[$projectorIndex]['PARITY'];
+					}		
+				
+					logEntry("BAUD RATE: ".$PROJECTOR_BAUD);
+					logEntry("CHAR BITS: ".$PROJECTOR_CHAR_BITS);
+					logEntry("STOP BITS: ".$PROJECTOR_STOP_BITS);
+					logEntry("PARITY: ".$PROJECTOR_PARITY);							
 				}
-
-
-
 			}
-	
+		}	
 	}
 }
 

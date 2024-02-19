@@ -115,7 +115,7 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Dukane_ImagePRO8758_NETWORK",
-		// This projector uses TELNET to connect, see note at tope of file.
+		// This projector uses TELNET to connect, see note at top of file.
 				"PROTOCOL" => "TCP",
 				"ON" => "(PWR1)",
 				"OFF" => "(PWR0)",

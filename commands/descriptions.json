@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Projector Control-Projector PROTOCOL",
+        "script": "PROJECTOR-PROTOCOL.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector ON",
+        "script": "PROJECTOR-ON.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector OFF",
+        "script": "PROJECTOR-OFF.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector RGB",
+        "script": "PROJECTOR-RGB.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector VIDEO",
+        "script": "PROJECTOR-VIDEO.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector DIGITAL",
+        "script": "PROJECTOR-DIGITAL.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector IP",
+        "script": "PROJECTOR-IP.sh",
+        "args": []
+    },
+    {
+        "name": "Projector Control-Projector PASSWORD",
+        "script": "PROJECTOR-PASSWORD.sh",
+        "args": []
+    }
+]
