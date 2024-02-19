@@ -10,6 +10,20 @@
 	"versions": [
 		{
 			"minFPPVersion": "2.0",
+			"maxFPPVersion": "7.9",
+			"branch": "master",
+			"sha": "",
+			"dependencies": {
+			    "plugins": [
+					],
+			    "packages": [
+					],
+				"scripts": [
+				]
+			}
+		},
+		{
+			"minFPPVersion": "8.0",
 			"maxFPPVersion": "0",
 			"branch": "master",
 			"sha": "",
@@ -21,6 +35,6 @@
 				"scripts": [
 				]
 			}
-		}
+		}		
 	]
 }
