@@ -52,7 +52,7 @@ $DEBUG = false;
 <div id="port">Port: <?  PrintSettingTextSaved("PORT", 0,0, 6, 6, $pluginName, "", "validatePort"); ?></div></p>
  
 <p>To report a bug, please file it against the Projector Control plug-in project on Git:<a href="https://github.com/FalconChristmas/FPP-Plugin-Projector-Control/issues"> Projector Control Issues Link</a>
-
+<!-- Delete this? -->
 <form method="post" action="http://<? echo $_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=<?php echo $pluginName;?>&page=plugin_setup.php">
 <?
 if (!isset($pluginSettings['PROJECTOR'])){ //check to see if first run. Save displayed settings if not
@@ -87,9 +87,9 @@ if (!isset($pluginSettings['PROJECTOR'])){ //check to see if first run. Save dis
 			SetPluginSetting(pluginName, "PARITY", temp,0,0,null);
 		}	
 		initialSave();
-		updateVisibility();			
+		projectorChanged();			
 	</script><?
-	create_scripts();
+	
 }
  
 ?>

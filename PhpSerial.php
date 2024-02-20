@@ -88,7 +88,7 @@ class PhpSerial
 //		echo "OS :", PHP_OS_FAMILY , "\n";                                  //pat what state is it in?
         if ($this->_dState !== SERIAL_DEVICE_OPENED) {
             if (PHP_OS_FAMILY === "Linux") {
-                if (preg_match("/tty[ASU][A-Z0-9]+/", $device, $matches[0])) {
+                if (preg_match("/tty[ASU][A-Z0-9]+/", $device, $matches)) {
 				//if (preg_match("@^COM(\d+):?$@i", $device, $matches)) {	
                     //use the device that is sent!!!
 					//$device = "/dev/ttyS" . ($matches[1] - 1);

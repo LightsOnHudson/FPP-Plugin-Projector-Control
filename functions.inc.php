@@ -5,7 +5,7 @@ require_once("commonFunctions.inc.php");
 include_once '/opt/fpp/www/common.php';
 
 
-$pluginName = basename(dirname(__FILE__));
+$pluginName = basename(dirname(__FILE__)); //delete? defined in commonFunctions 
 $DEVICE = $pluginSettings['DEVICE'];
 $BAUD_RATE = $pluginSettings['BAUD_RATE'];
 $CHAR_BITS = $pluginSettings['CHAR_BITS'];
@@ -213,11 +213,14 @@ foreach ($PROJECTORS as $key => $projector) {
 				$fs = fopen($scriptFilename,"w");
 				fputs($fs, $data);
 				fclose($fs);
+				chmod($scriptFilename, 0755);
 				//save scripts to commands $pluginName/commands directory
 				$saveDir = $pluginDirectory."/".$pluginName."/"."commands/";
 				$fileName = "PROJECTOR-".$key.".sh";
 				$filePath = $saveDir . $fileName;
 				file_put_contents($filePath, $data);
+				chmod($filePath,0755);
+
 			}	
          
     	}
@@ -226,9 +229,8 @@ foreach ($PROJECTORS as $key => $projector) {
 		$saveDir = $pluginDirectory."/".$pluginName."/"."commands/";
 		$fileName = "descriptions.json";
 		$filePath = $saveDir . $fileName;
-		file_put_contents($filePath, $json);
-		
-		break; // Stop searching once found
+		file_put_contents($filePath, $json);		
+		break; // Stop searching once found	}
 	}
 }
 	$result = Array("status" => "OK");
@@ -301,34 +303,29 @@ function processSequenceName($sequenceName) {
 			break;
 			exit(0);
 			
-			case "PROJ-OFF.FSEQ":
+		case "PROJ-OFF.FSEQ":
+		
+			logEntry("Projector OFF");
+			sendCommand("OFF");
+			break;
+			exit(0);
 			
-				logEntry("Projector OFF");
-				sendCommand("OFF");
-				break;
-				exit(0);
-				
-				case "PROJ-VIDEO-INPUT.FSEQ":
-				
-					logEntry("Projector Video Input Select");
-					sendCommand("VIDEO");
-					break;
-					exit(0);
-				
-		default:
-			logEntry("We do not support sequence name: ".$sequenceName." at this time");
-				
+		case "PROJ-VIDEO-INPUT.FSEQ":
+		
+			logEntry("Projector Video Input Select");
+			sendCommand("VIDEO");
+			break;
 			exit(0);
 				
+		default:
+			logEntry("We do not support sequence name: ".$sequenceName." at this time");				
+			exit(0);				
 	}
-	
-
-
 }
+
 function processCallback($argv) {
 
-	global $DEBUG,$pluginName;
-	
+	global $DEBUG,$pluginName;	
 	
 	if($DEBUG)
 		print_r($argv);
