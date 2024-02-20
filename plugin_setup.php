@@ -44,7 +44,9 @@ $DEBUG = false;
 <div class="alert alert-warning" id="IP_Warning" style="color:Red; display:none">
     <strong>Warning!</strong> This is an invalid IP
 </div>
-<div id="ip">PJLINK IP: <?  PrintSettingTextSaved("IP", 0,0, 15, 15, $pluginName, "", "validateIP"); ?></div></p>	
+<div id="ip">PJLINK IP: <?  PrintSettingTextSaved("IP", 0,0, 15, 15, $pluginName, "", "validateIP"); ?>
+	<input type="button" class="buttons" onClick='PingIP($("#IP").val(), 3);' value='Ping'>
+</div></p>
 <div id="pass">PJLINK Password: <?  PrintSettingTextSaved("PROJ_PASSWORD", 0,0, 30, 30, $pluginName); ?></div></p>
 <div class="alert alert-warning" id="Port_Warning" style="color:Red; display:none">
     <strong>Warning!</strong> This is an invalid Port. Only numbers are valid
