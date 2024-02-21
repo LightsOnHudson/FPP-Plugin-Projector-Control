@@ -89,7 +89,7 @@ if (!isset($pluginSettings['PROJECTOR'])){ //check to see if first run. Save dis
 			SetPluginSetting(pluginName, "PARITY", temp,0,0,null);
 		}	
 		initialSave();
-		projectorChanged();			
+		//projectorChanged();			
 	</script><?
 	
 }
