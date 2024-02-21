@@ -5,6 +5,13 @@ require_once("commonFunctions.inc.php");
 include_once '/opt/fpp/www/common.php';
 
 
+if (!isset($pluginSettings) || empty($pluginSettings)) {
+	$pluginSettings = array();
+    $pluginSettingInfos = array();
+
+    LoadPluginSettings("FPP-Plugin-Projector-Control");
+}
+
 $pluginName = basename(dirname(__FILE__)); //delete? defined in commonFunctions 
 $DEVICE = $pluginSettings['DEVICE'];
 $BAUD_RATE = $pluginSettings['BAUD_RATE'];
@@ -115,7 +122,8 @@ function getProjectors(){
 	global $PROJECTORS;
 	foreach ($PROJECTORS as $projector) {
 		$PROJECTOR_LIST[$projector['NAME']] = $projector['NAME'];			
-	}	
+	}
+	ksort($PROJECTOR_LIST);	
 	return $PROJECTOR_LIST;
 }
 
