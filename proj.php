@@ -17,21 +17,24 @@ include_once 'commonFunctions.inc.php';
 include_once '/opt/fpp/www/config.php';
 include_once '/opt/fpp/www/common.php';
 //@@@@@ IS THIS NEEDED? dECLARED IN FUNCTIONS,INC,PHP
-$pluginName = basename(dirname(__FILE__));     //pjd 8-10-2019   added per dkulp
+//$pluginName = basename(dirname(__FILE__));     //pjd 8-10-2019   added per dkulp
 
 
 
 
 //added TCPIP network control to port configured in projectorCommands.inc.php
 
+/*
 $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
-
+*/
 $logFile = $settings['logDirectory'] . "/".$pluginName.".log";
 
+ 
+//$myPid = getmypid(); //@@@@@@@@@@ is this needed?
 
-$myPid = getmypid(); //@@@@@@@@@@ is this needed?
+
 
 //$cfgServer="192.168.192.15";
 $cfgPort="3001";
@@ -67,22 +70,19 @@ logEntry("PROJECTOR: ".$PROJECTOR);
 
 if(trim($PROJECTOR) == "") {
 	logEntry("No Projector configured in plugin, exiting");
-	exit(0);
-	
+	exit(0);	
 }
 
 if($ENABLED != "ON") {
 	logEntry("Plugin is DISABLED, exiting");
 	exit(0);
-
 }
 
 $options = getopt("c:");
 
-
 $SERIAL_DEVICE="/dev/".$DEVICE;
 
-//@@@@@@@@@@@@@@ is this needed?? I don't see any z: settings
+
 if($options["z"] != "") {
 	$callBackPid = $options["z"];
 }
@@ -102,7 +102,7 @@ $projectorIndex = 0;
 //print_r($PROJECTORS);
 $PROJECTOR_FOUND=false;
 
-//@@@@ is this needed? Pull values from Globals??
+
 
 for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 
@@ -128,13 +128,12 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 					
 					if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
 						$IP= $PROJECTORS[$projectorIndex]['IP'];
-					}
-					
+					}					
 					
 					if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
 						$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
 					}
-					
+
 					$PJLINK_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
 					$PJLINK_CMD .= $IP." ";
 					$PJLINK_CMD .= $PROJECTOR_CMD." ";

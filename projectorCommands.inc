@@ -774,6 +774,11 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
+		),
+		Array("NAME" => "-- Select Projector --",
+				"PROTOCOL" => "NONE",
+				"ON" => "",
+				"OFF" => ""				
 		)
 );
 ?>

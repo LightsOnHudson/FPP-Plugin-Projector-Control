@@ -189,8 +189,8 @@ foreach ($PROJECTORS as $key => $projector) {
 		$PARITY=isset($projector["PARITY"]) ? $projector["PARITY"] : "";
 		WriteSettingToFile("STOP_BITS", $PARITY, $pluginName);
 
-		$IP=isset($projector["IP"]) ? $projector["IP"] : "";
-		WriteSettingToFile("IP", $IP, $pluginName);
+		//$IP=isset($projector["IP"]) ? $projector["IP"] : "";
+		//WriteSettingToFile("IP", $IP, $pluginName);
 
 		$PROJ_PASSWORD=isset($projector["PROJ_PASSWORD"]) ? $projector["PROJ_PASSWORD"] : "";
 		WriteSettingToFile("PROJ_PASSWORD", $PROJ_PASSWORD, $pluginName);
