@@ -14,7 +14,7 @@ $DEBUG = false;
 <html>
 <head>
 </head>
-
+<script src="./js/projector_controls.js"></script>
 <div id="projector" class="settings">
 <legend>Projector control Support Instructions</legend>
 <h2>Version <?echo $VERSION;?></h2>
@@ -23,6 +23,23 @@ $DEBUG = false;
 <ul>
 	<li>NONE</li>
 </ul>
+ <!-- Check Plugin -->
+ <div class="justify-content-md-center row setting-item">
+        <div class="col-md-6">
+          <div class="card-title h6">
+            Check Plugin
+          </div>
+          <div class="mb-2 text-muted card-subtitle">
+            This will run a check on the plugin configuration and automatically report any issues.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="checkPluginResults">
+            
+          </div>
+        </div>
+ </div>
+ 
 <p>Configuration:
 <ul>
 	<li>Select your Projector</li>
