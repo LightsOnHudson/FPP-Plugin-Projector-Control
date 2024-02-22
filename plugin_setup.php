@@ -13,6 +13,7 @@ $DEBUG = false;
 ?>
 <html>
 <head>
+	<script src="./js/projector_control.js"></script>
 </head>
 <script src="./js/projector_controls.js"></script>
 <div id="projector" class="settings">
@@ -51,6 +52,7 @@ $DEBUG = false;
 
 <br>
 <p/>
+<div id="updatesAvailable"></div>
 <div id="enabled">ENABLE PLUGIN <?PrintSettingCheckbox("Projector Control", "ENABLED",0, 0, "ON", "OFF", $pluginName);?></div></p>
 <div id="proj">Projector: <? PrintSettingSelect("ProjectorType", "PROJECTOR", 1, 0, $defaultValue="-- Select Projector --", $values = getProjectors(), $pluginName, "projectorChanged"); ?></div></p>
 <div id="serial">Serial Device: <? PrintSettingSelect("Device", "DEVICE", 0, 0, "", $values = get_serialDevices(), $pluginName); ?></div></p>
