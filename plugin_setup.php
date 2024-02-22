@@ -19,27 +19,16 @@ $DEBUG = false;
 <legend>Projector control Support Instructions</legend>
 <h2>Version <?echo $VERSION;?></h2>
 
-<p>Known Issues:
-<ul>
-	<li>NONE</li>
-</ul>
- <!-- Check Plugin -->
- <div class="justify-content-md-center row setting-item">
-        <div class="col-md-6">
-          <div class="card-title h6">
-            Check Plugin
-          </div>
-          <div class="mb-2 text-muted card-subtitle">
-            This will run a check on the plugin configuration and automatically report any issues.
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div id="checkPluginResults">
-            
-          </div>
-        </div>
- </div>
- 
+<div style="display: inline-block;">
+  <p style="display: inline;">Known Issues:
+    <ul style="display: inline;">
+      <li>Does not support passwords on the projector</li>
+    </ul>
+  </p>
+</div>
+<div id="updatesAvailable" style="display:inline-block; vertical-align: top; margin-left: 60px;"></div>
+
+
 <p>Configuration:
 <ul>
 	<li>Select your Projector</li>
@@ -50,8 +39,8 @@ $DEBUG = false;
 </ul>
 
 <br>
-<p/>
-<div id="updatesAvailable"></div>
+</p>
+
 <div id="enabled">ENABLE PLUGIN <?PrintSettingCheckbox("Projector Control", "ENABLED",0, 0, "ON", "OFF", $pluginName);?></div></p>
 <div id="proj">Projector: <? PrintSettingSelect("ProjectorType", "PROJECTOR", 1, 0, $defaultValue="-- Select Projector --", $values = getProjectors(), $pluginName, "projectorChanged"); ?></div></p>
 <div id="serial">Serial Device: <? PrintSettingSelect("Device", "DEVICE", 0, 0, "", $values = get_serialDevices(), $pluginName); ?></div></p>
@@ -110,7 +99,7 @@ function updateVisibility(){
 	switch (protocol){		
 		case "PJLINK":
 			document.getElementById('ip').style.display = "block";
-			document.getElementById('pass').style.display = "block";
+			document.getElementById('pass').style.display = "none";
 			document.getElementById('serial').style.display = "none";
 			document.getElementById('baud').style.display = "none";
 			document.getElementById('char').style.display = "none";
@@ -120,7 +109,7 @@ function updateVisibility(){
 			break;
 		case "TCP":
 			document.getElementById('ip').style.display = "block";
-			document.getElementById('pass').style.display = "block";
+			document.getElementById('pass').style.display = "none";
 			document.getElementById('serial').style.display = "none";
 			document.getElementById('baud').style.display = "none";
 			document.getElementById('char').style.display = "none";
