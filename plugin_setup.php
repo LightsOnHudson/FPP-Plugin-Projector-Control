@@ -15,7 +15,6 @@ $DEBUG = false;
 <head>
 	<script src="./js/projector_control.js"></script>
 </head>
-<script src="./js/projector_controls.js"></script>
 <div id="projector" class="settings">
 <legend>Projector control Support Instructions</legend>
 <h2>Version <?echo $VERSION;?></h2>
