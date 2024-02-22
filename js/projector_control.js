@@ -1,5 +1,6 @@
 $(document).ready(async () => {
     await init();
+})
 async function checkPluginUpdates() {
     await FPPPost('/api/plugin/FPP-Plugin-Projector-Control/updates', {}, (data) => {
       if(data?.updatesAvailable === 1) {
@@ -40,4 +41,3 @@ async function checkPluginUpdates() {
         
         hideLoader();
       }
-})
