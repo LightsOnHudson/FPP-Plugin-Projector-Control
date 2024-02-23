@@ -9,7 +9,8 @@ async function checkPluginUpdates() {
     (data) => {
       if (data?.updatesAvailable === 1) {
         $("#updatesAvailable").html(
-          '<h4 style="color:red;">A Plugin Update is Available</h4>'
+          '<h4 style="color:red;">A Plugin Update is Available</h4>' +
+          '<button class="buttons btn-success" onclick="UpgradePlugin(&quot;FPP-Plugin-Projector-Control&quot;)"><i class="far fa-arrow-alt-circle-down"></i> Update Now</button>'
         );
       }
     }

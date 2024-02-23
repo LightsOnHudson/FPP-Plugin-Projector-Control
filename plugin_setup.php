@@ -13,7 +13,7 @@ $DEBUG = false;
 ?>
 <html>
 <head>
-	<script src="./js/projector_control.js"></script>
+	
 </head>
 <div id="projector" class="settings">
 <legend>Projector control Support Instructions</legend>
@@ -21,7 +21,7 @@ $DEBUG = false;
 
 <div style="display: inline-block;">
   <p style="display: inline;">Known Issues:
-    <ul style="display: inline;">
+    <ul>
       <li>Does not support passwords on the projector</li>
     </ul>
   </p>
@@ -137,6 +137,11 @@ function updateVisibility(){
 			document.getElementById('parity').style.display = "none";
 			document.getElementById('port').style.display = "none";
 	}
+}
+function UpgradePlugin(plugin) {
+	var url = 'api/plugin/' + plugin + '/upgrade?stream=true';
+    DisplayProgressDialog("pluginsProgressPopup", "Upgrade Plugin");
+    StreamURL(url, 'pluginsProgressPopupText', 'PluginProgressDialogDone', 'PluginProgressDialogDone');
 }
 </script>
 </html>
