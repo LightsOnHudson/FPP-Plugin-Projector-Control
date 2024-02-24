@@ -66,26 +66,9 @@ $DEBUG = false;
 
 updateVisibility(); //show/hide boxes according to settings
 
-function validateIP(){
-	var ipAddress = document.getElementById("IP").value;
-    var ipRegex = /^(?:|(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)))$/;
 
-    if (ipRegex.test(ipAddress)) {
-        document.getElementById('IP_Warning').style.display = "none";        
-    } else {
-        document.getElementById('IP_Warning').style.display = "block";
-    }
-}
 
-function validatePort(){
-	var ipAddress = document.getElementById("PORT").value;
-	var ipRegex = /^(?:|(?:(?:\d+)))$/;
-	if (ipRegex.test(ipAddress)) {
-        document.getElementById('Port_Warning').style.display = "none";        
-    } else {
-        document.getElementById('Port_Warning').style.display = "block";
-    }
-}
+
 
 function projectorChanged(){	
 	GetSync("plugin.php?plugin=<?echo $pluginName ?>&page=functions.inc.php&action=create_scripts&nopage=1");
@@ -138,6 +121,7 @@ function updateVisibility(){
 			document.getElementById('port').style.display = "none";
 	}
 }
+
 function UpgradePlugin(plugin) {
 	var url = 'api/plugin/' + plugin + '/upgrade?stream=true';
     DisplayProgressDialog("pluginsProgressPopup", "Upgrade Plugin");
