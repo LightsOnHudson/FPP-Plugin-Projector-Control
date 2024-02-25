@@ -390,11 +390,8 @@ function processCallback($argv) {
 			exit(0);
 				
 		default:
-			exit(0);
-	
+			exit(0);	
 	}
-	
-
-
 }
+
 ?>
