@@ -49,7 +49,7 @@ $callBackPid="";
 $DEVICE = $pluginSettings['DEVICE'];
 
 //$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
-$DEVICE_CONNECTION_TYPE = $pluginSettings['DEVICE_CONNECTION_TYPE'];
+$DEVICE_CONNECTION_TYPE = $pluginSettings['PROJ_PROTOCOL'];
 
 //$IP = ReadSettingFromFile("IP",$pluginName);
 $IP = $pluginSettings['IP'];
