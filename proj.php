@@ -16,25 +16,9 @@ include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 include_once '/opt/fpp/www/config.php';
 include_once '/opt/fpp/www/common.php';
-//@@@@@ IS THIS NEEDED? dECLARED IN FUNCTIONS,INC,PHP
-//$pluginName = basename(dirname(__FILE__));     //pjd 8-10-2019   added per dkulp
 
-
-
-
-//added TCPIP network control to port configured in projectorCommands.inc.php
-
-/*
-$pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
-if (file_exists($pluginConfigFile))
-	$pluginSettings = parse_ini_file($pluginConfigFile);
-*/
 $logFile = $settings['logDirectory'] . "/".$pluginName.".log";
-
  
-//$myPid = getmypid(); //@@@@@@@@@@ is this needed?
-
-
 
 //$cfgServer="192.168.192.15";
 $cfgPort="3001";
@@ -43,30 +27,15 @@ $DEBUG=false;
 $SERIAL_DEVICE="";
 $callBackPid="";
 
-//@@@@@@@@@@@@ Are these needed? Settings are saved in functions.inc.php
-
-//$DEVICE = ReadSettingFromFile("DEVICE",$pluginName);
 $DEVICE = $pluginSettings['DEVICE'];
-
-//$DEVICE_CONNECTION_TYPE = ReadSettingFromFile("DEVICE_CONNECTION_TYPE",$pluginName);
 $DEVICE_CONNECTION_TYPE = $pluginSettings['PROJ_PROTOCOL'];
-
-//$IP = ReadSettingFromFile("IP",$pluginName);
 $IP = $pluginSettings['IP'];
-
-//$PORT = ReadSettingFromFile("PORT",$pluginName);
 $PORT = $pluginSettings['PORT'];
-
-//$ENABLED = ReadSettingFromFile("ENABLED",$pluginName);
 $ENABLED = urldecode($pluginSettings['ENABLED']);
-
-//$PROJECTOR = urldecode(ReadSettingFromFile("PROJECTOR",$pluginName));
 $PROJECTOR = urldecode($pluginSettings['PROJECTOR']);
-//$IP = urldecode($pluginSettings['PROJECTOR']);
 $PROJ_PASSWORD = urldecode($pluginSettings['PROJ_PASSWORD']);
 
 logEntry("PROJECTOR: ".$PROJECTOR);
-//
 
 if(trim($PROJECTOR) == "") {
 	logEntry("No Projector configured in plugin, exiting");
@@ -87,33 +56,20 @@ if($options["z"] != "") {
 	$callBackPid = $options["z"];
 }
 
-//logEntry("callback pid: ".$callBackPid);
-
-
 logEntry("option C: ".$options["c"]);
 $cmd= strtoupper(trim($options["c"]));
 
-//loop through the array of projectors to get the command
 //@@@ is this needed? For loop initializes projectorIndex 
 $projectorIndex = 0; 
 //set the found flag, do not send a command if the name and command cannot be found
 
-
-//print_r($PROJECTORS);
 $PROJECTOR_FOUND=false;
 
-
-
-for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
-
-	
+for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {	
 	if($PROJECTORS[$projectorIndex]['NAME'] == $PROJECTOR) {
 		logEntry("proj.php Projector found: ".$PROJECTOR);
 		logEntry("Looking for command string for cmd: ".$cmd);
-
-		//while (list($key, $val) = each($PROJECTORS[$projectorIndex])) {   // removed for newer php  -pat 2/4/2024
-		foreach($PROJECTORS[$projectorIndex] as $key => $val) {	
-			
+		foreach($PROJECTORS[$projectorIndex] as $key => $val) {			
 			if(strtoupper(trim($key)) == $cmd) {
 				$PROJECTOR_FOUND=true;
 				$PROJECTOR_CMD = $val;
@@ -141,29 +97,21 @@ for($projectorIndex=0;$projectorIndex<=count($PROJECTORS)-1;$projectorIndex++) {
 					
 					logEntry("PJLINK CMD: ".$PJLINK_CMD);
 					$PROJECTOR_CMD = $PJLINK_CMD;
-					//**saved settings are over-ridden??? */
+					
 				} elseif ($PROJECTORS[$projectorIndex]['PROTOCOL'] == "TCP") {
 					$DEVICE_CONNECTION_TYPE = "IP";
 					logEntry("TCP/IP Projector");
 					
 					if(trim($PROJECTORS[$projectorIndex]['IP']) != "") {
 						$IP= $PROJECTORS[$projectorIndex]['IP'];
-					}
-					
+					}					
 					
 					if(trim($PROJECTORS[$projectorIndex]['PASSWORD']) != "") {
 						$PROJ_PASSWORD = $PROJECTORS[$projectorIndex]['PASSWORD'];
 					}
 					$PORT= $PROJECTORS[$projectorIndex]['PORT'];
 					
-					//$IP_CMD =  $settings['pluginDirectory'] . "/" .$pluginName. "/pjlinkutil.pl ";
-					//$IP_CMD .= $IP." ";
-					//$IP_CMD = $PROJECTOR_CMD;//." ";
-					//$IP_CMD .= "-p ".$PROJ_PASSWORD;
-					
-					logEntry("TCPIP IP: ".$IP." PORT: ".$PORT." CMD: ".$PROJECTOR_CMD);
-					//$PROJECTOR_CMD = $IP_CMD;
-					
+					logEntry("TCPIP IP: ".$IP." PORT: ".$PORT." CMD: ".$PROJECTOR_CMD);					
 				} else {
 					
 					if($pluginSettings['BAUD_RATE'] !="")
@@ -211,7 +159,6 @@ if(!$PROJECTOR_FOUND) {
 
 logEntry("-------");
 $PCMD = hex_dump($PROJECTOR_CMD, $newline="\n");
-//logEntry("PROJECTOR CMD2: ".$PCMD);
 logEntry("Sending command");
 logEntry("HEX DECODED COMMAND: ".$PCMD);
 
@@ -250,8 +197,7 @@ switch ($DEVICE_CONNECTION_TYPE) {
 	
 	break;
 	
-	case "IP":
-       // $cfgServer = $options["h"];
+	case "IP":       
 	logEntry("SENDING IP COMMAND");
        
 		sendTCP($IP, $PORT, $PROJECTOR_CMD);

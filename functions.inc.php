@@ -18,7 +18,6 @@ $BAUD_RATE = $pluginSettings['BAUD_RATE'];
 $CHAR_BITS = $pluginSettings['CHAR_BITS'];
 $STOP_BITS = $pluginSettings['STOP_BITS'];
 $PARITY = $pluginSettings['PARITY'];	
-//$DEVICE_CONNECTION_TYPE = $pluginSettings['DEVICE_CONNECTION_TYPE'];
 $IP = $pluginSettings['IP'];
 $PORT = $pluginSettings['PORT'];
 $ENABLED = urldecode($pluginSettings['ENABLED']);
@@ -189,9 +188,6 @@ foreach ($PROJECTORS as $key => $projector) {
 		$PARITY=isset($projector["PARITY"]) ? $projector["PARITY"] : "";
 		WriteSettingToFile("STOP_BITS", $PARITY, $pluginName);
 
-		//$IP=isset($projector["IP"]) ? $projector["IP"] : "";
-		//WriteSettingToFile("IP", $IP, $pluginName);
-
 		$PROJ_PASSWORD=isset($projector["PROJ_PASSWORD"]) ? $projector["PROJ_PASSWORD"] : "";
 		WriteSettingToFile("PROJ_PASSWORD", $PROJ_PASSWORD, $pluginName);
 
@@ -200,7 +196,6 @@ foreach ($PROJECTORS as $key => $projector) {
 
 		$index = $key; // Save the index
 		foreach($PROJECTORS[$index] as $key => $value){
-			$numCommands=count($PROJECTORS[$index]);				
 			if($key != "NAME" && $key != "BAUD_RATE" && $key != "CHAR_BITS" && $key != "PARITY" && $key != "STOP_BITS" && $key != "VALID_STATUS_0" && $key != "VALID_STATUS_1" && $key != "VALID_STATUS_2"){
 				$scriptCMD = $pluginDirectory."/".$pluginName."/"."proj.php -d".$DEVICE_CONNECTION_TYPE." -s".$DEVICE." -c".$key; 
 				$scriptFilename = $scriptDirectory."/PROJECTOR-".$key.".sh";
