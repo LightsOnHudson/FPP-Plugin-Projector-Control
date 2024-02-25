@@ -55,3 +55,8 @@ function validatePort(){
     }
 }
 
+function PluginProgressDialogDone() {
+  $('#pluginsProgressPopupCloseButton').prop("disabled", false);
+  DisplayProgressDialog("pluginsProgressPopup", "Upgrade Plugin");
+  StreamURL(url, 'pluginsProgressPopupText', 'PluginProgressDialogDone', 'PluginProgressDialogDone');
+}
