@@ -316,7 +316,7 @@ $PROJECTORS = Array(
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
 		),
-		Array("NAME" => "EPSON_EH_TW5900",
+		Array("NAME" => "EPSON_EH_TW5900_Powerlite_1960",
 		
 				"ON" => "\x50\x57\x52\x20\x4f\x4e\x0d\x0a",
 				"OFF" => "\x50\x57\x52\x20\x4f\x46\x46\x0d\x0a",
