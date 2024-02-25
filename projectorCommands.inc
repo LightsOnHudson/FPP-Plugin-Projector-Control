@@ -43,7 +43,7 @@ $PROJECTORS = Array(
 				"PASSWORD" => "",
 				"PORT" => "4352", //OR 3620 possibly 3629 = ESCport
 		),
-		Array("NAME" => "EPSON_PWRLITE_93_NETWORK",
+		Array("NAME" => "_PWRLITE_93_NETWORK",
 				"PROTOCOL" => "TCP",
 				//"ON" => "IMPWR ON?",
 				//"OFF" => "IMPWR OFF?",
@@ -115,7 +115,7 @@ $PROJECTORS = Array(
 				"PARITY" => "none"
 		),
 		Array("NAME" => "Dukane_ImagePRO8758_NETWORK",
-		// This projector uses TELNET to connect, see note at tope of file.
+		// This projector uses TELNET to connect, see note at top of file.
 				"PROTOCOL" => "TCP",
 				"ON" => "(PWR1)",
 				"OFF" => "(PWR0)",
@@ -774,6 +774,11 @@ $PROJECTORS = Array(
 				"CHAR_BITS" => "8",
 				"STOP_BITS" => "1",
 				"PARITY" => "none"
+		),
+		Array("NAME" => "-- Select Projector --",
+				"PROTOCOL" => "NONE",
+				"ON" => "",
+				"OFF" => ""				
 		)
 );
 ?>
